@@ -1,0 +1,836 @@
+<odoo>
+    <data>
+
+        <template id="homepage_template" name="Home" inherit_id="website.homepage">
+            <xpath expr="//div[@id='wrap']" position="replace">
+                <div id="wrap" style="margin-top:0px;">
+                    <div class="oe_structure">
+                        <div class="version2">
+                            <t t-if="announcement_id">
+                                <img class="image_height " src="/ebs_qsheild_mod/static/src/image/lebanese_flag.jpg"/>
+                                <div class="exist_announcement_page banner_inner_content">
+                                    <p>نحن هنا لخدمتكم بشكل أفضل</p>
+                                </div>
+                                <a href="/my/home" style="background-color: white;font-color:white;"
+                                   class="exist_announcement_page what_we_can_button" align="center">Electronic Services
+                                    <img class="img_search_icon"
+                                         src="/ebs_qsheild_mod/static/src/image/search-icon.png"/>
+                                </a>
+                            </t>
+                            <t t-else="">
+                                <img class="image_height " src="/ebs_qsheild_mod/static/src/image/lebanese_flag.jpg"/>
+                                <div class=" banner_inner_content_without_announchment">
+                                    <p>نحن هنا لخدمتكم بشكل أفضل</p>
+                                </div>
+                                <a href="/my/home" style="background-color: white;font-color:white;"
+                                   class=" what_we_can_button_without_announchment" align="center">Electronic Services
+                                    <img class="img_search_icon"
+                                         src="/ebs_qsheild_mod/static/src/image/search-icon.png"/>
+                                </a>
+                            </t>
+                        </div>
+
+
+                        <t t-if="request.env['ebs_mod.news'].sudo().search([('active','=',True)])">
+                            <div style="background: white !important;text-align:center;border:3px solid #753939;margin-top:5px;height: 85px;"
+                                 class="card-body">
+                                <div class="ticker-wrap">
+                                    <div class="ticker">
+                                        <t t-foreach="request.env['ebs_mod.news'].sudo().search([('active','=',True)], order='id desc')"
+                                           t-as="news">
+                                            <div class="ticker__item">
+                                                <p style="margin-left:30px; display:inline-block">
+                                                    <span style="margin-left:11px;">•</span>
+                                                    <t t-esc="news.name"/>
+                                                </p>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                        <div class="col-md-12 who_we_are_content_class" style="display:none">
+                            <h2 class="text-center border_bottom_class">
+                                <b>who are we</b>
+                            </h2>
+                            <p class="text-center content_size_class container">Lorem Ipsum is simply dummy text used in
+                                the printing and typesetting industry. It has been the industry's standard dummy text
+                                since the 1500s, when an unknown printer took a type plate and scrambled it to make a
+                                sample book. It has survived not only five centuries, but also the leap into electronic
+                                typesetting, and has remained fundamentally unchanged. It was published in the 1960s and
+                                more recently with desktop publishing software.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row row mt-5 mb-5">
+                        <t t-set="title"
+                           t-value="request.env['ebs_mod.about.embassy'].search([],limit=1, order='id desc')"/>
+                        <div class="col-md-6">
+                            <img class="w-100 home_page_ambassy_image_height"
+                                 t-attf-src="/web/image/ebs_mod.about.embassy/{{title.id}}/embassy_image"/>
+                        </div>
+                        <div class="col-md-6">
+                            <div align="center">
+                                <b>
+                                    <div>
+                                        <span style="border-bottom: 3px solid red;padding-bottom: 3px;font-size:25px;font-family:HelveticaNeue-Medium !important;"
+                                              t-field="title.type"/>
+                                    </div>
+                                </b>
+                                <br/>
+                                <span style="font-size:21px;" t-field="title.description"/>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-if="request.env['ambassador.greetings'].search([('active','=',True)])">
+                        <section class="ambassador_greetings mb-5">
+                            <div class="container-fluid" style="background: #f9f9f9;">
+                                <b>
+                                    <div align="center">
+                                        <span style="border-bottom: 3px solid red;padding-bottom: 3px;font-size:28px;font-family:HelveticaNeue-Medium !important;">
+                                            كلمة السفير
+                                        </span>
+                                    </div>
+                                </b>
+                                <br/>
+                                <t t-foreach="request.env['ambassador.greetings'].search([('active','=',True)])"
+                                   t-as="title">
+                                    <div class="col-md-12">
+                                        <b>
+                                            <div>
+                                                <span style="border-bottom: 3px solid red;padding-bottom: 3px;font-size:25px;font-family:HelveticaNeue-Medium !important;"
+                                                      t-field="title.name"/>
+                                            </div>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:21px;word-break: break-word;"
+                                              t-field="title.description"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </section>
+                    </t>
+
+                    <t t-if="announcement_id">
+                        <section id="desktop_view_display" class="container-fluid management_team_entigrity"
+                                 style="background: #f9f9f9;">
+                            <div id="multi-item-example" class="carousel slide carousel-multi-item">
+                                <!--Indicators-->
+                                <div class="section-header with_text text-center white_text"
+                                     style="padding-top: 30px;padding-bottom: 30px;">
+                                    <span class="management_title_border_class management_title_class"
+                                          style="font-size: 1.75rem;padding-bottom: 5px;">التعاميم
+                                    </span>
+                                </div>
+                                <ol class="carousel-indicators">
+                                    <t t-if="first">
+                                        <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+                                    </t>
+                                    <t t-if="second">
+                                        <li data-target="#multi-item-example" data-slide-to="1"></li>
+                                    </t>
+                                    <t t-if="third">
+                                        <li data-target="#multi-item-example" data-slide-to="2"></li>
+                                    </t>
+                                </ol>
+                                <!--/.Indicators-->
+
+                                <!--Slides-->
+                                <div class="carousel-inner" role="listbox" style="padding-bottom: 70px;">
+                                    <!--First slide-->
+                                    <t t-if="first">
+                                        <div class="carousel-item active">
+                                            <div class="row">
+                                                <t t-foreach="first" t-as="ann_1">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_1) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_1.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_1.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_1.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_1.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_1.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <!--/.First slide-->
+
+                                    <!--Second slide-->
+                                    <t t-if="second">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="second" t-as="ann_2">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_2) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_2.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_2.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_2.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_2.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_2.attachment_id.id}?download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <!--                                /.Second slide-->
+
+                                    <!--                                Third slide-->
+                                    <t t-if="third">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="third" t-as="ann_3">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_3) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_3.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_3.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_3.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_3.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_3.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <!--                                /.Third slide-->
+
+                                </div>
+                                <!--/.Slides-->
+
+                            </div>
+                        </section>
+                    </t>
+                    <t t-if="announcement_id">
+                        <section id="mobile_view_display" class="container-fluid management_team_entigrity"
+                                 style="background: #f9f9f9;">
+                            <div id="multi-item-examples" class="carousel slide carousel-multi-item">
+                                <!--Indicators-->
+                                <div class="section-header with_text text-center white_text"
+                                     style="padding-top: 30px;padding-bottom: 30px;">
+                                    <span class="management_title_border_class management_title_class"
+                                          style="font-size: 1.75rem;padding-bottom: 5px;">التعاميم
+                                    </span>
+                                </div>
+                                <ol class="carousel-indicators">
+                                    <t t-if="mobile_first_view">
+                                        <li data-target="#multi-item-examples" data-slide-to="0" class="active"></li>
+                                    </t>
+                                    <t t-if="mobile_second_view">
+                                        <li data-target="#multi-item-examples" data-slide-to="1"></li>
+                                    </t>
+                                    <t t-if="mobile_third_view">
+                                        <li data-target="#multi-item-examples" data-slide-to="2"></li>
+                                    </t>
+                                    <t t-if="mobile_fourth_view">
+                                        <li data-target="#multi-item-examples" data-slide-to="3"></li>
+                                    </t>
+                                    <t t-if="mobile_fifth_view">
+                                        <li data-target="#multi-item-examples" data-slide-to="4"></li>
+                                    </t>
+                                    <t t-if="mobile_six_view">
+                                        <li data-target="#multi-item-examples" data-slide-to="5"></li>
+                                    </t>
+                                </ol>
+                                <!--/.Indicators-->
+
+                                <!--Slides-->
+                                <div class="carousel-inner" role="listbox" style="padding-bottom: 70px;">
+                                    <!--First slide-->
+                                    <t t-if="mobile_first_view">
+                                        <div class="carousel-item active">
+                                            <div class="row">
+                                                <t t-foreach="mobile_first_view" t-as="ann_1">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_1) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_1.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_1.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_1.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_1.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_1.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <!--/.First slide-->
+
+                                    <!--Second slide-->
+                                    <t t-if="mobile_second_view">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="mobile_second_view" t-as="ann_2">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_2) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_2.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_2.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_2.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_2attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_2.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <!--                                /.Second slide-->
+
+                                    <!--                                Third slide-->
+                                    <t t-if="mobile_third_view">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="mobile_third_view" t-as="ann_3">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_3) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_3.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_3.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_3.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_3.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_3.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <!--                                /.Third slide-->
+                                    <t t-if="mobile_fourth_view">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="mobile_fourth_view" t-as="ann_4">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_4) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_4.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_4.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_4.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_4.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_4.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-if="mobile_fifth_view">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="mobile_fifth_view" t-as="ann_5">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_5) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_5.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_5.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_5.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_5.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_5.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+
+                                    <t t-if="mobile_six_view">
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <t t-foreach="mobile_six_view" t-as="ann_6">
+                                                    <div class="col-md-6">
+                                                        <div class=""
+                                                             style="border:1px solid #cdcdcd;border-radius:5px;">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text_wrap">
+                                                                    <a t-attf-href="/announcement/#{ slug(ann_6) }/">
+                                                                        <img class="home_page_announchment_slider_image"
+                                                                             t-attf-src="/web/image/circulars.page/{{ann_6.id}}/image"></img>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-8"
+                                                                     style="height:180px;max-height:180px;">
+                                                                    <div style="margin-top:45px;margin-bottom:45px;">
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;word-break: break-word;"
+                                                                                  t-esc="ann_6.name"></span>
+                                                                        </div>
+                                                                        <div style="margin:1rem;">
+                                                                            <span style="color:#000;"
+                                                                                  t-esc="ann_6.date"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <t t-if="ann_6.attachment_id">
+                                                                        <div style="margin:1rem;">
+                                                                            <span>
+                                                                                <a style="color:#d90000;"
+                                                                                   t-attf-href="/web/content/#{ann_6.attachment_id.id}?&amp;download=true">
+                                                                                    تنزيل المرفقات
+                                                                                    <div class="fa fa-download"></div>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </t>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+
+
+                                </div>
+                                <!--/.Slides-->
+
+                            </div>
+                        </section>
+                    </t>
+
+
+                    <section class="">
+                        <div style="margin-bottom:4%;">
+                            <div class="mb-4" align="center" style="font-size:38px">
+                                <span style="border-bottom: 3px solid red;padding-bottom: 3px;">الخدمات الالكترونية
+                                </span>
+                            </div>
+                            <section>
+                                <div>
+                                    <t t-set="serviceTypes"
+                                       t-value="request.env['ebs_mod.service.types'].sudo().search([('parent_service_id','=',False)])"/>
+                                    <div class="row">
+                                        <t t-foreach="serviceTypes" t-as="service">
+                                            <div class="image_section_class">
+                                                <div class="image_display_class">
+                                                    <a t-att-href="'/my'+service.path">
+                                                        <img t-if="service.service_image"
+                                                             t-attf-src="data:image/png;base64,{{service.service_image}}"></img>
+                                                        <img t-if="not service.service_image"
+                                                             src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                                        <div style="color:red">
+                                                            <t t-esc="service._get_name()"></t>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+
+                </div>
+            </xpath>
+        </template>
+
+        <template id="important_link_webpage" name="ImportantLink">
+
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section>
+                        <form name="importantlink" method="post">
+                            <div style="font-size:20px;font-weight:bold;color: #262626;margin-right: 5.7%;">
+                                <p>Important Links</p>
+                            </div>
+                            <table class="table table-borderless" style="color: #262626;width:60%;margin-right:4.9%">
+                                <tr>
+                                    <td style="font-size:20px;">
+                                        <p>Name</p>
+                                    </td>
+                                    <td style="font-size:20px;">
+                                        <p>Link</p>
+                                    </td>
+                                </tr>
+                                <t t-foreach="request.env['ebs_mod.important.links'].search([])" t-as="link">
+                                    <tr>
+                                        <td style="font-size:15px;">
+                                            <t t-esc="link.name"/>
+                                        </td>
+                                        <td style="font-size:15px;">
+                                            <a t-att-href="link.link" target="_blank">
+                                                <t t-esc="link.link"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </form>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="ambassador_list_webpage" name="AmbassadorsList">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section>
+                        <form name="ambassadorlist" method="post">
+                            <div style="font-size:20px;font-weight:bold;color: #262626;margin-right: 5.7%;">
+                                <p>Previous Ambassador List</p>
+                            </div>
+                            <table class="table table-borderless" style="color: #262626;width:60%;margin-right:4.9%">
+
+                                <tr>
+                                    <td style="font-size:20px;">
+                                        <p>Name</p>
+                                    </td>
+                                    <td style="font-size:20px;">
+                                        <p>From Date</p>
+                                    </td>
+                                    <td style="font-size:20px;">
+                                        <p>To Date</p>
+                                    </td>
+                                </tr>
+                                <t t-foreach="request.env['ebs_mod.ambassadors.names'].search([])" t-as="amb">
+                                    <tr>
+                                        <td style="font-size:15px;">
+                                            <t t-esc="amb.name"/>
+                                        </td>
+                                        <td style="font-size:15px;">
+                                            <t t-esc="amb.from_date"/>
+                                        </td>
+                                        <td style="font-size:15px;">
+                                            <t t-esc="amb.to_date"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </form>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="current_ambassador_list_webpage" name="AmbassadorsList">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section>
+                        <form name="ambassadorlist" method="post">
+                            <table class="table table-borderless" style="text-align:right;font-size:20px;">
+                                <t t-foreach="request.env['res.company'].search([])" t-as="camb">
+                                    <div style="font-size:20px;margin-right:3%;font-weight:bold" align="right">
+                                        <span t-field="camb.ambassador_name"/>
+                                    </div>
+                                    <div class="row" style="margin-right:3%;margin-top: 20px;">
+                                        <div class="col-md-6" style="font-size:15px;" align="right">
+                                            <span t-field="camb.description"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </table>
+                        </form>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="company_names_logo" name="Company name" inherit_id="web.frontend_layout">
+            <xpath expr="//div[@id='wrapwrap']/header" position="attributes">
+                <attribute name="style">font-size:18px;font-weight:bold;color:#0f205f</attribute>
+            </xpath>
+        </template>
+
+
+
+        <template id="contact_form_inherit" name="Contact Form" inherit_id="website.contactus">
+            <xpath expr="//form[@id='contactus_form']/div/div[4]" position="attributes">
+                <attribute name="class">d-none</attribute>
+            </xpath>
+            <xpath expr="//form[@id='contactus_form']/div/div[8]/a" position="attributes">
+                <attribute name="style">background-color:#d90000;width:184px;</attribute>
+            </xpath>
+            <xpath expr="//form[@id='contactus_form']/div" position="attributes">
+                <attribute name="class">d-none</attribute>
+            </xpath>
+        </template>
+
+
+        <template id="contact_inherit" name="Contact Form" inherit_id="base.contact">
+            <xpath expr="//address" position="replace"></xpath>
+        </template>
+
+
+
+<!--        commented by mervat-->
+<!--        <template id="contact_us_form_inherit" name="Contact Form" inherit_id="website.company_description">-->
+<!--            <xpath expr="//t[@t-if='res_company.google_map_img()']" position="replace"></xpath>-->
+<!--            <xpath expr="//address" position="replace">-->
+<!--                <section class="s_text_block" style="margin-bottom:40px;">-->
+<!--                    <div class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">-->
+<!--                        <div style="margin-bottom: 7px;background:#f9f9f9;padding:20px;">-->
+<!--                            <div class="border_bottom_class_contactus" style="margin-bottom:20px;font-size:22px;">-->
+<!--                                <span class="border_bottom_class_contactus">-->
+<!--                                    Shift Time-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                            <span style="font-size:18px;" t-field="res_company.shift_description"/>-->
+<!--                        </div>-->
+<!--                        <div style="background:#f9f9f9;padding:20px;" id="connect">-->
+<!--                            <div class="border_bottom_class_contactus" style="font-size:22px;">-->
+<!--                                <span class="border_bottom_class_contactus">Contact Us-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                            <t t-foreach="request.env['ebs_mod.communicate.embassy'].search([])" t-as="link">-->
+<!--                                <div class="ebs_contactus_address ">-->
+<!--                                    <t t-esc="link.type"/>-->
+<!--                                </div>-->
+<!--                                <div class="ebs_contactus_address_field">-->
+<!--                                    <span style="color: red;margin:auto;text-decoration: underline;text-underline-position: under;text-decoration-color: #ed5f34;"-->
+<!--                                          t-field="link.email"/>-->
+<!--                                </div>-->
+
+<!--                            </t>-->
+
+<!--                            <t t-foreach="request.env['ebs_mod.contact.details'].sudo().search([])" t-as="contact">-->
+<!--                                <div class="ebs_contactus_address ">-->
+<!--                                    <span class="border_bottom_class_contactus">-->
+<!--                                        <t t-esc="contact.name"/>-->
+<!--                                    </span>-->
+<!--                                </div>-->
+<!--                                <div class="ebs_contactus_address_field">-->
+<!--                                    <span style="color:red;" t-field="contact.phone"/>-->
+<!--                                </div>-->
+
+<!--                                <div class="ebs_contactus_address_field">-->
+<!--                                    <span style="color:red;" t-field="contact.fax"/>-->
+<!--                                </div>-->
+<!--                            </t>-->
+<!--                            <a t-att-href="res_company.google_map_link()" target="_BLANK">-->
+<!--                                <img style="width:100%" src="/ebs_qsheild_mod/static/src/image/mappng.png"/>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </section>-->
+<!--            </xpath>-->
+<!--        </template>-->
+    </data>
+</odoo>

@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="about_embassy_tree" model="ir.ui.view">
+            <field name="name">About Embassy Tree</field>
+            <field name="model">ebs_mod.about.embassy</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="type"/>
+                     <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+          <record id="about_embassy_form" model="ir.ui.view">
+            <field name="name">About Embassy Form</field>
+            <field name="model">ebs_mod.about.embassy</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="embassy_image" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label  for="type" string="Type"/>
+                            <field name="type"/>
+                        </div>
+                        <group>
+                            <field name="description" widget="html"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+               <!--list view -->
+        <record id="communicate_embassy_tree" model="ir.ui.view">
+            <field name="name">Communicate Embassy Tree</field>
+            <field name="model">ebs_mod.communicate.embassy</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="type"/>
+                     <field name="email" widget="email"/>
+                     <field name="phone" widget="phone"/>
+                </tree>
+            </field>
+        </record>
+
+          <record id="communicate_embassy_form" model="ir.ui.view">
+            <field name="name">Communicate Embassy Form</field>
+            <field name="model">ebs_mod.communicate.embassy</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                             <field name="type"/>
+                             <field name="email" widget="email"/>
+                             <field name="phone" widget="phone"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="important_links_tree" model="ir.ui.view">
+            <field name="name">Important Links Tree</field>
+            <field name="model">ebs_mod.important.links</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="name"/>
+                     <field name="link"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="contact_religion_form" model="ir.ui.view">
+            <field name="name">Important Links Form</field>
+            <field name="model">ebs_mod.important.links</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                              <field name="name"/>
+                              <field name="link"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ambassadors_names_tree" model="ir.ui.view">
+            <field name="name">Ambassador Names Tree</field>
+            <field name="model">ebs_mod.ambassadors.names</field>
+            <field name="arch" type="xml">
+                <tree>
+                      <field name="name"/>
+                      <field name="from_date"/>
+                      <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ambassadors_names_form" model="ir.ui.view">
+            <field name="name">Ambassador Names Form</field>
+            <field name="model">ebs_mod.ambassadors.names</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                              <field name="name"/>
+                              <field name="from_date"/>
+                              <field name="to_date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--window -->
+        <record id="about_embassy_window" model="ir.actions.act_window">
+            <field name="name">About The Embassy</field>
+            <field name="res_model">ebs_mod.about.embassy</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="communicate_embassy_window" model="ir.actions.act_window">
+            <field name="name">Communicate with The Embassy</field>
+            <field name="res_model">ebs_mod.communicate.embassy</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <record id="important_links_window" model="ir.actions.act_window">
+            <field name="name">Important Links</field>
+            <field name="res_model">ebs_mod.important.links</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="ambassadors_names_window" model="ir.actions.act_window">
+            <field name="name">Ambassadors Names</field>
+            <field name="res_model">ebs_mod.ambassadors.names</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="contact_details_form" model="ir.ui.view">
+            <field name="name">Contact Detail Form</field>
+            <field name="model">ebs_mod.contact.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                              <field name="name"/>
+                              <field name="phone"/>
+                              <field name="fax"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="contact_detail_tree" model="ir.ui.view">
+            <field name="name">Contact Details Tree</field>
+            <field name="model">ebs_mod.contact.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                      <field name="name"/>
+                      <field name="phone"/>
+                      <field name="fax"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="contact_details_window" model="ir.actions.act_window">
+            <field name="name">Contact Details</field>
+            <field name="res_model">ebs_mod.contact.details</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--menu -->
+
+        <menuitem name="Ambassadors Names"
+            id="menu_website_ambassadors_list"
+            action="ambassadors_names_window"
+            parent="website.menu_website_global_configuration"
+            sequence="113"
+            />
+
+        <menuitem name="Contact Details"
+            id="menu_website_contact_detail_ex"
+            action="contact_details_window"
+            parent="website.menu_website_global_configuration"
+            sequence="156"
+            />
+
+        <menuitem name="Important Links"
+            id="menu_website_links_list"
+            action="important_links_window"
+            parent="website.menu_website_global_configuration"
+            sequence="112"
+            />
+        <menuitem name="Communicate with The Embassy"
+            id="menu_website_communicate_list"
+            action="communicate_embassy_window"
+            parent="website.menu_website_global_configuration"
+            sequence="111"
+            />
+        <menuitem name="About The Embassy"
+            id="menu_website_embassy_about_list"
+            action="about_embassy_window"
+            parent="website.menu_website_global_configuration"
+            sequence="110"
+            />
+
+    </data>
+</odoo>

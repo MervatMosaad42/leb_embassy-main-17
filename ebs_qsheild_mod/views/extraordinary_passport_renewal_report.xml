@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_extraordinary_passport_renewal_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td>
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="80%"/>
+                                <br/>
+                                <img src="/ebs_qsheild_mod/static/src/image/report_icon.png" width="50%"/>
+                            </td>
+                            <td width="50%" style="font-weight: bold;" align="center">
+                                <h7 class="text-right">
+                                    <span>تجديد إستثنائي لجواز سفر لبناني طلب</span>
+                                    <br/>
+                                    <span>لمدة سنة واحدة</span>
+                                    <br/>
+                                    <span>عملا بقرار المديرية العامة للأمن العام اللبناني</span>
+                                    <br/>
+                                    <span>رقم 905 / اع / و/ خ بتاريخ 24/03/2016</span>
+                                    <br/>
+                                    <span>يجدد جواز السفر القديم المقروء آليا لمدة سنة واحدة فقط بصورة إستثنائية وفي
+                                        الحالات
+                                    </span>
+                                    <br/>
+                                    <span>الضرورية على الصفحة رقم 4 وذلك بعد موافقة رئيس لبعثة أو القنصل.</span>
+                                    <br/>
+                                    <span>ملاحظة : وجوب تعبئة الإستمارة كاملة وبشكل واضح.</span>
+                                </h7>
+                            </td>
+                            <td>
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>First Name:</b>
+                                <br/>
+                                <b>Middle Name:</b>
+                                <br/>
+                                <b>Last Name:</b>
+                                <br/>
+                                <b>Mother's Maiden Name:</b>
+                                <br/>
+                                <b>Place &amp; Date of Birth:</b>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: الاســــــم</b>
+                                <br/>
+                                <b>: اسم الاب</b>
+                                <br/>
+                                <b>: الشــهرة</b>
+                                <br/>
+                                <b>: اســم الام وشهرتـها (قبل الزواج)</b>
+                                <br/>
+                                <b>: مكان وتاريخ الولادة</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;padding-top: 5px;padding-bottom: 5px;">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: رقم السجل</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: القضاء</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: مكان القيد</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: تاريخ</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                colspan="2" align="right">
+                                <b>: رقم الهوية او إخراج القيد الإفرادي</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: تاريخ الانتهاء</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: تاريخ الإصدار</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: رقم جواز السفر</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: مـهنـة الزوج/ة</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="2">
+                                <u>
+                                    <b>أرمل/ة</b>
+                                </u>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>
+                                    <b>مطلق/ة</b>
+                                </u>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>
+                                    <b>متأهل/ة</b>
+                                </u>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>
+                                    <b>أعزب /عزباء</b>
+                                </u>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>
+                                    <b>: الوضع العـائلـي</b>
+                                </u>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: الجنسية</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: باللغة الاجنبية</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: اسم الزوج/ة باللغة العربية</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="3">
+                                <b>: إسم ورقم جوال لقريب في قطر(لحلات الطوارىء):</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: البناية / المجمع</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: اسم الشارع</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: العنوان في قطر كاملا : المدينة</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: هاتف ارضي :.MOBILE</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: ص.ب.</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: شقة / طابق رقم</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: الحي</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: اسم الشارع</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="3">
+                                <b>: العنوان في لبنان كاملا : المدينة أو القرية :</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>MOBILE +961</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: الهاتف</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: طابق</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: ملك</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: بــــنـــــايــــــة</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: اسم الكفيل و/ او صلة القرابة</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="2">
+                                <b>: الاقامة في قطر: اسم المؤسسة ( العمل )</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: تاريخ الانتهاء</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: الوظيفة / المهنة</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: رقم الاقامة:</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                colspan="2" align="right">
+                                <b>اقر على مسؤوليتي الشخصية ان كامل المعلومات المصرح عنها اعلاه هي صحيحة.</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: انا الموقع أدناه السيد/ة</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <div style="border: 1px solid;padding: 15px;">
+                                    <b>: توقيع صاحب العلاقة</b>
+                                </div>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>جوب حضور الاولاد شخصيا مع الاهل (بين ال5 سنوات و18 سنة)</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: توقيع الوالد</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right">
+                                <b>: .تاريخ</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="2">
+                                <b>: توقيع الوالدة</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="2">
+                                <b>: المستندات المطلوبة</b>
+                                <br/>
+                                <b>1- جواز السفر الحالي وصورة عن الصفحات الاساسية</b>
+                                <br/>
+                                <b>2- صورتان شمسيتان حديثتان 4.3 x 3.5 cm ( خلفية بيضاء ) .</b>
+                                <br/>
+                                <b>3- صورة عن بيان قيد افرادي او صورة عن بطاقة الهوية اللبنانية</b>
+                                <br/>
+                                <b>4- على المتزوجة ابراز ( بيان قيد افرادي / او هوية لبنانية ) يبين وضعها العا ئلي
+                                    الحالي .
+                                </b>
+                                <br/>
+                                <b>
+                                    5- التكلفة : 150 ريال قطري نقداً.
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="center">
+                                <b>لمزيد من المعلومات أو لأي إستقسارات أخرى يمكن مراسلة السفارة على البريد الإلكتروني
+                                    التالي:
+                                    <u>passport@lebanesemebassyqatar.com</u>
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="center">
+                                <b>: مدة التجديـــــد الاستثنا ئي</b>
+                                <br/>
+                                <b>: رقم الايصــــال</b>
+                            </td>
+                            <td style="border: none !important;font-size: 14px;padding-top: 5px;padding-bottom: 5px;"
+                                align="center">
+                                <b>رقــــــــم التجــــــديـــــد</b>
+                                <br/>
+                                <b>تـاريخ الــموافـــقـــــــة</b>
+                            </td>
+                        </tr>
+                    </table>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

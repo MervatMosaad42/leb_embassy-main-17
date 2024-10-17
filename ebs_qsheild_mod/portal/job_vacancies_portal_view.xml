@@ -1,0 +1,1638 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+    <record id="job_vacancies_menu_main" model="website.menu">
+        <field name="name">وظائف للبنانيين</field>
+        <field name="url">/job/vacancies</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">50</field>
+    </record>
+
+    <template id="job_vacancies_template" name="Job Vacancies">
+              <t t-call="website.layout">
+                  <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                </style>
+
+                <div class="row">
+                    <t t-if="user_type == 'applicant_profile'">
+                        <div class="col-md-4 image_section_class">
+                            <div class="image_display_class">
+                                <a href="/job/applicant/account/">
+                                <img src="/ebs_qsheild_mod/static/src/image/profile.jpeg"/>
+                                    <div>Applicant Profile</div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 image_section_class">
+                            <div class="image_display_class">
+                                <a href="/job/vacancies/record">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" data-oe-model="ir.ui.view" data-oe-id="1071" data-oe-field="arch" data-oe-xpath="/data/xpath[1]/div/t[1]/div[1]/div[1]/a[1]/img[2]"/>
+                                <div class="">
+                                    Job Vacancies
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 image_section_class">
+                        <div class="image_display_class">
+                            <a href="/save/jobs/record">
+                            <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" data-oe-model="ir.ui.view" data-oe-id="1071" data-oe-field="arch" data-oe-xpath="/data/xpath[1]/div/t[1]/div[1]/div[1]/a[1]/img[2]"/>
+                            <div class="">
+                                Saved Jobs
+                            </div>
+                            </a>
+                        </div>
+                        </div>
+                    </t>
+                    <t t-if="user_type == 'company_profile'">
+                        <div class="col-md-3 image_section_class">
+                            <div class="image_display_class">
+                                <a href="/job/company/account/">
+                                <img src="/ebs_qsheild_mod/static/src/image/profile.jpeg"/>
+                                    <div>Company Profile</div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 image_section_class">
+                            <div class="image_display_class">
+                                <a href="/job/vacancies/record">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" data-oe-model="ir.ui.view" data-oe-id="1071" data-oe-field="arch" data-oe-xpath="/data/xpath[1]/div/t[1]/div[1]/div[1]/a[1]/img[2]"/>
+                                <div class="">
+                                    Job Vacancies
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 image_section_class">
+                        <div class="image_display_class">
+                            <a href="/company/job/seekers/">
+                            <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" data-oe-model="ir.ui.view" data-oe-id="1071" data-oe-field="arch" data-oe-xpath="/data/xpath[1]/div/t[1]/div[1]/div[1]/a[1]/img[2]"/>
+                            <div class="">
+                                Job Seekers
+                            </div>
+                            </a>
+                        </div>
+                        </div>
+
+                        <div class="col-md-3 image_section_class">
+                        <div class="image_display_class">
+                            <a href="/saved/application/company/">
+                            <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" data-oe-model="ir.ui.view" data-oe-id="1071" data-oe-field="arch" data-oe-xpath="/data/xpath[1]/div/t[1]/div[1]/div[1]/a[1]/img[2]"/>
+                            <div class="">
+                                Saved Applicants
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    </t>
+                </div>
+              </t>
+
+        </template>
+
+    <template id="job_vacancies_rec_template" name="Job Vacancies Record">
+          <t t-call="website.layout">
+                <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                </style>
+
+              <div class="container">
+                  <div class="row">
+                      <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                          <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                              <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                  data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                  <a href="/job/vacancies" aria-label="الرئيسية" title="الرئيسية">
+                                      <i class="fa fa-home"></i>
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item active">
+                                  <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]">Job Vacancies
+                                  </a>
+                              </li>
+                          </ol>
+                          <div>
+                              <input type="text" id="filter_vacanices_record" placeholder="Search"></input>
+                          </div>
+                      </nav>
+                      <div class="col-md-12" t-if="user_type == 'company_profile'">
+                          <a class="btn btn-primary" data-toggle="modal" data-target="#create_job_vacancies">Create</a>
+                          <div class="modal" tabindex="-1" role="dialog" id="create_job_vacancies">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Job Vacancies</h5>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <style>
+                                                    .form-group{
+                                                    color:#000;
+                                                    }
+                                                </style>
+                                                <div class="row">
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label" for="position_name">Position
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+                                                        <input type="text" required="required"
+                                                               name="create_position_name" class="form-control"
+                                                               id="create_vacancies_position_name"/>
+                                                    </div>
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label" for="create_publishing_date">
+                                                            Publishing Date
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+                                                        <input type="date"
+                                                               name="create_publishing_date" class="form-control"
+                                                               id="create_vacancies_publishing_date"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_description">Description
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_description" class="form-control "
+                                                               id="create_job_vacancies_description"/>
+                                                    </div>
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_eductional_requirement">Eductional
+                                                            Requirement
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_eductional_requirement"
+                                                               class="form-control "
+                                                               id="create_job_vacancies_eductional_requirement"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_skills_requirement">Skills
+                                                            Requirement
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_skills_requirement"
+                                                               class="form-control "
+                                                               id="create_job_vacancies_skills_requirement"/>
+                                                    </div>
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label" for="create_vacancies_benefits">
+                                                            Benefits
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_benefits" class="form-control "
+                                                               id="create_job_vacancies_benefits"/>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_applicant_passport_no">Joining Limit
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+
+                                                        <input type="date" required="required"
+                                                               name="create_vacancies_joining_limit"
+                                                               class="form-control " id="create_job_joining_limit"/>
+                                                    </div>
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_vacancy_expire_date">Vacancy Expire
+                                                            Date
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+                                                        <input type="date" required="required"
+                                                               name="vacancies_vacancy_expire_date"
+                                                               class="form-control "
+                                                               id="create_job_vacancy_expire_date"/>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_application_link">Application Link
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_application_link"
+                                                               class="form-control "
+                                                               id="create_job_vacancies_application_link"/>
+                                                    </div>
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_application_email">Application
+                                                            Email
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_application_email"
+                                                               class="form-control "
+                                                               id="create_job_vacancies_application_email"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div t-attf-class="form-group col-md-6">
+                                                        <label class="col-form-label"
+                                                               for="create_vacancies_work_location">Work Location
+                                                        </label>
+                                                        <span class="col-form-label"  style="color:red;">*</span>
+
+                                                        <input type="text" required="required"
+                                                               name="create_vacancies_work_location"
+                                                               class="form-control "
+                                                               id="create_job_vacancies_work_location"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary mb32"
+                                                    id="create_new_vacancies_close"
+                                                    data-dismiss="modal">Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary float-right mb32"
+                                                    name="save&amp;close"
+                                                    value="save&amp;close" id="create_new_vacancies_record_id">Save&amp;Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                      </div>
+                      <t t-if="search_product">
+                          <div class="mt-3" style="border:1px solid black;">
+                              <div class="" style="padding:10px;">
+                                  Search=<span><t t-esc="search_product"/></span>
+                                  <a type="button" class="btn btn-primary" id="remove_filter_section" href="/job/vacancies/record">x
+                                  </a>
+                            </div>
+                          </div>
+                      </t>
+                      <table class="table table-border" style="margin-top:10px;">
+                          <thead>
+                              <th>Job Position</th>
+                              <th>Company Name</th>
+                              <th>Expiry Date</th>
+                          </thead>
+                          <tbody>
+                              <tr t-foreach="job_vacancies_id" t-as="vacancies">
+                                  <td><a t-att-href="'/job/vacancies/%s' %(vacancies.id)" target="_blank"><t t-esc="vacancies.position"/></a></td>
+                                  <td><t t-esc="vacancies.company_id.name"/></td>
+                                  <td><t t-esc="vacancies.vacancy_expire_date"/></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+         </t>
+        </template>
+
+    <template id="job_vacancies_form_template" name="Job Vacancies Form">
+          <t t-call="website.layout">
+                    <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                  </style>
+
+              <div class="container">
+                  <div class="">
+                    <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                          <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                              <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                  data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                  <a href="/job/vacancies" aria-label="الرئيسية" title="الرئيسية">
+                                      <i class="fa fa-home"></i>
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item">
+                                  <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]" href="/job/vacancies/record">Job Vacancies
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item active">
+                                  <span data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]"><t t-esc="job_vacancies_id.position if job_vacancies_id else ''"/>
+                                  </span>
+                              </li>
+                          </ol>
+                      </nav>
+                    <form t-attf-action="/vacancies/form/record/" method="post" role="form" class="o_wprofile_editor_form js_website_submit_form row" enctype="multipart/form-data">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" id="job_vacancies_rec_id" name="job_vacancies_rec_id" t-att-value="job_vacancies_id.id"/>
+                    <t t-set="applicant_id" t-value="request.env['job.vacancies.applicant'].sudo().search([('user_id', '=', request.env.user.id)])"/>
+                    <input type="hidden" id="job_vacancies_hidden_applicant_id" name="job_vacancies_hidden_applicant_id" t-att-value="applicant_id.id"/>
+
+                    <t t-set="job_vac_sort_list_rec_id" t-value="request.env['application.company.sortlisting'].search([('position','=',job_vacancies_id.id),('applicant_name','=',applicant_id.id)])"/>
+
+                    <div class="container">
+                      <style>
+                          .form-group{
+                            color:#000;
+                          }
+                      </style>
+                          <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="publishing_date">Publishing Date</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" required="required" name="publishing_date"  class="form-control"  t-att-value="job_vacancies_id.publishing_date" id="vacancies_publishing_date" readonly="readonly"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="position_name">Position</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" required="required" name="position_name" class="form-control"  t-att-value="job_vacancies_id.position" id="vacancies_position_name" readonly="readonly"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_eductional_requirement">Eductional Requirement</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="text" required="required"  name="vacancies_eductional_requirement"  class="form-control " t-att-value="job_vacancies_id.eductional_requirement"  id="job_vacancies_eductional_requirement" readonly="readonly"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_description">Description</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <textarea  required="required" name="vacancies_description"  class="form-control " id="job_vacancies_description" readonly="readonly"><t t-esc="job_vacancies_id.description"/></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_benefits">Benefits</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input readonly="readonly" type="text" required="required" name="vacancies_benefits"  class="form-control " t-att-value="job_vacancies_id.benefits"  id="job_vacancies_benefits"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_skills_requirement">Skills Requirement</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input readonly="readonly" type="type"  required="required" name="vacancies_skills_requirement"  class="form-control " t-att-value="job_vacancies_id.skills_requirement"  id="job_vacancies_skills_requirement"/>
+                                </div>
+                            </div>
+
+                          <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_vacancy_expire_date">Vacancy Expire Date</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="date"  readonly="readonly" required="required" name="vacancies_vacancy_expire_date" class="form-control "  t-att-value="job_vacancies_id.vacancy_expire_date" id="job_vacancy_expire_date"/>
+
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_passport_no">Joining Limit</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="date"  readonly="readonly" required="required" name="vacancies_joining_limit" class="form-control "  t-att-value="job_vacancies_id.joining_limit" id="job_joining_limit"/>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_application_email">Application Email</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" readonly="readonly" required="required"  name="vacancies_application_email" class="form-control "  t-att-value="job_vacancies_id.application_email" id="job_vacancies_application_email"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <div t-if="request.env.user.partner_id.person_type == 'emp'" >
+                                        <div class="row pl-2">
+                                            <label class="col-form-label" for="vacancies_application_link">Application Link </label><span class="col-form-label"  style="color:red;">*</span>
+                                        </div>
+                                        <div class="row pl-2">
+                                           <a href="job_vacancies_id.application_link"><t t-esc="job_vacancies_id.application_link"/></a>
+                                        </div>
+                                   </div>
+                                    <t t-if="request.env.user.has_group('ebs_qsheild_mod.company_profile_grp')">
+                                        <label class="col-form-label" for="vacancies_application_link">Application Link</label><span class="col-form-label"  style="color:red;">*</span>
+                                        <input type="text" readonly="readonly" required="required"  name="vacancies_application_link" class="form-control "  t-att-value="job_vacancies_id.application_link" id="job_vacancies_application_link"/>
+                                    </t>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_work_location">Work Location</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" readonly="readonly" required="required"  name="vacancies_work_location"  class="form-control "  t-att-value="job_vacancies_id.work_location" id="job_vacancies_work_location"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_company_name">Company Name</label>
+                                    <input type="text" readonly="readonly" name="vacancies_company_name"  class="form-control "  t-att-value="job_vacancies_id.company_id.name" id="job_vacancies_company_name_id"/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div t-attf-class="form-group" t-if="request.env.user.has_group('ebs_qsheild_mod.company_profile_grp')">
+                            <button type='submit' class="btn btn-primary save_vacancies_record_data">Save</button>
+                        </div>
+                        <div t-attf-class="form-group col-md-6" t-if="request.env.user.person_type == 'emp'">
+                            <button type='button' class="btn btn-primary save_job_data">Save Job</button>
+                        </div>
+                 </form>
+
+
+                  </div>
+              </div>
+         </t>
+        </template>
+
+    <template id="job_vacancies_applicant_template" name="Applicant Profile">
+            <t t-call="website.layout">
+                  <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                  </style>
+
+              <form t-attf-action="/applicant/profile/info/" method="post" role="form" class="o_wprofile_editor_form js_website_submit_form row" enctype="multipart/form-data">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" id="applicant_profile_id" name="applicant_profile_name" t-att-value="applicant_id.id"/>
+
+                  <div class="container">
+                      <style>
+                          .form-group{
+                            color:#000;
+                          }
+                      </style>
+                      <div class="row">
+                          <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                              <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                                  <li class="breadcrumb-item">
+                                      <a href="/job/vacancies">
+                                          <i class="fa fa-home"></i>
+                                      </a>
+                                  </li>
+                                  <t t-if="account_type == 'job_Seekers'">
+                                      <li class="breadcrumb-item">
+                                          <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                             data-oe-xpath="/data/xpath/li[1]/a[1]" href="/saved/application/company/">Job Seekers
+                                          </a>
+                                      </li>
+                                    </t>
+
+                                   <t t-if="account_type == 'saved_applicant'">
+                                      <li class="breadcrumb-item">
+                                          <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                             data-oe-xpath="/data/xpath/li[1]/a[1]" href="/company/job/seekers/"> Saved Applicant
+                                          </a>
+                                      </li>
+                                    </t>
+                                  <t t-if="account_type == 'applicant_profile'">
+                                      <li class="breadcrumb-item">
+                                          <a data-oe-model="ir.ui.view">Applicant Profile
+                                          </a>
+                                      </li>
+                                  </t>
+                              </ol>
+                          </nav>
+                      </div>
+                      <div class="row">
+                            <div t-attf-class="form-group col-md-6">
+                                <label class="col-form-label" for="contact_email">Contact Email</label><span class="col-form-label"  style="color:red;">*</span>
+                                <input type="text" required="required" name="contact_email"  class="form-control" t-att-readonly="not account_type == 'applicant_profile'"  t-att-value="applicant_id.contact_email" id="job_applicant_email"/>
+                            </div>
+                            <div t-attf-class="form-group col-md-6">
+                                <label class="col-form-label" for="applicant_name">Name</label><span class="col-form-label"  style="color:red;">*</span>
+                                <input type="text" required="required" name="applicant_name" class="form-control" t-att-readonly="not account_type == 'applicant_profile'"  t-att-value="applicant_id.name" id="job_applicant_name"/>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div t-attf-class="form-group col-md-6">
+                                <label class="col-form-label" for="contact_phone_no">Contact Phone no</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                <input type="text" t-att-readonly="not account_type == 'applicant_profile'" required="required"  name="contact_phone_no"  class="form-control " t-att-value="applicant_id.contact_phone"  id="job_applicant_phone_no"/>
+                            </div>
+                            <div t-attf-class="form-group col-md-6">
+                                <label class="col-form-label" for="applicant_family_name">Family Name</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                <input type="text" t-att-readonly="not account_type == 'applicant_profile'"  required="required" name="applicant_family_name"  class="form-control " t-att-value="applicant_id.family_name" id="job_applicant_family_name" />
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                               <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="contact_notice_period">Notice Period</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <select name="contact_notice_period" id="job_applicant_notice_period" t-attf-class="form-control" t-att-disabled="'True' if not account_type == 'applicant_profile' else none">
+                                        <option value="up to 1 month" t-att-selected="applicant_id and applicant_id.notice_period == 'up to 1 month'">Up To 1 Months</option>
+                                        <option value="up to 2 month" t-att-selected="applicant_id and applicant_id.notice_period == 'up to 2 month'">Up To 2 Months</option>
+                                        <option value="more than 2 month" t-att-selected="applicant_id and applicant_id.notice_period == 'more than 2 month'">More Than 2 Months</option>
+                                    </select>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_date_of_birth">Date Of Birth</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="Date"  required="required" name="applicant_date_of_birth"  class="form-control " t-att-readonly="not account_type == 'applicant_profile'" t-att-value="applicant_id.date_of_birth"  id="job_applicant__date_of_birth"/>
+                                </div>
+
+                            </div>
+
+                          <div class="row">
+                                  <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_passport_expiry_date">Passport Expiry Date</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="Date" t-att-readonly="not account_type == 'applicant_profile'" required="required"  name="applicant_passport_expiry_date"  class="form-control " t-att-value="applicant_id.passport_expiry_date" id="job_applicant__passport_expiry_date"/>
+                                </div>
+
+                                 <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_passport_no">Passport No</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" t-att-readonly="not account_type == 'applicant_profile'" required="required" name="applicant_passport_no" class="form-control "  t-att-value="applicant_id.passport_no" id="job_applicant__passport_no"/>
+                                </div>
+
+                            </div>
+                          <div class="row">
+                                  <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_passport_issuance">Passport Issuance Place</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" t-att-readonly="not account_type == 'applicant_profile'" required="required"  name="applicant_passport_issuance" class="form-control "  t-att-value="applicant_id.passport_issuance_place" id="job_applicant__passport_issuance_place"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_passport_issuance_date">Passport Issuance Date</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="Date" t-att-readonly="not account_type == 'applicant_profile'" required="required"  name="applicant_passport_issuance_date"  class="form-control "  t-att-value="applicant_id.passport_issuance_date" id="job_applicant__passport_issuance_date"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="contact_marital_status">Marital Status</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <t t-set="marital_status" t-value="request.env['marital.status'].sudo().search([])"/>
+                                    <select name="contact_marital_status" id="job_applicant_marital_status" t-attf-class="form-control" t-att-disabled="'True' if not account_type == 'applicant_profile' else none">
+                                        <option value=""/>
+                                        <t t-foreach="marital_status" t-as="marital">
+                                            <option t-att-value="marital.id" t-att-selected="applicant_id.marital_status.id == marital.id">
+                                                <t t-esc="marital.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                               <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="contact_skills">Skills</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <textarea name="contact_skills" t-att-readonly="not account_type == 'applicant_profile'" required="required"  class="form-control "  id="job_applicant_skills"><t t-esc="applicant_id.skills"/></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="contact_address_qatar">Address in Qatar</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" t-att-readonly="not account_type == 'applicant_profile'" required="required"  name="contact_address_qatar" class="form-control "  t-att-value="applicant_id.qtr_address" id="job_applicant_address_qatar"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="contact_cv_summary">Cv Summary</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <textarea name="contact_cv_summary" t-att-readonly="not account_type == 'applicant_profile'"  required="required"  class="form-control"  id="job_applicant_cv_summary"><t t-esc="applicant_id.resume"/></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                               <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_resident_in_qatar">Resident In Qatar</label><span class="col-form-label"  style="color:red;">*</span>
+                                     <select name="applicant_resident_in_qatar" id="job_applicant_resident_in_qatar" t-attf-class="form-control" t-att-disabled="'True' if not account_type == 'applicant_profile' else none">
+                                        <option value="yes" t-att-selected="applicant_id and applicant_id.resident_in_qatar == 'yes'">Yes</option>
+                                        <option value="no" t-att-selected="applicant_id and applicant_id.resident_in_qatar == 'no'">No</option>
+                                    </select>
+                                </div>
+                               <div t-attf-class="form-group col-md-6 applicant_qid_number_div">
+                                    <label class="col-form-label" for="contact_qid">Qid</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="text" t-att-readonly="not account_type == 'applicant_profile'"  required="required" name="contact_qid"  class="form-control "  t-att-value="applicant_id.qid" id="job_applicant_qid"/>
+                                </div>
+
+                            </div>
+                          <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_qid_expiry_date">Qid Expiry Date</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="Date" t-att-readonly="not account_type == 'applicant_profile'" required="required"  name="applicant_qid_expiry_date" class="form-control "  t-att-value="applicant_id.qid_expiry_date" id="job_applicant_qid_expiry_date"/>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div t-attf-class="form-group col-md-3 job_history_div_border_class">
+                                <span class="applicant_educational_info"><button type="button" class="col-form-label btn" for="applicant_educational_info">Educational Information</button></span>
+                            </div>
+                            <div class="col-md-3 job_history_div_border_class">
+                                <span class="applicant_job_history"><button type="button" class="col-form-label btn" for="applicant_job_history">Job History</button></span>
+                            </div>
+                            <div class="educational_info_table_div col-md-12">
+                                <t t-call="ebs_qsheild_mod.portal_education_info_line_table"/>
+                            </div>
+                             <div class="job_history_table_div col-md-12">
+                                <t t-call="ebs_qsheild_mod.job_history_info_line_table"/>
+                            </div>
+                        </div>
+                        <div class="modal" tabindex="-1" role="dialog" id="select_eudcation_info_modal">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add Education Info</h5>
+                                    </div>
+                                    <input type="hidden" name="education_info_id" id="eduaction_info_new_record_id"
+                                           t-att-value="applicant_id.id"/>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div t-attf-class="form-group col-xl-6">
+                                                <label class="col-form-label" for="degree">Degree</label>
+                                                <input type="text" name="degree" class="form-control"
+                                                       id="education_degree_new_rec_amount"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="subject">Subject</label>
+                                                <input type="text" name="subject" class="form-control"
+                                                       id="education_subject_new_rec_amount"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="year_from">Year From</label>
+                                                <input type="text" name="year_from" class="form-control"
+                                                       id="education_year_from_new_rec_amount"/>
+                                            </div>
+
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="year_to">Year To</label>
+                                                <input type="text" name="year_to" class="form-control"
+                                                       id="education_year_to_new_rec_amount"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="major">Major</label>
+                                                <input type="text" name="major" class="form-control"
+                                                       id="education_major_new_rec"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="country_id">Country</label>
+                                                <select name="country_id" id="education_country_id"
+                                                        t-attf-class="form-control">
+                                                    <t t-set="country_ids"
+                                                       t-value="request.env['res.country'].sudo().search([])"/>
+                                                    <option value=""/>
+                                                    <t t-foreach="country_ids" t-as="country">
+                                                        <option t-att-value="country.id">
+                                                            <t t-esc="country.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mb32"
+                                                id="expens_new_rec_line_close"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary float-right mb32"
+                                                name="save&amp;close" t-att-data-id="applicant_id.id"
+                                                value="save&amp;close" id="create_new_rec_line_education_info">Save&amp;Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" tabindex="-1" role="dialog" id="select_job_history_modal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add Job History Info</h5>
+                                    </div>
+                                    <input type="hidden" name="job_history_id" id="job_history_new_record_id" t-att-value="applicant_id.id"/>
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            <div t-attf-class="form-group col-xl-6">
+                                                <label class="col-form-label" for="position">Position</label>
+                                                <input type="text" name="position"  class="form-control" id="job_history_position_new_rec"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="company_name">Company Name</label>
+                                                <input type="text" name="company_name"  class="form-control" id="job_company_name_new_rec"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="subject">End Date</label>
+                                                <input type="date" name="end_date" class="form-control" id="job_end_date_new_rec"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="starting_date">Starting Date</label>
+                                                <input type="date" name="starting_date"  class="form-control" id="job_starting_date_new_rec"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="description">Description</label>
+                                                <input type="text" name="description"  class="form-control" id="job_description_new_rec"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="country_id">Country</label>
+                                                <select name="country_id" id="job_history_country_id" t-attf-class="form-control" >
+                                                    <t t-set="country_ids" t-value="request.env['res.country'].sudo().search([])"/>
+                                                    <option value=""/>
+                                                    <t t-foreach="country_ids" t-as="country">
+                                                        <option t-att-value="country.id">
+                                                            <t t-esc="country.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="country_id">Current Position(Yes/No)</label>
+                                                <select name="current_position" id="job_current_position" t-attf-class="form-control" >
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mb32" id="expens_new_rec_line_close"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary float-right mb32" name="save&amp;close"
+                                               t-att-data-id="applicant_id.id" value="save&amp;close" id="create_new_rec_line_job_history">Save&amp;Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="row col-md-12 mb-3 education_line_button" t-if="account_type == 'applicant_profile'">
+                                <a data-toggle="modal" href="#select_eudcation_info_modal" class="btn btn-primary">Add Education Info</a>
+                            </div>
+                            <div class="row col-md-12 mb-3 job_line_button" t-if="account_type == 'applicant_profile'">
+                                <a data-toggle="modal" href="#select_job_history_modal" class="btn btn-primary">Add Job History Info</a>
+                            </div>
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_cover_letter">Cover Letter</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <t t-if="applicant_id">
+                                        <span><a t-attf-href="/web/content/#{applicant_id.cover_letter.id}?download=true"><div class="fa fa-download"></div></a></span>
+                                    </t>
+                                    <t t-else="">
+                                        <input type="file"
+                                               id="job_applicant_cover_letter" name="applicant_cover_letter"
+                                               accept="image/*,application/pdf,video/*" required="required"/>
+
+
+                                    </t>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_cv_attachment">Cv Attachement</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <t t-if="applicant_id">
+                                            <span><a t-attf-href="/web/content/#{applicant_id.cv_attachment.id}?download=true"><div class="fa fa-download"></div></a></span>
+
+
+                                    </t>
+                                    <t t-else="">
+                                            <input type="file"
+                                               id="job_applicant_cv_attachment" name="applicant_cv_attachment"
+                                               accept="image/*,application/pdf,video/*" required="required"/>
+                                    </t>
+
+                                </div>
+                                <div t-attf-class="form-group col-md-6" t-if="account_type == 'applicant_profile'">
+                                    <button type='submit' class="btn btn-primary save_applicant_data">SAVE</button>
+                                </div>
+                                 <div t-attf-class="form-group col-md-6" t-if="account_type == 'job_Seekers'">
+                                    <button type='button' t-att-data-id="applicant_id.id" class="btn btn-primary seekers_save_job_data">Save Job Seekers</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                 </form>
+            </t>
+        </template>
+
+    <template id="portal_education_info_line_table" name="Applicant Education Info">
+          <style>
+              .col-form-label{
+                float:left;
+              }
+              .form-control{
+                direction:ltr;
+              }
+          </style>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Degree</th>
+                    <th scope="col">Year To</th>
+                    <th scope="col">Year From</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Major</th>
+                    <th scope="col">Country</th>
+                    <th scope="col"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr t-foreach="applicant_id.education_info" t-as="education_info">
+                <td><t t-esc="education_info.degree"/></td>
+                <td><t t-esc="education_info.year_to"/></td>
+                <td><t t-esc="education_info.year_from"/></td>
+                <td><t t-esc="education_info.subject"/></td>
+                <td><t t-esc="education_info.major"/></td>
+                <td><t t-esc="education_info.country_id.name"/></td>
+                <td>
+                    <div>
+                        <button type="button" t-if="account_type == 'applicant_profile'" data-toggle="modal"  class="btn btn-primary mb12 ml10 education_info_edit_class" t-att-data-target="'#edit_education_info_line'+str(education_info.id)">edit</button>
+                        <div role="dialog" t-att-id="'edit_education_info_line'+str(education_info.id)" class="modal" style="z-index:9999999999;" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Education Info</h5>
+                                </div>
+                                <input type="hidden" name="education_info_id" id="edit_eduaction_info_new_record_id"
+                                       t-att-value="education_info.id"/>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="year_from">Year From</label>
+                                            <input type="text" name="year_from" class="form-control"
+                                                   t-att-value="education_info.year_from" id="edit_education_year_from_new_rec"/>
+                                        </div>
+                                        <div t-attf-class="form-group col-xl-6">
+                                            <label class="col-form-label" for="degree">Degree</label>
+                                            <input type="text" name="degree" class="form-control"
+                                                   t-att-value="education_info.degree" id="edit_education_degree_new_rec"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="year_to">Year To</label>
+                                            <input type="text" name="year_to" class="form-control"
+                                                  t-att-value="education_info.year_to" id="edit_education_year_to_new_rec"/>
+                                        </div>
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="subject">Subject</label>
+                                            <input type="text" name="subject" class="form-control"
+                                                t-att-value="education_info.subject"   id="edit_education_subject_new_rec"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="major">Major</label>
+                                            <input type="text" name="major" class="form-control"
+                                                  t-att-value="education_info.major" id="edit_education_major_new_rec"/>
+                                        </div>
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="country_id">Country</label>
+                                            <select name="country_id" id="edit_education_country_id"
+                                                    t-attf-class="form-control">
+                                                <t t-set="country_ids"
+                                                   t-value="request.env['res.country'].sudo().search([])"/>
+                                                <option value=""/>
+                                                <t t-foreach="country_ids" t-as="country">
+                                                    <option t-att-value="country.id" t-att-selected="country.id == education_info.country_id.id">
+                                                        <t t-esc="country.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary mb32"
+                                            id="edit_education_new_rec_line_close"
+                                            data-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary float-right mb32"
+                                            name="save&amp;close" t-att-data-id="education_info.id"
+                                            value="save&amp;close" id="edit_create_new_rec_line_education_info">Save&amp;Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </td>
+                <td>
+                    <button type="button" t-if="account_type == 'applicant_profile'" class="btn btn-primary mb12 ml10 education_info_remove_class" t-att-data-id="education_info.id">x</button>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="portal_company_point_of_contact_line_table" name="point of contact">
+              <style>
+                  .col-form-label{
+                    float:left;
+                  }
+              </style>
+
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Job Position</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr t-foreach="job_company_id.point_of_contact" t-as="contact">
+                <td><t t-esc="contact.name"/></td>
+                <td><t t-esc="contact.jb_position"/></td>
+                <td><t t-esc="contact.email"/></td>
+                <td><t t-esc="contact.phone"/></td>
+                <td>
+                    <div>
+                        <button type="button" data-toggle="modal"  class="btn btn-primary mb12 ml10 edit_point_of_contact_line" t-att-data-target="'#edit_point_of_contact_line'+str(contact.id)">edit</button>
+                        <div role="dialog" t-att-id="'edit_point_of_contact_line'+str(contact.id)" class="modal" style="z-index:9999999999;" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Point Of Contact</h5>
+                                </div>
+                                <input type="hidden" name="company_point_of_contact_id" id="company_point_of_contact_id"
+                                       t-att-value="contact.id"/>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="edit_company_job_postion">Job Postion</label>
+                                            <input type="text" name="edit_company_job_postion" class="form-control"
+                                                   t-att-value="contact.jb_position" id="edit_company_job_position_id"/>
+                                        </div>
+                                                                                <div t-attf-class="form-group col-xl-6">
+                                            <label class="col-form-label" for="degree">Name</label>
+                                            <input type="text" name="name" class="form-control"
+                                                   t-att-value="contact.name" id="edit_company_point_of_contact_name"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="edit_job_company_email">Email</label>
+                                            <input type="text" name="edit_job_company_email" class="form-control"
+                                                  t-att-value="contact.email" id="edit_job_company_email_id"/>
+                                        </div>
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="subject">Phone</label>
+                                            <input type="text" name="edit_company_phone" class="form-control"
+                                                t-att-value="contact.phone"   id="edit_company_phone_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary mb32"
+                                            id="edit_company_point_of_contact_close"
+                                            data-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary float-right mb32"
+                                            name="save&amp;close" t-att-data-id="contact.id"
+                                            value="save&amp;close" id="edit_company_point_of_contact_save">Save&amp;Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary mb12 ml10 point_of_remove_line" t-att-data-id="contact.id">x</button>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="job_history_info_line_table" name="Applicant Job History">
+                          <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                  </style>
+
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Starting Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Current Position(Yes/No)</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr t-foreach="applicant_id.job_history" t-as="job_data">
+                <td><t t-esc="job_data.position"/></td>
+                <td><t t-esc="job_data.company_name"/></td>
+
+                <td><t t-esc="job_data.start_date"/></td>
+                <td><t t-esc="job_data.end_date"/></td>
+                <td><t t-esc="job_data.description"/></td>
+                <td><t t-esc="job_data.country_id.name"/></td>
+                <td><t t-esc="job_data.current_position"/></td>
+                <td>
+                    <div>
+                        <button type="button" t-if="account_type == 'applicant_profile'" data-toggle="modal" t-att-data-target="'#edit_job_history_line'+str(job_data.id)" class="btn btn-primary mb12 ml10" id="job_history_edit_class">edit</button>
+                        <div role="dialog" t-att-id="'edit_job_history_line'+str(job_data.id)" class="modal" style="z-index:9999999999;" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Job History</h5>
+                                    </div>
+                                    <input type="hidden" name="job_history_id" id="edit_job_history_new_record_id"
+                                           t-att-value="job_data.id"/>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="job_company_name">Company Name</label>
+                                                <input type="text" name="job_company_name" class="form-control"
+                                                       t-att-value="job_data.company_name" id="edit_job_company_name_new_rec"/>
+                                            </div>
+                                                                                        <div t-attf-class="form-group col-xl-6">
+                                                <label class="col-form-label" for="job_position">Position</label>
+                                                <input type="text" name="job_position" class="form-control"
+                                                       t-att-value="job_data.position" id="edit_job_position_new_rec"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="start_date">Start Date</label>
+                                                <input type="date" name="start_date" class="form-control"
+                                                      t-att-value="job_data.start_date" id="edit_job_strt_date_to_new_rec"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="end_date">End Date</label>
+                                                <input type="date" name="end_date" class="form-control"
+                                                    t-att-value="job_data.end_date"   id="edit_job_end_date_new_rec"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="description">Description</label>
+                                                <input type="text" name="description" class="form-control"
+                                                      t-att-value="job_data.description" id="edit_job_description_new_rec"/>
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="country_id">Country</label>
+                                                <select name="country_id" id="edit_job_history_country_id"
+                                                        t-attf-class="form-control">
+                                                    <t t-set="country_ids"
+                                                       t-value="request.env['res.country'].sudo().search([])"/>
+                                                    <option value=""/>
+                                                    <t t-foreach="country_ids" t-as="country">
+                                                        <option t-att-value="country.id" t-att-selected="country.id == job_data.country_id.id">
+                                                            <t t-esc="country.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xl-6">
+                                                <label class="col-form-label" for="current_position">Current Position(yes/no)</label>
+                                                <select name="current_position" id="edit_job_history_current_position" t-attf-class="form-control">
+                                                    <option value="yes" t-att-selected="job_data and job_data.current_position == 'yes'">Yes</option>
+                                                    <option value="no" t-att-selected="job_data and job_data.current_position == 'no'">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mb32"
+                                                id="edit_job_history_rec_line_close"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary float-right mb32"
+                                                name="save&amp;close" t-att-data-id="job_data.id"
+                                                value="save&amp;close" id="edit_create_new_rec_line_job_history">Save&amp;Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <button type="button" t-if="account_type == 'applicant_profile'" class="btn btn-primary mb12 ml10 job_history_remove_line_class" t-att-data-id="job_data.id">x</button>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="job_vacancies_save_jobs_template" name="Save Jobs">
+          <t t-call="website.layout">
+            <style>
+              .col-form-label{
+                float:left;
+              }
+              .form-control{
+                direction:ltr;
+              }
+            </style>
+
+              <div class="container">
+                  <div class="row">
+                      <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                          <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                              <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                  data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                  <a href="/job/vacancies" aria-label="الرئيسية" title="الرئيسية">
+                                      <i class="fa fa-home"></i>
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item active">
+                                  <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]">Saved jobs
+                                  </a>
+                              </li>
+                          </ol>
+
+                      </nav>
+                      <table class="table table-border" style="margin-top:10px;">
+                          <thead>
+                              <th>Position Name</th>
+                              <th>Company Name</th>
+                              <th>Applicant Name</th>
+                          </thead>
+                          <tbody>
+                              <tr t-foreach="save_jobs_data" t-as="jobs">
+                                  <td><a t-att-href="'/job/position/%s' %(jobs.position.id)"><t t-esc="jobs.position.position"/></a></td>
+                                  <td><t t-esc="jobs.company_name.name"/></td>
+                                  <td><t t-esc="jobs.applicant_name.name"/></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+         </t>
+        </template>
+
+    <template id="job_company_portal_profile_template" name="Company Profile">
+        <t t-call="website.layout">
+                              <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                  </style>
+
+          <form t-attf-action="/company/profile/info/" method="post" role="form" class="o_wprofile_editor_form js_website_submit_form row" enctype="multipart/form-data">
+                <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="container">
+                  <style>
+                      .form-group{
+                        color:#000;
+                      }
+                  </style>
+                  <div class="row">
+                      <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                          <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                              <li class="breadcrumb-item">
+                                  <a href="/job/vacancies">
+                                      <i class="fa fa-home"></i>
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item">
+                                  <a data-oe-model="ir.ui.view">Company Profile
+                                  </a>
+                              </li>
+                          </ol>
+                      </nav>
+                  </div>
+                  <div class="row">
+                        <div t-attf-class="form-group col-md-6">
+                            <label class="col-form-label" for="job_company_industry">Industry</label><span class="col-form-label"  style="color:red;">*</span>
+                            <t t-set="industry_ids" t-value="request.env['vacancies.industry'].sudo().search([])"/>
+                            <select name="job_company_industry" id="job_company_industry_id" t-attf-class="form-control" t-att-disabled="'True' if job_company_id else None">
+                                <option value=""/>
+                                <t t-foreach="industry_ids" t-as="industry">
+                                    <option t-att-value="industry.id" t-att-selected="industry.id == job_company_id.industry_id.id">
+                                        <t t-esc="industry.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div t-attf-class="form-group col-md-6">
+                            <label class="col-form-label" for="company_name">Name</label><span class="col-form-label" style="color:red;">*</span>
+                            <input type="text" required="required" name="company_name" class="form-control" t-att-readonly="'readonly' if job_company_id else None" t-att-value="job_company_id.name" id="job_company_name"/>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div t-attf-class="form-group col-md-6">
+                            <label class="col-form-label" for="job_number_of_employees">Number Of Employees</label><span class="col-form-label"  style="color:red;">*</span>
+                            <select name="job_number_of_employees" id="job_number_of_employees_id" t-attf-class="form-control" t-att-disabled="'True' if job_company_id else None">
+                                <option value="1-50" t-att-selected="job_company_id.number_of_employees == '1-50'">1-50</option>
+                                <option value="50-200" t-att-selected="job_company_id.number_of_employees == '50-200'">50-200</option>
+                                <option value="200+" t-att-selected="job_company_id.number_of_employees == '200+'">200+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div t-attf-class="form-group col-md-2">
+                            <span class="company_point_of_contact"><label class="col-form-label" for="company_point_of_contact">Point Of Contact</label></span>
+                        </div>
+                        <div class="col-md-12">
+                            <t t-call="ebs_qsheild_mod.portal_company_point_of_contact_line_table"/>
+                        </div>
+                    </div>
+                    <div class="modal" tabindex="-1" role="dialog" id="select_point_of_contact_modal">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Add Point Of Contact</h5>
+                                </div>
+                                <input type="hidden" name="job_company_profile_id" id="job_company_profile_new_record_id"
+                                       t-att-value="job_company_id.id"/>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div t-attf-class="form-group col-xl-6">
+                                            <label class="col-form-label" for="new_company_name">Name</label>
+                                            <input type="text" name="new_company_name" class="form-control"
+                                                   id="company_new_name_id"/>
+                                        </div>
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="company_new_job_position">Job Position</label>
+                                            <input type="text" name="company_new_job_position" class="form-control"
+                                                   id="company_new_job_position_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="company_new_email">Email</label>
+                                            <input type="text" name="company_new_email" class="form-control"
+                                                   id="company_new_email_id"/>
+                                        </div>
+                                        <div class="form-group col-xl-6">
+                                            <label class="col-form-label" for="company_new_phone">Phone</label>
+                                            <input type="text" name="company_new_phone" class="form-control"
+                                                   id="company_new_phone_id"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary mb32"
+                                            id="company_new_modal_close"
+                                            data-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary float-right mb32"
+                                            name="save&amp;close" t-att-data-id="job_company_id.id"
+                                            value="save&amp;close" id="create_new_point_of_contact">Save&amp;Close
+                                    </button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="row col-md-12 mb-3">
+                            <a data-toggle="modal" href="#select_point_of_contact_modal" class="btn btn-primary">Add Point Of Contact</a>
+                        </div>
+                        <div t-attf-class="row form-group pull-right" t-if="not job_company_id">
+                            <button type='submit' class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+             </form>
+        </t>
+    </template>
+
+    <template id="job_vacancies_job_seekeres_template" name="Job Seekers">
+        <t t-call="website.layout">
+              <style>
+                  .col-form-label{
+                    float:left;
+                  }
+                  .form-control{
+                    direction:ltr;
+                  }
+              </style>
+
+            <div class="container">
+              <div class="row">
+                  <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                      <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                          <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                              data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                              <a href="/job/vacancies" aria-label="الرئيسية" title="الرئيسية">
+                                  <i class="fa fa-home"></i>
+                              </a>
+                             </li>
+                              <li class="breadcrumb-item active">
+                                  <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]">Job Seekers
+                                  </a>
+                              </li>
+                      </ol>
+
+                        <div>
+                            <input type="text" id="filter_jobseekers_record" t-att-value="search_product and search_product" placeholder="Search"></input>
+                        </div>
+                        <div style="margin:10px;">
+                            <select name="filter_resident_in_qatar_record_name" id="filter_resident_in_qatar_record" t-attf-class="form-control">
+                                <option value="" t-att-selected="not resident_in_qatar or False">Resident In Qatar</option>
+                                <option value="yes" t-att-selected="resident_in_qatar and resident_in_qatar == 'yes' or False">Yes</option>
+                                <option value="no" t-att-selected="resident_in_qatar and resident_in_qatar == 'no' or False">No</option>
+                            </select>
+                        </div>
+                  </nav>
+
+                    <t t-if="search_product">
+                      <div class="mt-3" style="border:1px solid black;">
+                          <div class="" style="padding:10px;">
+                              Search=<span><t t-esc="search_product"/></span>
+                              <t t-if="resident_in_qatar">
+                                  <a type="button" class="btn btn-primary" t-att-href="'/company/job/seekers/?resident_in_qatar=%s' % (resident_in_qatar)">x
+                                  </a>
+                              </t>
+                               <t t-else="">
+                                  <a type="button" class="btn btn-primary" href="/company/job/seekers/">x
+                                  </a>
+                              </t>
+                        </div>
+                      </div>
+                    </t>
+
+                    <t t-if="resident_in_qatar">
+                      <div class="mt-3" style="border:1px solid black;">
+                          <div class="" style="padding:10px;">
+                              Resident In Qatar =<span><t t-esc="resident_in_qatar"/></span>
+                              <t t-if="search_product">
+                                <a type="button" class="btn btn-primary" t-att-href="'/company/job/seekers/?search=%s' % (search_product)">x
+                                </a>
+                              </t>
+                              <t t-else="">
+                                  <a type="button" class="btn btn-primary" href="/company/job/seekers/">x</a>
+                              </t>
+                          </div>
+                      </div>
+
+                      </t>
+
+
+                  <table class="table table-border" style="margin-top:10px;">
+                      <thead>
+                            <th>Date Of Birth</th>
+                            <th>Resident In Qatar</th>
+                          <th>Position</th>
+                          <th>Degree</th>
+                          <th>Name</th>
+                      </thead>
+                      <tbody>
+                          <tr t-foreach="applicant_ids" t-as="seekers">
+                              <td><t t-esc="seekers.date_of_birth"/></td>
+                              <td><t t-esc="seekers.resident_in_qatar"/></td>
+                              <td><t t-esc="seekers.job_position_applicant"/></td>
+                              <td><t t-esc="seekers.degree_applicant"/></td>
+                              <td><a t-att-href="'/job/seekers/%s' %(seekers.id)" target="_blank"><t t-esc="seekers.name"/></a></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              </div>
+
+        </t>
+    </template>
+
+    <template id="save_sortlisted_applicant_tmp" name="Save Applicant">
+          <t t-call="website.layout">
+                                <style>
+                    .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                  </style>
+
+              <div class="container">
+                  <div class="row">
+                      <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                          <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                              <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                  data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                  <a href="/job/vacancies" aria-label="الرئيسية" title="الرئيسية">
+                                      <i class="fa fa-home"></i>
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item active">
+                                  <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]">Saved Applicant
+                                  </a>
+                              </li>
+                          </ol>
+
+                      </nav>
+                      <table class="table table-border" style="margin-top:10px;">
+                          <thead>
+                              <th>Position Name</th>
+                              <th>Company Name</th>
+                              <th>Applicant Name</th>
+                          </thead>
+
+                          <tbody>
+                              <tr t-foreach="saved_sortlisted_seekers" t-as="jobs">
+                                  <td><a t-att-href="'/job/applicant/%s' %(jobs.applicant_name.id)"><t t-esc="jobs.company_position"/></a></td>
+                                  <td><a t-att-href="'/job/applicant/%s' %(jobs.applicant_name.id)"><t t-esc="jobs.company_name.name"/></a></td>
+                                  <td><a t-att-href="'/job/applicant/%s' %(jobs.applicant_name.id)"><t t-esc="jobs.applicant_name.name"/></a></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+         </t>
+        </template>
+
+    <template id="job_position_form_template" name="Job Vacancies Form">
+          <t t-call="website.layout">
+                    <style>
+                      .col-form-label{
+                        float:left;
+                      }
+                      .form-control{
+                        direction:ltr;
+                      }
+                  </style>
+
+              <div class="container">
+                  <div class="">
+                    <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                          <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                              <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                  data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                  <a href="/job/vacancies" aria-label="الرئيسية" title="الرئيسية">
+                                      <i class="fa fa-home"></i>
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item">
+                                  <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]" href="/save/jobs/record">Saved Jobs
+                                  </a>
+                              </li>
+                              <li class="breadcrumb-item active">
+                                  <span data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                     data-oe-xpath="/data/xpath/li[1]/a[1]"><t t-esc="job_vacancies_id.position if job_vacancies_id else ''"/>
+                                  </span>
+                              </li>
+                          </ol>
+                      </nav>
+                    <form t-attf-action="/vacancies/form/record/" method="post" role="form" class="o_wprofile_editor_form js_website_submit_form row" enctype="multipart/form-data">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" id="job_vacancies_rec_id" name="job_vacancies_rec_id" t-att-value="job_vacancies_id.id"/>
+                    <t t-set="applicant_id" t-value="request.env['job.vacancies.applicant'].sudo().search([('user_id', '=', request.env.user.id)])"/>
+                    <input type="hidden" id="job_vacancies_hidden_applicant_id" name="job_vacancies_hidden_applicant_id" t-att-value="applicant_id.id"/>
+
+                    <t t-set="job_vac_sort_list_rec_id" t-value="request.env['application.company.sortlisting'].search([('position','=',job_vacancies_id.id),('applicant_name','=',applicant_id.id)])"/>
+
+                    <div class="container">
+                      <style>
+                          .form-group{
+                            color:#000;
+                          }
+                      </style>
+                          <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="publishing_date">Publishing Date</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" required="required" name="publishing_date"  class="form-control"  t-att-value="job_vacancies_id.publishing_date" id="vacancies_publishing_date" readonly="readonly"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="position_name">Position</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" required="required" name="position_name" class="form-control"  t-att-value="job_vacancies_id.position" id="vacancies_position_name" readonly="readonly"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_eductional_requirement">Eductional Requirement</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="text" required="required"  name="vacancies_eductional_requirement"  class="form-control " t-att-value="job_vacancies_id.eductional_requirement"  id="job_vacancies_eductional_requirement" readonly="readonly"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_description">Description</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <textarea required="required" name="vacancies_description"  class="form-control " id="job_vacancies_description" readonly="readonly"><t t-esc="job_vacancies_id.description"/></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_benefits">Benefits</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input readonly="readonly" type="text" required="required" name="vacancies_benefits"  class="form-control " t-att-value="job_vacancies_id.benefits"  id="job_vacancies_benefits"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_skills_requirement">Skills Requirement</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input readonly="readonly" type="type"  required="required" name="vacancies_skills_requirement"  class="form-control " t-att-value="job_vacancies_id.skills_requirement"  id="job_vacancies_skills_requirement"/>
+                                </div>
+
+
+                            </div>
+
+                          <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_vacancy_expire_date">Vacancy Expire Date</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="date"  readonly="readonly" required="required" name="vacancies_vacancy_expire_date" class="form-control "  t-att-value="job_vacancies_id.vacancy_expire_date" id="job_vacancy_expire_date"/>
+
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="applicant_passport_no">Joining Limit</label><span class="col-form-label"  style="color:red;">*</span>
+
+                                    <input type="date"  readonly="readonly" required="required" name="vacancies_joining_limit" class="form-control "  t-att-value="job_vacancies_id.joining_limit" id="job_joining_limit"/>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_application_email">Application Email</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" readonly="readonly" required="required"  name="vacancies_application_email" class="form-control "  t-att-value="job_vacancies_id.application_email" id="job_vacancies_application_email"/>
+                                </div>
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_application_link">Application Link</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" readonly="readonly" required="required"  name="vacancies_application_link" class="form-control "  t-att-value="job_vacancies_id.application_link" id="job_vacancies_application_link"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-md-6">
+                                    <label class="col-form-label" for="vacancies_work_location">Work Location</label><span class="col-form-label"  style="color:red;">*</span>
+                                    <input type="text" readonly="readonly" required="required"  name="vacancies_work_location"  class="form-control "  t-att-value="job_vacancies_id.work_location" id="job_vacancies_work_location"/>
+                                </div>
+                            </div>
+                        </div>
+
+                 </form>
+
+
+                  </div>
+              </div>
+         </t>
+        </template>
+
+
+
+    </data>
+</odoo>

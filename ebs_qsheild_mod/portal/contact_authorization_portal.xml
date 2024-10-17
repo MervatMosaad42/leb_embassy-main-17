@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="portal_my_home_menu_contact_authorization"
+                  name="Portal layout : ContactAuthorization menu entries"
+                  inherit_id="portal.portal_breadcrumbs" priority="50">
+
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ('authorization_insert', 'authorization' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/authorization">Authorization</a>
+                </li>
+
+                <li t-if="page_name == 'authorization_insert'" class="breadcrumb-item active">
+
+                </li>
+            </xpath>
+        </template>
+
+        <template id="portal_authorization_request" name="contact Leb passport request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Authorization Request</t>
+                </t>
+                <tr>
+                    <th class="text-right">Authorization Services</th>
+                </tr>
+
+                <br/>
+            </t>
+        </template>
+
+
+        <template id="portal_contact_authorization" name="contact authorization">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Authorization</t>
+                </t>
+                <t t-if="partner.status != 'confirm'">
+                    <div class="alert alert-warning" role="alert">
+                        Please complete your application from My Profile page to access this.
+                    </div>
+                </t>
+                <t t-if="partner.status == 'confirm'">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div t-if="authorization" t-call="portal.portal_table">
+                        <br/>
+                        <div class="row grid_service_types">
+                            <t t-foreach="authorization_services" t-as="auth_service">
+                                <div class="col-md-2 subimage_section_class">
+                                    <div class="subimage_display_class">
+                                        <a class="image_click" href="#">
+                                            <img t-if="auth_service.service_image"
+                                                 t-attf-src="data:image/png;base64,{{auth_service.service_image}}"></img>
+                                            <img t-if="not auth_service.service_image"
+                                                 src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                            <div class="image-type">
+                                                <t t-esc="auth_service._get_name()"></t>
+                                            </div>
+                                        </a>
+                                        <input type="hidden" name="type_id" class="type_id"
+                                               t-att-value="auth_service.name"/>
+                                        <input type="hidden" name="service_name" class="service_name"
+                                               value="authorization"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <br/>
+                        <br/>
+                        <form class="form-horizontal" method="post" id="service_form">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <h4>Service Requests</h4>
+                            <thead style="display:block;">
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Service Description</th>
+                                    <th>Service Date</th>
+                                    <th>Service Status</th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll; height:300px; display:block;">
+                                <tr class="table-row" t-foreach="service_request or []" t-as="service">
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-esc="service.service_type_id._get_name()"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.desc"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.date"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.status"/>
+                                    </td>
+                                    <td width="10px" t-if="service.status in ('draft')">
+                                        <i class="fa fa-lg fa-trash" id="btn_delete_record"
+                                           t-attf-onclick="serviceDelete('#{service.id}');"></i>
+                                    </td>
+                                    <td width="10px" t-if="service.status not in ('draft')"
+                                        t-attf-onclick="viewService('#{service.id}');">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </form>
+                        <br/>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+            <xpath expr="." position="inside">
+                <style>
+                    .table-row:hover{
+                    cursor:pointer;
+                    }
+                    thead th, tbody td {
+                    width:1110px;
+                    }
+                </style>
+                <script>
+
+                    function viewService(e)
+                    {
+                    $(location).attr('href','/my/authorization/insert_doc_form/'+e);
+                    }
+
+                    function serviceDelete(e)
+                    {
+                    var url='/my/services/delete/'+e;
+                    var formValues= $('#service_form').serialize();
+
+                    $.post(url, formValues, function(data)
+                    {
+                    location.reload();
+                    });
+                    }
+                </script>
+            </xpath>
+        </template>
+
+        <template id="create_service_request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Create new service order</t>
+                </t>
+                <div class="bg-white" style="padding:20px;">
+                    <script>
+
+                        function viewService(e)
+                        {
+                        $(location).attr('href','/my/authorization/insert_doc_form/'+e);
+                        }
+
+
+                    </script>
+                    <form id="auth_form" action="/my/authorization" method="post">
+                        <h4>New Request</h4>
+
+                        <div class="row">
+
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <select name="service" required="required" data-live-search="true"
+                                        t-attf-class="form-control selectpicker" id="service">
+                                    <t t-foreach="authorization_services" t-as="authorization">
+                                        <option t-value="authorization.id">
+                                            <t t-esc="authorization._get_name()"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-6'>
+
+                            </div>
+
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class='row'>
+                            <br/>
+                            <div class="col-lg-4">
+                                <input type="button" id="submit-info-btn" class="btn btn-primary float-right mb32"
+                                       width="100%" value="Next"
+                                       onclick="submit_info()"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+
+        </template>
+
+        <template id="portal_contact_authorization_form" name="contact authorization form">
+            <t t-call="portal.portal_layout">
+                <br/>
+                <div class="success_alert alert alert-success" role="alert">
+                    Your application has been submitted successfully. We will review it and get back to you shortly.
+                </div>
+                <div class="card col-lg-12 mt16">
+                    <div id="introduction"
+                         t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+                        <div class="row no-gutters">
+                            <div class="col-md">
+                                <h5 class="mb-1 mb-md-0">
+                                    <em t-esc="service_request.service_type_id._get_name()"/>
+                                </h5>
+                            </div>
+                            <div class="col-md" hidden="1">
+                                <h5 class="mb-1 mb-md-0">
+                                    Diplomatic Pouch
+                                    <em t-esc="service_request.bag_no"/>
+                                </h5>
+                            </div>
+                            <div class="col-md text-md-right">
+                                <small class="text-right">Status:</small>
+                                <span t-field="service_request.status" class=" badge badge-pill badge-info"
+                                      title="Current status of this service request"/>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="/my/authorization/submit_authorization" method="post"
+                          id="authorization_form">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" id="service_id" name="service_id" t-att-value="service_request.id"/>
+                        <input type="hidden" id="service_code" name="service_code"
+                               t-att-value="service_request.service_type_id.code"/>
+                        <input type="hidden" name="status" id="status" t-att-value="service_request.status"/>
+
+                        <div class="row">
+                            <div class="col-lg-12" id="success_message_div">
+                                <div t-if="len(service_request.service_type_id.terms_conditions)>11"
+                                     class="alert alert-success" role="status">
+                                    <div t-field="service_request.service_type_id.terms_conditions"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <input type="text" name="service" t-attf-class="form-control "
+                                       t-att-value="service_request.service_type_id._get_name()" disabled="disabled"/>
+                            </div>
+
+                            <div class='col-md-6'>
+                                <label class="col-form-label" for="description">Remarks</label>
+                                <input type="text" name="description" id="description" t-attf-class="form-control "
+                                       t-att-value="service_request.desc" onBlur="auto_save()"/>
+                            </div>
+
+                        </div>
+
+                        <br></br>
+                        <h4>Beneficiary</h4>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label" for="beneficiary">Service Beneficiary</label>
+                                <select name="beneficiary" id="beneficiary" t-attf-class="form-control  " data-init="1"
+                                        onchange="getDocuments();" onBlur="auto_save()">
+                                    <option t-att-value="service_request.partner_id.id"
+                                            t-att-selected="service_request.partner_id.id == service_request.service_beneficiary.id">
+                                        <t t-esc="service_request.partner_id.name"/>
+                                    </option>
+                                    <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="d">
+                                        <option t-att-value="d.id"
+                                                t-att-selected="d.id == service_request.service_beneficiary.id">
+                                            <t t-esc="d.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-4'></div>
+                            <div class='col-md-4'></div>
+                        </div>
+
+                        <div class="row" id="agent_address_info">
+                            <div class='col-md-9'>
+                                <label class="col-form-label" for="account_number">The full address of the agent in
+                                    Lebanon
+                                </label>
+                                <input type="text" name="agent_address" id="agent_address" t-attf-class="form-control "
+                                       t-att-value="service_request.agent_address" onBlur="auto_save()"
+                                       placeholder="ex, City, Region,Building Number,Street Name,Neighborhood, tel ..."/>
+                            </div>
+
+                            <div class='col-md-3'>
+
+                            </div>
+
+                        </div>
+                        <div class="row" id="bank_info">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="account_number">Bank Account Number</label>
+                                <input type="text" name="account_number" id="account_number"
+                                       t-attf-class="form-control "
+                                       t-att-value="service_request.account_number" onBlur="auto_save()"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="bank_name">Bank Name</label>
+                                <input type="text" name="bank_name" id="bank_name" t-attf-class="form-control "
+                                       t-att-value="service_request.bank_name" onBlur="auto_save()"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="branch">Branch</label>
+                                <input type="text" name="branch" id="branch" t-attf-class="form-control "
+                                       t-att-value="service_request.branch" onBlur="auto_save()"/>
+                            </div>
+
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <div class="container">
+                                <button type="button" class="btn btn-primary float-left mb32 " id="docBtn">Add
+                                    Document
+                                </button>
+                                <table class="table table-responsive table-hover" id="docTab">
+                                    <thead>
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>Document Owner</th>
+                                            <th>Document Owner Name</th>
+                                            <th>Document Owner Description</th>
+                                            <th>رقم المستند</th>
+                                            <th>Document Name</th>
+                                            <th>Issue Date</th>
+                                            <th>Expiry Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="service_request.status == 'draft'">
+                                            <tr t-foreach="documents or []" t-as="doc"
+                                                t-attf-onclick="openModal('#{doc.id}');">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner_name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner_description"/>
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-lg fa-pencil" id="btn_new_record"
+                                                       t-attf-onclick="openModal('#{doc.id}');"></i>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr t-foreach="documents or []" t-as="doc">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner_name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner_description"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <t t-if="service_request.status == 'draft'">
+                                        <button type="button" id="submit_btn" onclick="submitauth();"
+                                                class="btn btn-info">Submit
+                                        </button>
+                                    </t>
+                                </div>
+                                <div class='col-md-4' t-if="service_request.status == 'draft'">
+                                    <button type="button" id="delete_btn" onclick="deleteAuth();" class="btn btn-info">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!--            Document Modal-->
+                    <xpath expr="//form" position='after'>
+                        <!-- Modal -->
+                        <div class="modal fade" id="docModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding:25px 60px;">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Documents
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="doc_form" role="form" action="/my/authorization/insert_documents"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id" value=""/>
+                                            <input type="hidden" name="is_required_issue_date"
+                                                   id="is_required_issue_date"/>
+                                            <input type="hidden" name="is_required_expiry_date"
+                                                   id="is_required_expiry_date"/>
+                                            <input type="hidden" name="is_required_doc_no" id="is_required_doc_no"/>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" required="required"
+                                                           for="document_type">Document Type
+                                                    </label>
+                                                    <select name="document_type" id="document_type"
+                                                            t-attf-class="form-control">
+                                                        <t t-foreach="documentTypes or []" t-as="types">
+                                                            <option t-att-value="types.id">
+                                                                <t t-esc="types._get_name()"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner">Document Owner
+                                                    </label>
+                                                    <select name="document_owner" required="required"
+                                                            t-attf-class="form-control" id="document_owner">
+                                                        <option value="me">Applicant</option>
+                                                        <option value="family">Family Member</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner_name">Document
+                                                        Owner Name
+                                                    </label>
+                                                    <input type="text" id="document_owner_name"
+                                                           name="document_owner_name" t-attf-class="form-control "
+                                                           t-att-value="document_owner_name"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner_description">
+                                                        Document Owner Description
+                                                    </label>
+                                                    <input type="text" id="document_owner_description"
+                                                           name="document_owner_description"
+                                                           t-attf-class="form-control "
+                                                           t-att-value="document_owner_description"/>
+                                                </div>
+                                                <div class='col-md-6' id="docNodiv">
+                                                    <label class="col-form-label" for="docNo">رقم المستند</label>
+                                                    <input type="text" id="docNo" name="docNo"
+                                                           t-attf-class="form-control "
+                                                           t-att-value="docNo"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class='col-md-6' id="issueDatediv">
+                                                    <label class="col-form-label" for="issueDate">Issue Date</label>
+                                                    <input id="issueDate" onBlur="parseDMY(this);" name="issueDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="issueDate"/>
+                                                </div>
+                                                <div class='col-md-6' id="expiryDatediv">
+                                                    <label class="col-form-label" for="expiryDate">Expiry Date</label>
+                                                    <input id="expiryDate" onBlur="parseDMY(this);" name="expiryDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="expiryDate"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="file_attach">File</label>
+                                                    <input type="file" id="file_attach" name="files[]"
+                                                           class="o_sign_load btn btn-link" required="required"
+                                                           role="button"/>
+                                                </div>
+                                                <div class='col-md-6'>
+
+                                                </div>
+                                            </div>
+
+                                            <br></br>
+                                            <input type="submit" id="save-doc-btn" class="btn btn-default btn-block"
+                                                   value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ratingModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Feedback
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="feedback_form" role="form" action="/my/service/submit_feedback"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id"
+                                                   t-att-value="service_request.id"/>
+                                            <h4>
+                                                <span class="glyphicon glyphicon-lock"></span>
+                                                Feedback
+                                            </h4>
+                                            <div class="row">
+                                                <label class="col-form-label" for="rating-value">Rating
+                                                </label>
+                                            </div>
+                                            <div class="row" style="width:100%;">
+                                                <div style="width:20%;place-self: flex-end;text-align: right;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+
+                                                </div>
+                                                <div style="width:80%;padding-left: 10px;">
+                                                    <input type="radio" id="one_star" name="rating" value="1"/>
+                                                    <br/>
+                                                    <input type="radio" id="two_star" name="rating" value="2"/>
+                                                    <br/>
+                                                    <input type="radio" id="three_star" name="rating"
+                                                           value="3"/>
+                                                    <br/>
+                                                    <input type="radio" id="four_star" name="rating"
+                                                           value="4"/>
+                                                    <br/>
+                                                    <input type="radio" id="five_star" name="rating"
+                                                           value="5"/>
+                                                </div>
+                                                <input type="hidden" name="type" id="type" value="auth"/>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <label class="col-form-label" for="comments">Comments</label>
+                                                    <textarea id="comments" class="comments" name="comments"
+                                                              t-attf-class="form-control"/>
+
+                                                </div>
+
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <center>
+                                                <i class="loader_for_service_submit"/>
+                                            </center>
+                                            <input type="button" id="save-feedback-btn" class="btn btn-info"
+                                                   value="Save"/>
+
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </xpath>
+
+                    <xpath expr="." position="inside">
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                        <script>
+                            function auto_save()
+                            {
+                            var url='/my/service/service_auto_save';
+                            var formValues= $('#authorization_form').serialize();
+                            $.post(url, formValues, function(data){
+                            });
+                            }
+
+                            $("#docBtn").click(function(){
+                            $("#docModal").modal();
+                            var service_id = $('#service_id').val();
+                            $(".modal-body #service_id").val(service_id);
+                            $(".modal-body #partner_doc_Id").val('');
+                            });
+
+
+                            $(function ()
+                            {
+                            var status = $('#status').val();
+                            if(status == "progress" || status == "complete")
+                            {
+                            $('button').hide();
+                            $('input[type="submit"]').hide();
+                            $("#description").attr('disabled','disabled');
+                            $("#account_number").attr('disabled','disabled');
+                            $("#bank_name").attr('disabled','disabled');
+                            $("#branch").attr('disabled','disabled');
+                            $("#agent_address").attr('disabled','disabled');
+                            }
+
+                            var service_code = $('#service_code').val();
+                            if(service_code == "03-09")
+                            {
+                            $("#agent_address_info").show();
+                            }
+                            else
+                            {
+                            $("#agent_address_info").hide();
+                            }
+                            if(service_code == "03-01")
+                            {
+                            $("#bank_info").show();
+                            }
+                            else
+                            {
+                            $("#bank_info").hide();
+                            }
+
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+
+
+                            });
+
+                            $('#document_type').on('change',function()
+                            {
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+                            }
+
+                            });
+
+                            });
+
+                            function openModal(e)
+                            {
+                            var url='/my/authorization/document/open/'+e;
+                            formValues = $('#authorization_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #service_id").val( data.data.service_id );
+                            $(".modal-body #partner_doc_Id").val( data.data.documentId );
+                            $(".modal-body #document_type").val( data.data.doctype );
+                            $(".modal-body #document_owner").val( data.data.document_owner );
+
+
+                            $(".modal-body #document_type").prop('disabled', 'disabled');
+                            if(data.data.document_number != 'None')
+                            $(".modal-body #docNo").val( data.data.document_number );
+                            $(".modal-body #issueDate").val( data.data.issue_date );
+                            $(".modal-body #expiryDate").val( data.data.expiry_date );
+
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+                            $('#docModal').modal('toggle');
+                            });
+                            }
+
+                            $("#save-doc-btn").on("submit", function(event)
+                            {
+                            var url='/my/authorization/insert_documents';
+                            var formValues= $('#authorization_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            location.reload();
+                            });
+
+                            });
+
+                            function getDocuments()
+                            {
+                            var url='/my/service/change_doc';
+                            var formValues= $('#authorization_form').serialize();
+                            $.post(url, formValues, function(data){
+                            location.reload();
+                            });
+                            }
+
+
+                            function deleteAuth()
+                            {
+                            var url='/my/services/delete';
+                            var formValues= $('#authorization_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            $(location).attr('href','/my/authorization');
+                            });
+                            }
+
+                            function submitauth()
+                            {
+                            $('#ratingModal').modal('toggle');
+                            }
+
+                            function validate(isDate)
+                            {
+                            isValid = true;
+                            tmp = isDate.split("/");
+                            isLeap = tmp[2]%4;
+                            if (!/[1-9]{1}/.test(tmp[0]) || /[1-9]{2}/.test(tmp[0]) &amp;&amp;
+                            !/10|11|12/.test(tmp[0])){isValid = false}
+                            else if ((/4|6|9|11/.test(tmp[0])) &amp;&amp; tmp[1] > 30){isValid=false}
+                            else if ((/1|3|5|7|8|10|12/.test(tmp[0])) &amp;&amp; tmp[1] > 31){isValid=false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap == 0) &amp;&amp; tmp[1] > 29){isValid = false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap != 0) &amp;&amp; tmp[1] > 28){isValid = false}
+                            else if (tmp[2].length != 4 || (!/^19|20/.test(tmp[2]))){isValid = false}
+                            if (isNaN(Date.parse(isDate)) || !isValid){return true}
+                            else { return true }
+                            }
+
+                            function parseDMY(isDate)
+                            {
+                            tmp = isDate.value;
+                            if(tmp){
+                            tmp = tmp.split("-");
+                            refDate = tmp[1]+"/"+tmp[2]+"/"+tmp[0];
+                            if (!validate(refDate))
+                            {
+                            isDate.value = "";
+                            isDate.focus();
+                            }
+                            }
+                            }
+
+
+                        </script>
+                    </xpath>
+                </div>
+                <div class="o_portal_messages_container mt32">
+                    <h4>Message and communication history</h4>
+                    <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="service_request.access_token"/>
+                        <t t-set="object" t-value="service_request"/>
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,152 @@
+<odoo>
+
+    <record id="custom_paperformat" model="report.paperformat">
+        <field name="name">Custom</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">23</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+ </record>
+
+    <record id="paperformat_report_palestinian" model="report.paperformat">
+            <field name="name">Palestinian and Lebaneses sejel</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+        </record>
+
+    <report
+        string="Lebaneses_sejel"
+        id="custom_Lebaneses_sejel_action"
+        model="res.partner"
+        report_type="qweb-pdf"
+        paperformat="ebs_qsheild_mod.paperformat_report_palestinian"
+        name="ebs_qsheild_mod.report_leabanesejel_custom2"
+        file="ebs_qsheild_mod.report_leabanesejel_custom2"
+        menu="True"/>
+
+    <report
+            string="Palestinian_sejel"
+            id="custom_pal_sejel_action"
+            model="res.partner"
+            report_type="qweb-pdf"
+            name="ebs_qsheild_mod.report_palestiniansejel"
+            file="ebs_qsheild_mod.report_palestiniansejel"
+            menu="True"
+            paperformat="ebs_qsheild_mod.paperformat_report_palestinian"
+
+    />
+<!--      <report-->
+<!--            string="House Maid"-->
+<!--            id="custom_house_maid"-->
+<!--            model="res.partner"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="ebs_qsheild_mod.report_housemaid"-->
+<!--            file="ebs_qsheild_mod.report_housemaid"-->
+<!--            menu="True"-->
+<!--            paperformat="ebs_qsheild_mod.custom_paperformat"-->
+<!--    />-->
+<!--    <report-->
+<!--            string="tasdik_degree"-->
+<!--            id="custom_report_degree"-->
+<!--            model="res.partner"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="ebs_qsheild_mod.report_degree"-->
+<!--            file="ebs_qsheild_mod.report_degree"-->
+<!--            menu="True"-->
+<!--            paperformat="ebs_qsheild_mod.custom_paperformat"-->
+
+<!--    />-->
+
+<!--        <report-->
+<!--            string="visa_english"-->
+<!--            id="visa_template_custom"-->
+<!--            model="res.partner"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="ebs_qsheild_mod.report_visa_template"-->
+<!--            file="ebs_qsheild_mod.report_visa_template"-->
+<!--            menu="True"-->
+<!--            paperformat="ebs_qsheild_mod.custom_paperformat"-->
+
+<!--    />-->
+
+<!--         <report-->
+<!--            string="marriage_lb"-->
+<!--            id="marriageLb_template_custom"-->
+<!--            model="res.partner"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="ebs_qsheild_mod.report_marriage_leb"-->
+<!--            file="ebs_qsheild_mod.report_marriage_leb"-->
+<!--            menu="True"-->
+<!--            paperformat="ebs_qsheild_mod.custom_paperformat"-->
+
+<!--    />-->
+
+      <report
+            string="Lebanese electronic Passport page 1"
+            id="passportlb_custom"
+            model="ebs_mod.service.request"
+            report_type="qweb-pdf"
+            name="ebs_qsheild_mod.report_passport_leb"
+            file="ebs_qsheild_mod.report_passport_leb"
+            menu="True"
+            paperformat="ebs_qsheild_mod.custom_paperformat"
+
+    />
+    <report
+            string="Lebanese Biometric Passport "
+            id="passportlb2_custom"
+            model="ebs_mod.service.request"
+            report_type="qweb-pdf"
+            name="ebs_qsheild_mod.report_passport_leb2"
+            file="ebs_qsheild_mod.report_passport_leb2"
+            menu="True"
+            paperformat="ebs_qsheild_mod.custom_paperformat"
+    />
+      <report
+            string="Palestenian Biometric Passport"
+            id="passportpal_custom"
+            model="ebs_mod.service.request"
+            report_type="qweb-pdf"
+            name="ebs_qsheild_mod.report_passport_pal"
+            file="ebs_qsheild_mod.report_passport_pal"
+            menu="True"
+            paperformat="ebs_qsheild_mod.custom_paperformat"
+
+    />
+        <report
+            string="Palestenian Electronic Passport page 1"
+            id="passportpal2_custom"
+            model="ebs_mod.service.request"
+            report_type="qweb-pdf"
+            name="ebs_qsheild_mod.report_passport_pal2"
+            file="ebs_qsheild_mod.report_passport_pal2"
+            menu="True"
+            paperformat="ebs_qsheild_mod.custom_paperformat"
+    />
+
+    <report
+            string="Electronic passport page 2"
+            id="report_passport_electronic"
+            model="ebs_mod.service.request"
+            report_type="qweb-pdf"
+            name="ebs_qsheild_mod.report_passport_elec"
+            file="ebs_qsheild_mod.report_passport_elec"
+            menu="True"
+            paperformat="ebs_qsheild_mod.custom_paperformat"
+    />
+</odoo>

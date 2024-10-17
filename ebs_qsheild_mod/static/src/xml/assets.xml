@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="assets_frontend_inherit_kentuna" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <link href="/ebs_qsheild_mod/static/src/css/homepage.css" rel="stylesheet" type="text/css"/>
+            <link href="/ebs_qsheild_mod/static/src/css/owl.carousel.css" rel="stylesheet" type="text/css"/>
+            <link href="/ebs_qsheild_mod/static/src/css/Font_face/font_face.css" rel="stylesheet" type="text/css"/>
+            <link href="/ebs_qsheild_mod/static/src/css/lightbox.css" rel="stylesheet" type="text/css"/>
+            <link href="/ebs_qsheild_mod/static/src/css/marquee.scss" rel="stylesheet" type="text/css"/>
+            <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/homepage.js"></script>
+            <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/portal.js"></script>
+            <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/owl.carousel.js"></script>
+            <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/lightbox.js"></script>
+            <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/feedback_form.js"></script>
+        </xpath>
+    </template>
+
+    <template id="ebs_lebembassy_service_report" name="service report" inherit_id="web.report_assets_pdf">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/ebs_qsheild_mod/static/src/css/Font_face/report_font.css" type="text/css"/>
+        </xpath>
+    </template>
+
+</odoo>

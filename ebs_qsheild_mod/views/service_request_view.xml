@@ -1,0 +1,588 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="service_request_tree" model="ir.ui.view">
+            <field name="name">Service Request Tree</field>
+            <field name="model">ebs_mod.service.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="service_number" />
+                    <field name="name" invisible="1"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="service_beneficiary"/>
+                    <field name="bag_no"/>
+                    <field name="assigned_user_id"/>
+                    <field name="message"/>
+                    <field name="service_type_id"/>
+                    <field name="end_date"/>
+                    <field name="flow_type" invisible="True"/>
+                    <field name="status"/>
+                    <field name="is_mail_sent"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="service_request_form" model="ir.ui.view">
+            <field name="name">Service Request Form</field>
+            <field name="model">ebs_mod.service.request</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <header>
+
+
+                        <button name="%(create_contact_document_view_action)d"
+                                string="Upload Document to Contact"
+                                type="action" class="oe_highlight"
+                                context="{
+                                'default_contact_id':partner_id,
+                                'upload_service_contact':True,
+                                'upload_contact':True,
+                                'default_service_request_id':id,
+                                'default_issue_date':end_date
+                                }"
+                        />
+
+                        <button name="request_submit" string="submit" type="object"
+                                invisible="status != 'draft'"/>
+
+                        <button name="request_hold" string="On Hold" type="object"
+                                invisible="status != 'progress'"/>
+
+                        <button name="request_progress" string="In Progress" type="object"
+                                invisible="status != 'hold'"/>
+
+                        <button name="request_cancel" string="Cancel" type="object"
+                                invisible="status not in ['assign', 'progress']"/>
+
+                        <button name="request_draft" string="Draft" type="object"
+                                invisible="status != 'cancel'"/>
+
+                        <button name="request_complete" string="Complete" type="object"
+                                invisible="status not in ['assign', 'progress']"/>
+
+                        <button name="request_reject" string="Reject" type="object"
+                                invisible="status == 'complete'"/>
+
+                        <field name="status" widget="statusbar"/>
+
+
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="toggle_active" type="object" invisible="True"
+
+                                    class="oe_stat_button" icon="fa-archive">
+
+                                <field name="active" widget="boolean_button"
+
+                                       options='{"terminology": "archive"}'/>
+
+                            </button>
+                            <button name="action_see_documents" type="object" class="oe_stat_button"
+                                    icon="fa-file-text-o">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="document_count"/>
+                                    </span>
+                                    <span class="o_stat_text">Documents</span>
+                                </div>
+                            </button>
+                        </div>
+                        <h1>
+                            <field name="name" placeholder="Name ..." invisible="1"/>
+                        </h1>
+                        <h2>
+                            <field name="service_number" />
+                            <field name="message" invisible="1"/>
+                        </h2>
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="date"
+                                       readonly="status != 'draft'"/>
+                                <field name="partner_id"
+                                       invisible="context.get('invisible_contact',False)"
+                                       options="{'no_create': True, 'no_create_edit':True}"
+                                       readonly="status != 'draft'"/>
+                                <field name="service_beneficiary"
+                                       invisible="context.get('invisible_contact',False)"
+                                       options="{'no_create': True, 'no_create_edit':True}"
+                                />
+
+                                <field name="assigned_user_id"/>
+                                <field name="partner_type"
+                                       invisible="1"
+                                       readonly="True"
+                                />
+                                <field name="partner_document_count" invisible="True"/>
+                                <field name="bag_no"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="is_started" invisible="True"/>
+
+                                <field name="service_type_id"
+                                       readonly="status != 'draft'" />
+
+                                <field name="flow_type" invisible="True"
+                                       readonly="status != 'draft'"
+                                />
+                                <field name="is_mail_sent"/>
+
+                                <field name="sla_min" invisible="1"/>
+                                <field name="sla_max" invisible="1"/>
+                                <field name="start_date"
+                                       invisible="is_started != True"/>
+                                <field name="estimated_end_date"
+                                       invisible="is_started != True"/>
+                                <field name="days_to_finish"
+                                       invisible="is_started != True"/>
+                                <field name="end_date"
+                                       invisible="status != 'complete'"/>
+                                <field name="sla_days"
+                                       invisible="status != 'complete'"/>
+
+                            </group>
+                        </group>
+                        <group name="group_bottom">
+                            <field name="desc"/>
+                        </group>
+                        <notebook>
+                            <page name="ServiceInfo_page" string="Service Information">
+                                  <form>
+                                    <sheet>
+                                        <group name="group_top">
+                                            <group name="group_left">
+                                                 <field name="spouse"
+                                                        invisible="service_code not in ['02-01','02-02','02-04','02-03']"/>
+                                                 <field name="spouse_passport"
+                                                        invisible="service_code not in ['02-01','02-02']"/>
+                                                 <field name="spouse_ikama"
+                                                        invisible="service_code not in ['02-01','02-02']"/>
+                                                 <field name="child"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="child_birth_certificate"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="child_birth_certificate_date"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="child_birth_registration"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="child_birth_registration_date"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="birth_registry_number"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="birth_record_page"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="record_personal_status"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="record_transaction_number"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="starting_date"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="child_passport_number"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="record_transaction_number"
+                                                        invisible="service_code not in ['02-04']"/>
+                                                 <field name="purpose_of_trip"
+                                                        invisible="service_code not in ['04-02']"/>
+                                                 <field name="visa_duration"
+                                                        invisible="service_code not in ['04-02']"/>
+                                                 <field name="nb_entries"
+                                                        invisible="service_code not in ['04-02']"/>
+                                                 <field name="entry_point"
+                                                        invisible="service_code not in ['04-02']"/>
+                                                 <field name="expected_arrival_day"
+                                                        invisible="service_code not in ['04-02']"/>
+                                                 <field name="expected_departure_day"
+                                                        invisible="service_code not in ['04-02']"/>
+                                                 <field name="visa_no" invisible="service_code not in ['04-02']"/>
+                                                 <field name="receipt_no" invisible="service_code not in ['04-02']"/>
+                                                 <field name="renewal_nb" invisible="service_code not in ['04-05']"/>
+                                                 <field name="renewal_date" invisible="service_code not in ['04-05']"/>
+                                                 <field name="passport_request_period"
+                                                        invisible="service_code not in ['01-01']"/>
+                                                 <field name="current_passport_type" invisible="service_code not in ['01-01']"/>
+                                                 <field name="passport_period" invisible="service_code not in ['01-01']"/>
+                                                 <field name="dhl25" invisible="service_code not in ['01-01']"/>
+
+                                                 <field name="service_code" invisible="1"/>
+                                                 <field name="current_passport_type"
+                                                        invisible="service_code not in ['01-05','01-02']"/>
+                                                 <field name="passport_period"
+                                                        invisible="service_code not in ['01-07','01-05','04-05']"/>
+                                                 <field name="pal_doc_period"
+                                                        invisible="service_code not in ['01-02','01-03','01-04']"/>
+                                                 <field name="dhl30"
+                                                        invisible="service_code not in ['01-02']"/>
+                                                 <field name="dhl25"
+                                                        invisible="service_code not in ['01-05']"/>
+                                                 <field name="received_by"
+                                                        invisible="service_code not in ['01-02']"/>
+                                                 <field name="documentNo"
+                                                        invisible="service_code not in ['01-02','01-05']"/>
+
+
+                                             </group>
+                                             <group name="group_right">
+                                                 <field name="request_type"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="replacement_reason"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="paid_fee"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+
+                                                 <field name="applicant_profession_ar"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+
+                                                 <field name="applicant_profession_en"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+
+                                                 <field name="mission_name"
+                                                        invisible="service_code not in ['01-07','01-03']"/>
+                                                 <field name="table_number"
+                                                        invisible="service_code not in ['01-07','01-03']"/>
+                                                 <field name="order_number"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="application_date"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="application_registration_number"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="mission_file_number"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="mission_answer"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+
+                                                 <field name="consular_number"
+                                                        invisible="service_code not in ['01-06']"/>
+                                                 <field name="receipt_number"
+                                                        invisible="service_code not in ['01-06','04-05']"/>
+                                                 <field name="release_Date"
+                                                        invisible="service_code not in ['01-06']"/>
+                                                 <field name="general_director_decision"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="director_decision_nb"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="director_decision_date"
+                                                        invisible="service_code not in ['01-01', '01-02', '04-05','01-07','01-03']"/>
+                                                 <field name="additional_documents_type"
+                                                        invisible="service_code not in ['01-07','01-03']"/>
+                                                 <field name="additional_documents_nb"
+                                                        invisible="service_code not in ['01-07','01-03']"/>
+                                                 <field name="additional_documents_date"
+                                                        invisible="service_code not in ['01-07','01-03']"/>
+                                                 <field name="additional_documents_exp_date"
+                                                        invisible="service_code not in ['01-07','01-03']"/>
+
+                                             </group>
+                                        </group>
+                                         <group name="group_bottom">
+                                              <field name="sign_below"
+                                                     invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="allow_child_travel"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="nb_notary_statement_ar"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="date_notary_statement_ar"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="tel_notary_statement_ar"
+                                                        invisible="service_code not in ['01-01','01-04']" />
+                                                 <field name="notary_fullname_ar"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="nb_notary_statement_en"
+                                                        invisible="service_code not in ['01-01','01-04']" />
+                                                 <field name="date_notary_statement_en"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="tel_notary_statement_en"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="notary_fullname_en"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+
+                                                 <field name="with_marital_status"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="without_marital_status"
+                                                        invisible="service_code not in ['01-01','01-04']"/>
+                                                 <field name="with_husband_name"
+                                                        invisible="service_code not in ['01-02','01-05','01-03','01-04']"/>
+                                        </group>
+                                    </sheet>
+                                  </form>
+                            </page>
+                               <page name="Agent_addressInfo_page" string="Agent Address Information"
+                                     invisible="service_code not in ['03-09']">
+                                  <form>
+                                    <sheet>
+                                        <group name="group_top">
+                                             <group name="group_left">
+                                                 <field name="agent_address"
+                                                        invisible="service_code not in ['03-09']"/>
+                                             </group>
+                                        </group>
+
+                                    </sheet>
+                                  </form>
+                            </page>
+
+                               <page name="AuthorizationInfo_page" string="Authorization Information"
+                                     invisible="service_code not in ['03-01']">
+                                  <form>
+                                    <sheet>
+                                        <group name="group_top">
+                                             <group name="group_left">
+                                                 <field name="account_number"
+                                                        invisible="service_code not in ['03-01']"/>
+                                                 <field name="bank_name"
+                                                        invisible="service_code not in ['03-01']"/>
+                                                 <field name="branch"
+                                                        invisible="service_code not in ['03-01']"/>
+                                             </group>
+                                        </group>
+
+                                    </sheet>
+                                  </form>
+                            </page>
+
+
+                            <page name="document_page" string="In Documents">
+                                <field name="document_in"
+                                       readonly="status == 'complete'"/>
+                            </page>
+
+                            <page name="document_page" string="Out Documents">
+                                <button name="%(create_contact_document_view_action)d"
+                                        string="Create Document"
+                                        type="action" class="oe_highlight"
+                                        context="{
+                                        'default_service_request_id':id,
+                                        'upload_service':True
+                                        }"
+                                        invisible="status == 'complete'"/>
+
+                                <field name="service_document_ids"
+                                       readonly="status == 'complete'"
+                                />
+
+
+                            </page>
+
+                            <page name="expense_page" string="Expenses">
+                                <field name="expenses_ids"
+                                       groups="ebs_qsheild_mod.qshield_accountant_admin"
+                                >
+                                    <tree editable="bottom">
+                                        <field name="expense_type_id"/>
+                                        <field name="date" string="Date"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                        <field name="currency_id"/>
+                                        <field name="payment_by"/>
+                                        <field name="desc"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page name="feedback" string="Feedback">
+                                <field name="feedback_ids"/>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+                </form>
+            </field>
+        </record>
+
+        <!--window -->
+        <record id="service_request_window" model="ir.actions.act_window">
+            <field name="name">Service Request</field>
+            <field name="res_model">ebs_mod.service.request</field>
+            <field name="view_mode">tree,form,activity</field>
+            <field name="domain">[('status', '!=', 'draft')]</field>
+        </record>
+        <!--menu -->
+
+
+        <record id="view_service_request_filter" model="ir.ui.view">
+            <field name="name">Service Request Filters</field>
+            <field name="model">ebs_mod.service.request</field>
+            <field name="arch" type="xml">
+                <search string="Search Contract">
+                    <field name="partner_id"/>
+                    <field name="service_beneficiary"/>
+                    <field name="date"/>
+                    <field name="service_type_id"/>
+                    <field name="bag_no"/>
+                    <field name="status"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="service_type_group" string="Service Type"
+                                context="{'group_by': 'service_type_id'}"/>
+                        <filter name="service_status_group" string="Service Status" context="{'group_by': 'status'}"/>
+                        <filter name="workflow_group" string="Workflow Type" context="{'group_by': 'flow_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!--  service Flow Form and tree  -->
+
+        <record id="service_flow_tree" model="ir.ui.view">
+            <field name="name">Service Flow Tree</field>
+            <field name="model">ebs_mod.service.request.workflow</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="workflow_id"/>
+                    <field name="sequence"/>
+                    <field name="start_count_flow"/>
+                    <field name="due_date"/>
+                    <field name="status"/>
+                    <field name="date"/>
+                    <field name="assign_to"/>
+                    <button name="create_service_activity" icon="fa-calendar" type="object"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="service_flow_form" model="ir.ui.view">
+            <field name="name">Service Flow Form</field>
+            <field name="model">ebs_mod.service.request.workflow</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                            <group>
+                                <field name="workflow_id"
+                                       options="{'no_create': True, 'no_create_edit':True}"
+                                       domain="[
+                                                ('flow_type', '=', parent.flow_type),
+                                                ('service_type_id', '=', parent.service_type_id)
+                                                ]"
+                                />
+                                <field name="sequence"/>
+                                <field name="start_count_flow"/>
+                                <field name="due_date"/>
+                            </group>
+                            <group>
+                                <field name="assign_to"/>
+                                <field name="status"/>
+                                <field name="date" readonly="True"/>
+                                <button name="create_service_activity" string="Create Activity" class="btn btn-primary"
+                                        type="object"/>
+                            </group>
+                        </group>
+                        <group name="group_bottom">
+                            <field name="desc"/>
+                        </group>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+
+        <!-- service payment -->
+        <!--        <record id="service_expense_tree" model="ir.ui.view">-->
+        <!--            <field name="name">Service Expense Tree</field>-->
+        <!--            <field name="model">ebs_mod.service.request.expenses</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <tree>-->
+        <!--                    <field name="expense_type_id"/>-->
+        <!--                    <field name="desc"/>-->
+        <!--                    <field name="amount"/>-->
+        <!--                    <field name="date"/>-->
+        <!--                    <field name="payment_by"/>-->
+
+
+        <!--                </tree>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <record id="service_expense_form" model="ir.ui.view">
+            <field name="name">Service Expense Form</field>
+            <field name="model">ebs_mod.service.request.expenses</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                            <group>
+                                <field name="expense_type_id"/>
+                                <field name="date"/>
+                                <field name="payment_by"/>
+                                <field name="currency_id"/>
+                                <field name="amount" widget="monetary" sum="Total"/>
+                            </group>
+                        </group>
+                        <group name="group_bottom">
+                            <field name="desc"/>
+                        </group>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+        <record id="service_request_groups_rule" model="ir.rule">
+            <field name="name">Service.request: groups</field>
+            <field name="model_id" ref="model_ebs_mod_service_request"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="domain_force">[
+                '|',
+                    ('service_type_id.read_group_ids', '=', False),
+                    ('service_type_id.read_group_ids', 'in', [g.id for g in user.groups_id]),
+                ]</field>
+        </record>
+
+
+
+
+<!--        Feed back-->
+        <!--list view -->
+        <record id="feedback_service_request_tree" model="ir.ui.view">
+            <field name="name">Feedback Service Request Tree</field>
+            <field name="model">ebs_mod.service.request.feedback</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="service_id" widget="Many2one"/>
+                    <field name="service_type"/>
+                    <field name="service_contact"/>
+                    <field name="rating" widget="priority"/>
+                    <field name="comments"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        form view-->
+        <record id="feedback_service_request_form" model="ir.ui.view">
+            <field name="name">Feedback Service Request form</field>
+            <field name="model">ebs_mod.service.request.feedback</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="service_id" widget="Many2one"/>
+                            <field name="service_type"/>
+                            <field name="service_contact"/>
+                            <field name="rating" widget="field_float_rating"/>
+                            <field name="comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

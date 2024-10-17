@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="ebs_feedback_template" name="website feedback">
+            <t t-call="website.layout">
+                <section class="pt8 pb8" id="thank_you_feedback" style="display:none;">
+                    <div class="container">
+                        <div class="mt-5">
+                            <h1 style="text-align:center;">شكرا على تقييمكم</h1>
+                        </div>
+                    </div>
+                </section>
+                <div id="wrap" class="feedback_website_main_page">
+                    <div class="oe_structure">
+
+                        <section class="pt8 pb8">
+                            <div class="container">
+                                <div class="row s_nb_column_fixed">
+                                    <div class="col-lg-12 s_title pt16 pb16">
+                                        <h1>تقييم المستخدم</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="container mt-2">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <form id="contactus_form">
+                                    <div class="form-group row form-field o_website_form_custom o_website_form_required_custom" style="color:#000;">
+                                        <div class="col-lg-3 col-md-4">
+                                            <label class="col-form-label" for="Name">الإسم</label>
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <input type="text" class="form-control o_website_form_input feedback_name_class" name="Name" required=""/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row form-field" style="color:#000;">
+                                        <div class="col-lg-3 col-md-4">
+                                            <label class="col-form-label" for="email_from">البريد الإلكتروني</label>
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <input type="email" class="form-control o_website_form_input feedback_email_class" name="email_from"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row form-field o_website_form_custom" style="color:#000;">
+                                        <div class="col-lg-3 col-md-4">
+                                            <label class="col-form-label" for="description">المقترح</label>
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <textarea  class="form-control o_website_form_input feedback_description_class" name="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row form-field o_website_form_custom" style="color:#000;">
+                                        <div class="col-lg-3 col-md-4">
+                                            <label class="col-form-label" for="comments">تعليق</label>
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <input type="text"  class="form-control o_website_form_input feedback_comments_class" readonly="1" name="comments"></input>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row form-field o_website_form_custom" style="color:#000;">
+                                        <div class="col-lg-3 col-md-4">
+                                            <label class="col-form-label" for="rating">التقييم</label>
+                                        </div>
+                                        <div class="col-lg-7 col-md-8">
+                                            <form id="rating"
+                                                  method="post"
+                                                  action-xhr="https://amp.dev/documentation/examples/interactivity-dynamic-content/star_rating/set"
+                                                  target="_blank" >
+                                                <fieldset class="rating">
+                                                    <input name="rating"
+                                                           type="radio"
+                                                           id="rating5"
+                                                           class="rating_class"
+                                                           value="5"
+                                                           on="change:rating.submit"/>
+                                                    <label for="rating5"
+                                                           title="5 stars">☆</label>
+
+                                                    <input name="rating"
+                                                           type="radio"
+                                                           id="rating4"
+                                                           class="rating_class"
+                                                           value="4"
+                                                           on="change:rating.submit"/>
+                                                    <label for="rating4"
+                                                           title="4 stars">☆</label>
+
+                                                    <input name="rating"
+                                                           type="radio"
+                                                           class="rating_class"
+                                                           id="rating3"
+                                                           value="3"
+                                                           on="change:rating.submit"/>
+                                                    <label for="rating3"
+                                                           title="3 stars">☆</label>
+
+                                                    <input name="rating"
+                                                           type="radio"
+                                                           id="rating2"
+                                                           value="2"
+                                                           class="rating_class"
+                                                           on="change:rating.submit"
+                                                           />
+                                                    <label for="rating2"
+                                                           title="2 stars">☆</label>
+
+                                                    <input name="rating"
+                                                           type="radio"
+                                                           id="rating1"
+                                                           value="1"
+                                                           class="rating_class"
+                                                           on="change:rating.submit"
+                                                    />
+                                                    <!-- checked="checked"-->
+                                                    <label for="rating1"
+                                                           title="1 stars">☆</label>
+                                                </fieldset>
+
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                    <style>
+                                        .form-control:disabled, .o_wysiwyg_loader, .form-control[readonly]{
+                                        background-color: #fff;
+                                        }
+                                        .rating {
+                                        --star-size: 3;  /* use CSS variables to calculate dependent dimensions later */
+                                        padding: 0;  /* to prevent flicker when mousing over padding */
+                                        border: none;  /* to prevent flicker when mousing over border */
+                                        unicode-bidi: bidi-override; direction: ltr;  /* for CSS-only style change on hover */
+                                        text-align: left;  /* revert the RTL direction */
+                                        user-select: none;  /* disable mouse/touch selection */
+                                        font-size: 3em;  /* fallback - IE doesn't support CSS variables */
+                                        font-size: calc(var(--star-size) * 1em);  /* because `var(--star-size)em` would be too good to be true */
+                                        cursor: pointer;
+                                        /* disable touch feedback on cursor: pointer - http://stackoverflow.com/q/25704650/1269037 */
+                                        -webkit-tap-highlight-color: rgba(0,0,0,0);
+                                        -webkit-tap-highlight-color: transparent;
+                                        margin-bottom: 1em;
+                                        }
+                                        /* the stars */
+                                        .rating > label {
+                                        display: inline-block;
+                                        position: relative;
+                                        width: 1.1em;  /* magic number to overlap the radio buttons on top of the stars */
+                                        width: calc(var(--star-size) / 3 * 1.1em);
+                                        }
+                                        .rating > *:hover,
+                                        .rating > *:hover ~ label,
+                                        .rating:not(:hover) > input:checked ~ label {
+                                        color: transparent;  /* reveal the contour/white star from the HTML markup */
+                                        cursor: inherit;  /* avoid a cursor transition from arrow/pointer to text selection */
+                                        }
+                                        .rating > *:hover:before,
+                                        .rating > *:hover ~ label:before,
+                                        .rating:not(:hover) > input:checked ~ label:before {
+                                        content: "★";
+                                        position: absolute;
+                                        left: 0;
+                                        color: gold;
+                                        }
+                                        .rating > input {
+                                        position: relative;
+                                        transform: scale(3);  /* make the radio buttons big; they don't inherit font-size */
+                                        transform: scale(var(--star-size));
+                                        /* the magic numbers below correlate with the font-size */
+                                        top: -0.5em;  /* margin-top doesn't work */
+                                        top: calc(var(--star-size) / 6 * -1em);
+                                        margin-left: -2.5em;  /* overlap the radio buttons exactly under the stars */
+                                        margin-left: calc(var(--star-size) / 6 * -2em);
+                                        z-index: 2;  /* bring the button above the stars so it captures touches/clicks */
+                                        opacity: 0;  /* comment to see where the radio buttons are */
+                                        font-size: initial; /* reset to default */
+                                        }
+                                        form.amp-form-submit-error [submit-error] {
+                                        color: red;
+                                        }
+                                    </style>
+                                    <div class="form-group row">
+                                        <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                                            <a class="btn btn-primary btn-lg o_website_feedback_form_send" style="background-color: #d90000;border-color: #d90000;">إرسال</a>
+                                            <span id="o_website_form_result"></span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-4">
+                                <section class="s_text_block" style="margin-bottom:40px;">
+                                    <div class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+                                        <div style="margin-bottom: 7px;background:#f9f9f9;padding:20px;">
+                                            <div class="border_bottom_class_contactus" style="margin-bottom:20px;font-size:22px;">
+                                                <span class="border_bottom_class_contactus">
+                                                    أوقات الدوام
+                                                </span>
+                                            </div>
+                                            <span style="font-size:18px;" t-field="res_company.shift_description"/>
+                                        </div>
+                                        <div style="background:#f9f9f9;padding:20px;" id="connect">
+                                            <div class="border_bottom_class_contactus" style="font-size:22px;">
+                                                <span class="border_bottom_class_contactus">تواصل معنا
+                                                </span>
+                                            </div>
+                                            <t t-foreach="request.env['ebs_mod.communicate.embassy'].search([])" t-as="link">
+                                                <div class="ebs_contactus_address ">
+                                                    <t t-esc="link.type"/>
+                                                </div>
+                                                <div class="ebs_contactus_address_field">
+                                                    <span style="color: red;margin:auto;text-decoration: underline;text-underline-position: under;text-decoration-color: #ed5f34;" t-field="link.email"/>
+                                                </div>
+
+                                            </t>
+                                            <t t-foreach="request.env['ebs_mod.contact.details'].sudo().search([])" t-as="contact">
+                                                <div class="ebs_contactus_address ">
+                                                    <span class="border_bottom_class_contactus">
+                                                        <t t-esc="contact.name"/>
+                                                    </span>
+                                                </div>
+                                                <div class="ebs_contactus_address_field">
+                                                    <span style="color:red;" t-field="contact.phone"/>
+                                                </div>
+
+                                                <div class="ebs_contactus_address_field">
+                                                    <span style="color:red;" t-field="contact.fax"/>
+                                                </div>
+                                            </t>
+                                            <a t-att-href="res_company.google_map_link()" target="_BLANK">
+                                                <img style="width:100%" src="/ebs_qsheild_mod/static/src/image/mappng.png"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure mt-2"/>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

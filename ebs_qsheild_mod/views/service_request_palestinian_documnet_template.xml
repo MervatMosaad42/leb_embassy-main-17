@@ -1,0 +1,1191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="palestinian_document_embassy_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                <div class="oe_structure"/>
+                <div class="header" style="direction:rtl;">
+                    <div class="row">
+                        <div class="col-3">
+                            <img style="width:130px;height:130px;"
+                                 class="mb-3"/>
+                        </div>
+
+                        <div class="col-6">
+                            <span style="float:right;font-size:30px;margin-right:30px;font-family: Times-new-roman !important;">
+                                <b>طلب اصدار جواز مرور فلسطيني</b><br/>
+                                <center><b>لمدة ثلاثة أشهر.</b></center>
+                            </span>
+                        </div>
+                        <div class="col-3">
+                            <img t-if="request.env.user.company_id.logo"
+                                 t-att-src="image_data_uri(request.env.user.company_id.logo)"
+                                 style="width:180px;height:100px;"
+                                 class="mb-3 pull-left"/>
+                        </div>
+
+                    </div>
+                </div>
+                <br/>
+                    <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <div style="direction:rtl">
+                            <table class="table" style="width:100%;border-collapse:collapse;">
+                                <style>
+                                    p {
+                                    width:100%;
+                                    margin-bottom:0 !important;
+                                    text-align:right;
+                                    direction:rtl;
+                                    }
+                                    h2 ,span, p{
+                                        font-size:21px !important;
+                                    }
+                                </style>
+                                <t t-if="doc.service_beneficiary and doc.service_beneficiary.person_type == 'emp'">
+                                    <t t-set="beneficiary_data" t-value="doc.service_beneficiary"/>
+                                    <t t-set="child_data" t-value="request.env['res.partner'].sudo().search([('parent_id','=',beneficiary_data.id),('dependent_type','=','child'),('active','=',True)],limit=1, order='id desc')"/>
+                                </t>
+                                <t t-elif="doc.service_beneficiary and doc.service_beneficiary.person_type == 'child'">
+                                    <t t-set="beneficiary_data" t-value="doc.service_beneficiary.parent_id"/>
+                                    <t t-set="child_data" t-value="doc.service_beneficiary"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="beneficiary_data" t-value="request.env['res.partner']"/>
+                                    <t t-set="child_data" t-value="request.env['res.partner']"/>
+                                </t>
+                                <t t-if="doc.spouse and doc.spouse.person_type =='emp'">
+                                    <t t-set="spouse_data" t-value="doc.spouse"/>
+                                </t>
+                                <t t-elif="doc.spouse and doc.spouse.person_type == 'child'">
+                                    <t t-set="spouse_data" t-value="doc.spouse.parent_id"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="spouse_data" t-value="request.env['res.partner']"/>
+                                </t>
+
+
+                                <t t-set="qtr_address_id" t-value="request.env['ebs_mod.contact.address'].sudo().search([('partner_id','=',beneficiary_data.id),('is_active','=',True),('type','=','Qatar')],limit=1,order='id desc')"/>
+                                <t t-set="lab_address_id" t-value="request.env['ebs_mod.contact.address'].sudo().search([('partner_id','=',beneficiary_data.id),('is_active','=',True),('type','=','Lebanon')],limit=1,order='id desc')"/>
+                                <t t-set="father_qid_obj" t-value="request.env['ebs_mod.contact.ikama'].sudo().search([('partner_id','=',beneficiary_data.id),('is_active','=',True),('family_member','=','father')],limit=1,order='id desc')"/>
+                                <t t-set="mother_qid_obj" t-value="request.env['ebs_mod.contact.ikama'].sudo().search([('partner_id','=',spouse_data.id if spouse_data else False),('is_active','=',True),('family_member','=','mother')],limit=1,order='id desc')"/>
+
+                                <tr>
+                                    <td style="border:1px solid black;padding:10px;" colspan="2">
+                                            <p style="font-family: Times-new-roman !important;">
+                                                <b>    إسم المولود/ة : باللغة العربية :</b>
+
+                                            <t t-if="child_data.firstName  or child_data.middleName  or child_data.lastName ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="(child_data.firstName if child_data.firstName else '') +' ' + (child_data.middleName if child_data.middleName else '' )+' '+ (child_data.lastName if child_data.lastName else '')"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b> الاسم  باللغة الأجنبية :</b>
+                                            </span>
+
+                                        <t t-if="child_data.first_name_en  or child_data.middle_name_en  or child_data.last_name_en ">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="(child_data.first_name_en if child_data.first_name_en else '') +' ' + (child_data.middle_name_en if child_data.middle_name_en else '' )+' '+ (child_data.last_name_en if child_data.last_name_en else '')"></span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>...................</span>
+                                        </t>
+
+                                            </p>
+<!--                                        <b>-->
+<!--                                            <span style="font-family: Times-new-roman !important;">-->
+<!--                                                الاسم الأول :-->
+<!--                                            </span>-->
+<!--                                        </b>-->
+
+
+                                            <p style="font-family: Times-new-roman !important;">
+                                        <b>  مكان وتاريخ الولادة :</b>
+
+                                        <t t-if="child_data.placeOfBirth or child_data.date ">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="child_data.placeOfBirth"></span>
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="child_data.date"></span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>...................</span>
+                                        </t>
+
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   الجنس :</b>
+                                            </span>
+
+                                        <t t-if="child_data.gender == 'male'">
+                                            <input type="checkbox" value='' checked="true" style="height:20px;width:20px;"/>
+<!--                                            <img src="/ebs_qsheild_mod/static/src/image/tick_images.png" style="height:15px;width:15px;"/>-->
+                                        </t>
+                                        <t t-else="">
+                                            <img src="/ebs_qsheild_mod/static/src/image/tickbox.png" style="height:15px;width:15px;"/>
+                                        </t>
+
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>  ذكر :</b>
+                                            </span>
+
+
+                                        <t t-if="child_data.gender == 'female'">
+                                            <input type="checkbox" value='' checked="true" style="height:20px;width:20px;"/>
+<!--                                            <img src="/ebs_qsheild_mod/static/src/image/tick_box.png" style="height:15px;width:15px;"/>-->
+                                        </t>
+                                        <t t-else="">
+                                            <img src="/ebs_qsheild_mod/static/src/image/tickbox.png" style="height:15px;width:15px;"/>
+                                        </t>
+
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   أنثى رقم تسجيل شهاده الميلاد :</b>
+                                            </span>
+
+
+                                         <t t-if="child_data.birth_certificate_nb ">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="child_data.birth_certificate_nb"></span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>...................</span>
+                                        </t>
+
+
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   تاريخ إصدار شهادة الميلاد :</b>
+                                            </span>
+
+                                        <t t-if="child_data.birth_certificate_date ">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="child_data.birth_certificate_date"></span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>...................</span>
+                                        </t>
+                                            </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;width:50%;">
+                                        <center>
+                                            <h2 style="direction:rtl !important;font-size:25px !important;margin-top:5px;font-family: Times-new-roman !important;">
+                                                <b>  معلومات عن الأب</b>
+                                            </h2>
+                                        </center>
+                                    </td>
+                                    <td style="border:1px solid black;width:50%;">
+                                        <center>
+                                            <h2 style="direction:rtl !important;font-size:25px !important;margin-top:5px;font-family: Times-new-roman !important;">
+                                                <b>   معلومات عن الأم</b>
+                                            </h2>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <t t-if="beneficiary_data.gender == 'male'">
+                                        <td style="border:1px solid black;padding:10px;">
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                        <b>  إسم الأم والشهرة  :</b>
+
+                                                    <t t-if="beneficiary_data.firstName  or beneficiary_data.middleName  or beneficiary_data.lastName ">
+                                                        <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="(beneficiary_data.firstName if beneficiary_data.firstName else '') +' ' + (beneficiary_data.middleName if beneficiary_data.middleName else '' )+' '+ (beneficiary_data.lastName if beneficiary_data.lastName else '')"></span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span>.......................</span>
+                                                    </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                       <b> مكان وتاريخ الولادة :
+                                                    </b>
+                                                <t t-if="beneficiary_data.placeOfBirth  or beneficiary_data.date">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.placeOfBirth"></span>
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.date"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                   <b>     المذهب :
+
+                                                </b>
+
+                                                <t t-if="beneficiary_data.religion">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.religion.name"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+
+
+                                                    <span style="font-family: Times-new-roman !important;">
+                                                        <b>         المهنة :</b>
+                                                    </span>
+
+                                                <t t-if="beneficiary_data.function ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.function"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+
+
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                 <b>       رقم الملـف :
+
+                                                </b>
+
+                                                 <t t-if="child_data.father_file_no ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="child_data.father_file_no"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+
+
+                                                    <span style="font-family: Times-new-roman !important;">
+                                                        <b>          رقم البيان الإحصائي :</b>
+                                                    </span>
+
+<!--                                                <t t-if="child_data.father_stati_no ">-->
+                                                <t t-if="beneficiary_data.sejelNo">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.sejelNo"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                            <b>    مسجل مع )حسب( البطاقة :</b>
+
+                                                <t t-if="child_data.father_registered_with ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="child_data.father_registered_with"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                        <b>  رقم وثيقة السف :</b>
+
+
+                                                <t t-set="passport_data"
+                                                   t-value="request.env['ebs_mod.contact.passport'].sudo().search([('partner_id','=',beneficiary_data.id),('is_active','=',True),('family_member','=','father')],limit=1,order='id desc')"/>
+
+                                                <t t-if="passport_data.passport_no ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_no"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                         <b>مكان وتاريخ الصدو :
+
+                                                </b>
+                                               <t t-if="passport_data.passport_place  or passport_data.passport_start_date ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_place"></span>
+                                                   <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_start_date"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                  <b>      تاريخ انتهاء وثيقة السفر :
+
+                                                </b>
+                                                <t t-if="passport_data.passport_exp_date ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_exp_date"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+                                            </td>
+                                        <td style="border:1px solid black;padding:10px;">
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                                    <b>    إسم الأم والشهرة  :</b>
+<!--                                            <t t-if="child_data.motherFullName ">-->
+<!--                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"-->
+<!--                                                      t-esc="spouse_data.motherFullName"></span>-->
+<!--                                            </t>-->
+                                            <t t-if="spouse_data.firstName  or spouse_data.middleName  or spouse_data.lastName ">
+                                                        <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                              t-esc="(spouse_data.firstName if spouse_data.firstName else '') +' ' + (spouse_data.middleName if spouse_data.middleName else '' )+' '+ (spouse_data.lastName if spouse_data.lastName else '')"></span>
+                                            </t>
+
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                               <b>     مكان وتاريخ الولادة :
+
+                                            </b>
+<!--                                            <t t-if="child_data.mother_place_of_birth  or child_data.mother_date_of_birth ">-->
+<!--                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"-->
+<!--                                                      t-esc="child_data.mother_place_of_birth"></span>-->
+<!--                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"-->
+<!--                                                      t-esc="child_data.mother_date_of_birth"></span>-->
+<!--                                            </t>-->
+                                            <t t-if="spouse_data.placeOfBirth  or spouse_data.date">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.placeOfBirth"></span>
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.date"></span>
+                                            </t>
+
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                                   <b> الجنسية الاصلية :
+
+                                            </b>
+
+                                            <t t-if="spouse_data.first_Nationality == 'leb'">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="dict(spouse_data._fields['first_Nationality'].selection).get(spouse_data.first_Nationality)"></span>
+                                            </t>
+                                            <t t-elif="spouse_data.first_Nationality == 'pal'">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="dict(spouse_data._fields['first_Nationality'].selection).get(spouse_data.first_Nationality)"></span>
+                                            </t>
+                                            <t t-elif="spouse_data.first_Nationality == 'other'">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="dict(spouse_data._fields['first_Nationality'].selection).get(spouse_data.first_Nationality)"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>..................................</span>
+                                            </t>
+                                            </p>
+
+
+                                            <p style="font-family: Times-new-roman !important;">
+                                                <b>    المذهب :
+                                            </b>
+                                            <t t-if="spouse_data.religion">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.mother_religion.name"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>..................................</span>
+                                            </t>
+
+
+                                                <span style="font-family: Times-new-roman !important;">
+                                                    <b>  المهنة :</b>
+                                                </span>
+
+
+                                             <t t-if="spouse_data and spouse_data.religion">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.religion.name"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>..................................</span>
+                                            </t>
+                                                </p>
+
+
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                                    <b>     رقم الملـف :</b>
+
+
+                                            <t t-if="child_data.mother_file_no ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="child_data.mother_file_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                            <b>       رقم البيان الإحصائي :</b>
+
+                                            <t t-if="child_data.mother_stati_no ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="child_data.mother_stati_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                             <b>       مسجلة مع :
+
+                                            </b>
+                                            <t t-if="child_data.mother_registered_with ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="child_data.mother_registered_with"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+                                            <t t-set="passport_data_mother"
+                                               t-value="request.env['ebs_mod.contact.passport'].sudo().search([('partner_id','=',spouse_data.id if spouse_data else False),('is_active','=',True),('family_member','=','mother')],limit=1,order='id desc')"/>
+                                                <p style="font-family: Times-new-roman !important;">
+                                               <b>     رقم الجواز او وثيقة السفر :
+
+                                            </b>
+                                            <t t-if="passport_data_mother.passport_no ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="passport_data_mother.passport_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+
+                                                <span style="font-family: Times-new-roman !important;">
+                                                    <b>           مكان وتاريخ الصدور :</b>
+                                                </span>
+
+                                           <t t-if="passport_data_mother.passport_place  or passport_data_mother.passport_start_date ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="passport_data_mother.passport_place"></span>
+                                               <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="passport_data_mother.passport_start_date"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+                                        </td>
+                                    </t>
+                                    <t t-if="beneficiary_data.gender == 'female'">
+                                        <td style="border:1px solid black;padding:10px;">
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                                    <b>    إسم الأم والشهرة  :</b>
+<!--                                            <t t-if="child_data.motherFullName ">-->
+<!--                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"-->
+<!--                                                      t-esc="spouse_data.motherFullName"></span>-->
+<!--                                            </t>-->
+                                            <t t-if="spouse_data.firstName  or spouse_data.middleName  or spouse_data.lastName ">
+                                                        <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                              t-esc="(spouse_data.firstName if spouse_data.firstName else '') +' ' + (spouse_data.middleName if spouse_data.middleName else '' )+' '+ (spouse_data.lastName if spouse_data.lastName else '')"></span>
+                                            </t>
+
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                               <b>     مكان وتاريخ الولادة :
+
+                                            </b>
+<!--                                            <t t-if="child_data.mother_place_of_birth  or child_data.mother_date_of_birth ">-->
+<!--                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"-->
+<!--                                                      t-esc="child_data.mother_place_of_birth"></span>-->
+<!--                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"-->
+<!--                                                      t-esc="child_data.mother_date_of_birth"></span>-->
+<!--                                            </t>-->
+                                            <t t-if="spouse_data.placeOfBirth  or spouse_data.date">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.placeOfBirth"></span>
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.date"></span>
+                                            </t>
+
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                                   <b> الجنسية الاصلية :
+
+                                            </b>
+
+                                            <t t-if="spouse_data.first_Nationality == 'leb'">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="dict(spouse_data._fields['first_Nationality'].selection).get(spouse_data.first_Nationality)"></span>
+                                            </t>
+                                            <t t-elif="spouse_data.first_Nationality == 'pal'">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="dict(spouse_data._fields['first_Nationality'].selection).get(spouse_data.first_Nationality)"></span>
+                                            </t>
+                                            <t t-elif="spouse_data.first_Nationality == 'other'">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="dict(spouse_data._fields['first_Nationality'].selection).get(spouse_data.first_Nationality)"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>..................................</span>
+                                            </t>
+                                            </p>
+
+
+                                            <p style="font-family: Times-new-roman !important;">
+                                                <b>    المذهب :
+                                            </b>
+                                            <t t-if="spouse_data.religion">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.religion.name"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>..................................</span>
+                                            </t>
+
+
+                                                <span style="font-family: Times-new-roman !important;">
+                                                    <b>  المهنة :</b>
+                                                </span>
+
+
+                                             <t t-if="spouse_data and spouse_data.religion">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="spouse_data.religion.name"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>..................................</span>
+                                            </t>
+                                                </p>
+
+
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                                    <b>     رقم الملـف :</b>
+
+
+                                            <t t-if="child_data.mother_file_no ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="child_data.mother_file_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                            <b>       رقم البيان الإحصائي :</b>
+
+                                            <t t-if="child_data.mother_stati_no ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="child_data.mother_stati_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                             <b>       مسجلة مع :
+
+                                            </b>
+                                            <t t-if="child_data.mother_registered_with ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="child_data.mother_registered_with"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                                </p>
+                                            <t t-set="passport_data_mother"
+                                               t-value="request.env['ebs_mod.contact.passport'].sudo().search([('partner_id','=',spouse_data.id if spouse_data else False),('is_active','=',True),('family_member','=','mother')],limit=1,order='id desc')"/>
+
+
+                                                <p style="font-family: Times-new-roman !important;">
+                                               <b>     رقم الجواز او وثيقة السفر :
+
+                                            </b>
+                                            <t t-if="passport_data_mother.passport_no ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="passport_data_mother.passport_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+
+                                                <span style="font-family: Times-new-roman !important;">
+                                                    <b>           مكان وتاريخ الصدور :</b>
+                                                </span>
+
+                                           <t t-if="passport_data_mother.passport_place  or passport_data_mother.passport_start_date ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="passport_data_mother.passport_place"></span>
+                                               <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="passport_data_mother.passport_start_date"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                        </td>
+                                        <td style="border:1px solid black;padding:10px;">
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                        <b>  إسم الأم والشهرة  :</b>
+
+
+                                                    <t t-if="beneficiary_data.firstName  or beneficiary_data.middleName  or beneficiary_data.lastName ">
+                                                        <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="(beneficiary_data.firstName if beneficiary_data.firstName else '') +' ' + (beneficiary_data.middleName if beneficiary_data.middleName else '' )+' '+ (beneficiary_data.lastName if beneficiary_data.lastName else '')"></span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span>.......................</span>
+                                                    </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                       <b> مكان وتاريخ الولادة :
+                                                    </b>
+                                                <t t-if="beneficiary_data.placeOfBirth  or beneficiary_data.date">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.placeOfBirth"></span>
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.date"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                   <b>     المذهب :
+
+                                                </b>
+
+                                                <t t-if="beneficiary_data.religion">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.religion.name"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+
+
+                                                    <span style="font-family: Times-new-roman !important;">
+                                                        <b>         المهنة :</b>
+                                                    </span>
+
+                                                <t t-if="beneficiary_data.function ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.function"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+
+
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                 <b>       رقم الملـف :
+
+                                                </b>
+
+                                                 <t t-if="child_data.father_file_no ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="child_data.father_file_no"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+
+
+                                                    <span style="font-family: Times-new-roman !important;">
+                                                        <b>          رقم البيان الإحصائي :</b>
+                                                    </span>
+
+<!--                                                <t t-if="child_data.father_stati_no ">-->
+                                                <t t-if="beneficiary_data.sejelNo">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="beneficiary_data.sejelNo"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                            <b>    مسجل مع )حسب( البطاقة :</b>
+
+                                                <t t-if="child_data.father_registered_with ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="child_data.father_registered_with"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                        <b>  رقم وثيقة السف :</b>
+
+
+                                                <t t-set="passport_data"
+                                                   t-value="request.env['ebs_mod.contact.passport'].sudo().search([('partner_id','=',beneficiary_data.id),('is_active','=',True),('family_member','=','father')],limit=1,order='id desc')"/>
+
+                                                <t t-if="passport_data.passport_no ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_no"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+
+
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                         <b>مكان وتاريخ الصدو :
+
+                                                </b>
+                                               <t t-if="passport_data.passport_place  or passport_data.passport_start_date ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_place"></span>
+                                                   <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_start_date"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+                                                    <p style="font-family: Times-new-roman !important;">
+                                                  <b>      تاريخ انتهاء وثيقة السفر :
+
+                                                </b>
+                                                <t t-if="passport_data.passport_exp_date ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="passport_data.passport_exp_date"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+                                            </td>
+
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;padding:10px;" colspan="2">
+                                            <p style="font-family: Times-new-roman !important;">
+                                              <span style="border-bottom:1px solid black;"><b>       العنوان في قطر :
+
+                                                </b>
+                                              </span>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>  المدينة :</b>
+                                            </span>
+                                        <t t-if="qtr_address_id.city ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.city"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   الشارعّ :</b>
+                                            </span>
+                                        <t t-if="qtr_address_id.street ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.street"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>  البناية /المجمع :</b>
+                                            </span>
+                                        <t t-if="qtr_address_id.building ">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="qtr_address_id.building"></span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>.......................</span>
+                                        </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   طابق/شقة رقم :</b>
+                                            </span>
+                                       <t t-if="qtr_address_id.floor  or qtr_address_id.flat ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.floor"></span>
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.flat "></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   ص.ب. :</b>
+                                            </span>
+                                        <t t-if="qtr_address_id.pobox ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.pobox"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>    الهاتف :</b>
+                                            </span>
+                                        <t t-if="qtr_address_id.phoneNumber ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.phoneNumber"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>    المحمول  :</b>
+                                            </span>
+                                        <t t-if="qtr_address_id.mobile ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.mobile"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;padding:10px;" colspan="2">
+                                            <p style="font-family: Times-new-roman !important;">
+                                        <span style="border-bottom:1px solid black;"><b>  العنوان في لبنان كاملاً :</b></span>
+
+                                        <b>
+                                            <span style="">المدينة أو القرية :</span>
+                                        </b>
+                                        <t t-if="lab_address_id.kaza or lab_address_id.town ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="lab_address_id.kaza.name"></span><span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="qtr_address_id.flat "></span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>.......................</span>
+                                        </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   الشارع :</b>
+                                            </span>
+                                        <t t-if="lab_address_id.street ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="lab_address_id.street"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>  الحي :</b>
+                                            </span>
+                                        <t t-if="lab_address_id.region">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="lab_address_id.region.name"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>  بــــنـــــايــــــة :</b>
+                                            </span>
+                                        <t t-if="lab_address_id.building ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="lab_address_id.building"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>    ( ملك / أجار) :</b>
+                                            </span>
+
+                                        <t t-if="lab_address_id.owned == True">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;">
+                                                ملك
+                                            </span>
+                                        </t>
+                                        <t t-if="lab_address_id.owned == False">
+                                            <span>أجار</span>
+                                        </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b>   طابق :</b>
+                                            </span>
+                                        <t t-if="lab_address_id.floor ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="lab_address_id.floor"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            <span style="font-family: Times-new-roman !important;">
+                                                <b> الهاتف :</b>
+                                            </span>
+                                        <t t-if="lab_address_id.mobile ">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="lab_address_id.mobile"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <t t-if="beneficiary_data.gender == 'male'">
+                                        <td style="border:1px solid black;padding:10px;">
+                                                <p style="font-family: Times-new-roman !important;">
+                                            <b>    رقم إقــامة الأب :</b>
+
+                                             <t t-if="father_qid_obj.ikama_no ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="father_qid_obj.ikama_no"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                </p>
+                                                <p style="font-family: Times-new-roman !important;">
+                                                 <b>   إسم الكفيل :
+                                            </b>
+                                            <t t-if="father_qid_obj.guarantor">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="father_qid_obj.guarantor"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                </p>
+                                                <p style="font-family: Times-new-roman !important;">
+                                                <b>    تاريخ إنتهاء الإقامة :
+                                            </b>
+                                             <t t-if="father_qid_obj.ikama_enddate">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="father_qid_obj.ikama_enddate"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+                                        </td>
+                                        <td style="border:1px solid black;padding:10px;">
+                                            <p style="font-family: Times-new-roman !important;">
+                                               <b> رقم إقــامة الأب :
+                                        </b>
+                                         <t t-if="mother_qid_obj.ikama_no">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="mother_qid_obj.ikama_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                            <p style="font-family: Times-new-roman !important;">
+                                             <b>   إسم الكفيل :
+                                        </b>
+                                         <t t-if="mother_qid_obj.guarantor">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="mother_qid_obj.guarantor"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                            <p style="font-family: Times-new-roman !important;">
+                                               <b> تاريخ إنتهاء الإقامة :
+                                        </b>
+                                         <t t-if="mother_qid_obj.ikama_enddate">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="mother_qid_obj.ikama_enddate"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                    </td>
+                                    </t>
+                                     <t t-if="beneficiary_data.gender == 'female'">
+                                         <td style="border:1px solid black;padding:10px;">
+                                            <p style="font-family: Times-new-roman !important;">
+                                               <b> رقم إقــامة الأب :
+                                        </b>
+                                         <t t-if="mother_qid_obj.ikama_no">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="mother_qid_obj.ikama_no"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                            <p style="font-family: Times-new-roman !important;">
+                                             <b>   إسم الكفيل :
+                                        </b>
+                                         <t t-if="mother_qid_obj.guarantor">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="mother_qid_obj.guarantor"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                            <p style="font-family: Times-new-roman !important;">
+                                               <b> تاريخ إنتهاء الإقامة :
+                                        </b>
+                                         <t t-if="mother_qid_obj.ikama_enddate">
+                                                <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                      t-esc="mother_qid_obj.ikama_enddate"></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                            </p>
+                                    </td>
+                                        <td style="border:1px solid black;padding:10px;">
+                                                <p style="font-family: Times-new-roman !important;">
+                                            <b>    رقم إقــامة الأب :</b>
+
+                                             <t t-if="father_qid_obj.ikama_no ">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="father_qid_obj.ikama_no"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                </p>
+                                                <p style="font-family: Times-new-roman !important;">
+                                                 <b>   إسم الكفيل :
+                                            </b>
+                                            <t t-if="father_qid_obj.guarantor">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="father_qid_obj.guarantor"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                </p>
+                                                <p style="font-family: Times-new-roman !important;">
+                                                <b>    تاريخ إنتهاء الإقامة :
+                                            </b>
+                                             <t t-if="father_qid_obj.ikama_enddate">
+                                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                          t-esc="father_qid_obj.ikama_enddate"></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>.......................</span>
+                                                </t>
+                                                    </p>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;padding:10px;" colspan="2">
+                                        <p style="font-family: Times-new-roman !important;"><b>نحن الموقعين ادنــاه لا مانع لدينا من اصدار جواز مرور لأبننا/ لابنتنا : </b>
+                                        <t t-if="child_data.firstName or child_data.middleName or child_data.lastName">
+                                            <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"
+                                                  t-esc="(child_data.firstName if child_data.firstName else '') +' ' + (child_data.middleName if child_data.middleName else '' )+' '+ (child_data.lastName if child_data.lastName else '')"></span>
+                                        </t>
+                                            <t t-else="">
+                                                <span>.......................</span>
+                                            </t>
+                                        </p>
+                                        <p style="font-family: Times-new-roman !important"><span style="border-bottom:1px solid black;"><b>ولقد تبلغنا بوجوب اصدار وثيقة سفر خاصة بالمولود/ة خلال ثلاثة اشهر بعد  تسجيله/ها  في لبنان لدى دائرة</b></span></p>
+                                        <p style="font-family: Times-new-roman !important;"><span style="border-bottom:1px solid black;"><b>اللاجئين  الفلسطنين واصدار بطاقة هوية للمولود/ة وتعديل بطاقة الاونروا .</b></span></p>
+                                         <p style="margin-right:30px;font-family: Times-new-roman !important;">
+                                            <b>اسم الأب  والامضاء .</b>
+
+                                            <span>.................</span>
+                                            <span style="margin-right:30px;font-family: Times-new-roman !important;">
+                                                <b> التاريخ .</b>
+                                            </span>
+                                            <span>.................</span>
+
+                                            <span style="margin-right:30px;font-family: Times-new-roman !important;">
+                                                <b> اسم الأم  والامضاء .</b>
+                                            </span>
+                                            <span>.................</span>
+                                         </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;padding:10px;width:50%;">
+                                            <p style="font-family: Times-new-roman !important;">
+                                                <b>   الرقم القنصلي :</b>
+                                            </p>
+                                            <p style="font-family: Times-new-roman !important;">
+                                             <b>   رقم اللإيصال :
+                                        </b>
+                                            </p>
+                                    </td>
+                                    <td style="border:1px solid black;padding:10px;width:50%;">
+                                            <p style="font-family: Times-new-roman !important;">
+                                                <b> رقم جواز المرور :
+                                        </b>
+                                            </p>
+                                            <p style="font-family: Times-new-roman !important;">
+                                                <b>  تاريخ الإصدار :</b>
+                                            </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+<!--                </t>-->
+            </t>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="paperformat_palestinian_document_report_new" model="report.paperformat">
+            <field name="name">Palestinian Document Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                string="Palestinian Document report"
+                id="palestinian_document_report_embassy"
+                model="ebs_mod.service.request"
+                name="ebs_qsheild_mod.palestinian_document_embassy_report_template"
+                file="ebs_qsheild_mod.palestinian_document_embassy_report_template"
+                report_type="qweb-pdf"
+                paperformat="ebs_qsheild_mod.paperformat_palestinian_document_report_new"
+        />
+
+
+    </data>
+</odoo>

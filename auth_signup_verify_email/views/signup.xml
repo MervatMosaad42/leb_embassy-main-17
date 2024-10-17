@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2016 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="signup_fields" inherit_id="auth_signup.fields">
+        <xpath expr="//div[hasclass('field-password')]" position="attributes">
+            <attribute name="t-if">only_passwords</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('field-confirm_password')]" position="attributes">
+            <attribute name="t-if">only_passwords</attribute>
+        </xpath>
+        <input name="name" position="after">
+            <div class="form-group field-id_no">
+                <label for="id_no">Qatar ID</label>
+                <input type="text" pattern="[0-9]+" placeholder="e.g. 00000012345" name="id_no"
+                       t-att-value="id_no" id="id_no"
+                       t-attf-class="form-control #{'form-control-sm' if form_small else ''}"
+                       t-att-readonly="'readonly' if only_passwords else None"
+                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                       required="required" autofocus="autofocus" autocapitalize="off"/>
+                <span id="maxlenerrMsg"></span>
+            </div>
+        </input>
+        <xpath expr="//input[@name='login']" position="attributes">
+            <attribute name="type">email</attribute>
+            <attribute name="style">'color:white;'</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('field-name')]//label" position="replace">
+            <label for="name">Your Full Name</label>
+        </xpath>
+
+
+         <xpath expr="." position="inside">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+             <div class="loginPopup" style="position: relative;text-align: center;  width: 100%;">
+      <div class="formPopup" style=" display: none;left: 45%;top: 5%;
+        background-color:white;
+        border: 3px solid #999999;
+        z-index: 9;" id="popupForm">
+
+          <h2>Please Log in</h2>
+          <h2>Please Log in</h2>
+          <h2>Please Log in</h2>
+          <h2>Please Log in</h2>
+          <h2>Please Log in</h2>
+          <h2>Please Log in</h2>
+          <h2>Please Log in</h2>
+            <strong>E-mail</strong>
+          <label for="psw">
+            <strong>Password</strong>
+          </label>
+           </div>
+    </div>
+          <script>
+
+              $('.field-password').each(function(){
+        $(this).on('keyup', function(){
+            $(this).tooltip({
+                selector: 'data-toggle="tooltip"',
+                placement: 'right',
+                trigger: 'manual',
+                title: 'Min 8 Characters'+'\n'+'Upper Case Charactors (A-Z)'+
+                        '\n'+'Lower Case Charactors (A-Z)'+
+                        '\n'+'Numbers (0-9)'+
+                        '\n'+'Special Charactors(e.g.,!$#%)'+
+                        '\n'+'Unicode Charactors that do not fall for any of the above category'+
+                        '\n'+'Does not include User name,Display name,E-mail'
+
+            })
+            .data('placement', 'right');
+            $(this).tooltip('show');
+ document.getElementsByClassName('tooltip-inner')[0].style.whiteSpace='pre-wrap'
+               document.getElementsByClassName('tooltip-inner')[0].style.backgroundColor='white'
+                document.getElementsByClassName('tooltip-inner')[0].style.color='black'
+
+        });
+    });
+
+
+              $('.field-confirm_password').each(function(){
+            $(this).on('keyup', function(){
+                $(this).tooltip({
+                    selector: 'data-toggle="tooltip"',
+                    placement: 'right',
+                    trigger: 'manual',
+                title: 'Min 8 Characters'+'\n'+'Upper Case Charactors (A-Z)'+
+                        '\n'+'Lower Case Charactors (A-Z)'+
+                        '\n'+'Numbers (0-9)'+
+                        '\n'+'Special Charactors(e.g.,!$#%)'+
+                        '\n'+'Unicode Charactors that do not fall for any of the above category'+
+                        '\n'+'Does not include User name,Display name,E-mail'                })
+                .data('placement', 'right');
+                $(this).tooltip('show');
+               document.getElementsByClassName('tooltip-inner')[0].style.whiteSpace='pre-wrap'
+               document.getElementsByClassName('tooltip-inner')[0].style.backgroundColor='white'
+                document.getElementsByClassName('tooltip-inner')[0].style.color='black'
+
+            });
+        });
+              setTimeout(function () {
+            console.log($('.tooltip-inner'),">>>>>>>>>>>>>>>>>>>")
+            },100)
+
+
+
+              console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",this)
+          </script>
+         </xpath>
+    </template>
+
+    <template id="auth_signup.login" inherit_id="web.login" name="Sign up - Reset Password">
+        <xpath expr="//button[@type='submit']" position="after">
+            <div class="justify-content-between mt-2 d-flex small">
+                <a t-if="signup_enabled" style="color:white;font-size:14px" t-attf-href="/web/signup?{{ keep_query() }}">Sign Up</a>
+                <a t-if="reset_password_enabled" style="color:white;font-size:14px" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+            </div>
+        </xpath>
+    </template>
+</odoo>

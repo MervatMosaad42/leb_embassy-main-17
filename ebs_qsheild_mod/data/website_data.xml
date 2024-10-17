@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <!-- <record id="website.main_menu" model="website.menu">-->
+        <!-- <field name="name">Default Main Menu</field>-->
+        <!-- <field name="url">/default-main-menu</field>-->
+        <!-- <field name="website_id" ref="website.default_website"/>-->
+        <!-- </record>-->
+
+        <record id="website_menu_implink" model="website.menu">
+            <field name="name">Important Links</field>
+            <field name="url">/importantlink</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">50</field>
+        </record>
+
+
+        <!-- <record id="website_menu_contactus" model="website.menu">-->
+        <!-- <field name="name">Contact Us</field>-->
+        <!-- <field name="url">/contactus</field>-->
+        <!-- <field name="parent_id" ref="website.main_menu"/>-->
+        <!-- <field name="website_id" ref="website.default_website"/>-->
+        <!-- <field name="sequence" type="int">51</field>-->
+        <!-- </record>-->
+
+        <record id="website_aboutus_menu" model="website.menu">
+            <field name="name">About Us</field>
+            <!-- <field name="url">/aboutembassy</field>-->
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">49</field>
+        </record>
+
+        <record id="website_ambassadorsmenu" model="website.menu">
+            <field name="name">Previous Ambassadors List</field>
+            <field name="url">/previuosambassador</field>
+            <field name="parent_id" ref="website_aboutus_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">54</field>
+        </record>
+
+        <record id="website_aboutembassymenu" model="website.menu">
+            <field name="name">About Embassy</field>
+            <field name="url">/aboutembassy</field>
+            <field name="parent_id" ref="website_aboutus_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">53</field>
+        </record>
+
+
+        <record id="website_currentambassadermenu" model="website.menu">
+            <field name="name">Current Ambassador</field>
+            <field name="url">/currentambassador</field>
+            <field name="parent_id" ref="website_aboutus_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">55</field>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+        <record id="website_contacts_menu" model="website.menu">
+            <field name="name">Contacts</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">1</field>
+        </record>
+
+        <record id="website_individual_contacts_menu" model="website.menu">
+            <field name="name">Lebanese Contacts</field>
+            <field name="url">/individual_contacts</field>
+            <field name="parent_id" ref="website_contacts_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">1</field>
+        </record>
+
+        <record id="website_company_contacts_menu" model="website.menu">
+            <field name="name">Lebanese Companies</field>
+            <field name="url">/company_contacts</field>
+            <field name="parent_id" ref="website_contacts_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">1</field>
+        </record>
+
+        <record id="website_enroll_menu" model="website.menu">
+            <field name="name">Enroll</field>
+            <field name="url">/enroll</field>
+            <field name="parent_id" ref="website_contacts_menu"/>
+            <field name="website_id" ref="website.default_website"/>
+            <field name="sequence" type="int">1</field>
+        </record>
+    </data>
+</odoo>

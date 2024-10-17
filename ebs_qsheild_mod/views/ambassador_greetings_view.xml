@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<data>
+
+    <record id="ambassador_greetings_tree" model="ir.ui.view">
+        <field name="name">ambassador greetings  tree</field>
+        <field name="model">ambassador.greetings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="ambassador_greetings_form" model="ir.ui.view">
+        <field name="name">ambassador greetings form</field>
+        <field name="model">ambassador.greetings</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Title"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="description" widget="html"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- action -->
+    <record id="ambassador_greetings_action" model="ir.actions.act_window">
+        <field name="name">Ambassador greetings</field>
+        <field name="res_model">ambassador.greetings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="ambassador_greetings_menu"
+            name="Ambassador Greetings"
+            action="ambassador_greetings_action"
+            parent="website.menu_website_global_configuration"
+            sequence="200"
+    />
+</data>
+
+</odoo>

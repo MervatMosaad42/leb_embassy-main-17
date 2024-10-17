@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="feedback_page_tree" model="ir.ui.view">
+            <field name="name">feedback page tree</field>
+            <field name="model">feedback.feedback</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="rating" widget="priority"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view -->
+        <record id="feedback_page_form" model="ir.ui.view">
+            <field name="name">feedback page form</field>
+            <field name="model">feedback.feedback</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rating" widget="priority"/>
+                            <field name="email"/>
+                            <field name="description"/>
+                            <field name="comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="feedback_page_action" model="ir.actions.act_window">
+            <field name="name">Website Feedback</field>
+            <field name="res_model">feedback.feedback</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="feedback_page_menu"
+                name="Website Feedback"
+                action="feedback_page_action"
+                parent="website.menu_website_global_configuration"
+                sequence="190"
+        />
+    </data>
+</odoo>
+

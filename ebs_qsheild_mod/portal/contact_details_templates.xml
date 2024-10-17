@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <template id="individual_contacts_template" name="Lebanese Contacts">
+        <t t-call="website.layout">
+            <style>
+                .col-form-label{
+                float:left;
+                }
+                .form-control{
+                direction:ltr;
+                }
+            </style>
+
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                        <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                            <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                <a href="/">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                   data-oe-xpath="/data/xpath/li[1]/a[1]">Lebanese Contacts
+                                </a>
+                            </li>
+                        </ol>
+                        <div>
+                            <input type="text" id="filter_individual_contact_record" placeholder="Search"></input>
+                        </div>
+                    </nav>
+                    <t t-if="search_contacts">
+                        <div class="mt-3" style="border:1px solid black;">
+                            <div class="" style="padding:10px;">
+                                Search=
+                                <span>
+                                    <t t-esc="search_contacts"/>
+                                </span>
+                                <a type="button" class="btn btn-primary" id="remove_filter_section"
+                                   href="/individual_contacts">x
+                                </a>
+                            </div>
+                        </div>
+                    </t>
+                    <table class="table table-border" style="margin-top:10px;">
+                        <thead>
+                            <th>Name</th>
+                            <th>Profession</th>
+                            <th>Contact Phone</th>
+                            <th>Email</th>
+                            <th>Addresses</th>
+                            <th>Social Media</th>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="individual_contact_ids" t-as="contact">
+                                <td>
+                                    <t t-esc="contact.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.function"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.phone"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.email"/>
+                                </td>
+                                <td>
+                                    <a t-attf-href="/addresses/{{contact.id}}">
+                                        <i class="fa fa-address-card"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a t-attf-href="/social_media/{{contact.id}}">
+                                        <i class="fa fa-envelope"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="company_contacts_template" name="Lebanese Companies">
+        <t t-call="website.layout">
+            <style>
+                .col-form-label{
+                float:left;
+                }
+                .form-control{
+                direction:ltr;
+                }
+            </style>
+
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                        <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                            <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                <a href="/">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                   data-oe-xpath="/data/xpath/li[1]/a[1]">Lebanese Companies
+                                </a>
+                            </li>
+                        </ol>
+                        <div>
+                            <input type="text" id="filter_company_contact_record" placeholder="Search"></input>
+                        </div>
+                    </nav>
+                    <t t-if="search_contacts">
+                        <div class="mt-3" style="border:1px solid black;">
+                            <div class="" style="padding:10px;">
+                                Search=
+                                <span>
+                                    <t t-esc="search_contacts"/>
+                                </span>
+                                <a type="button" class="btn btn-primary" id="remove_filter_section"
+                                   href="/company_contacts">x
+                                </a>
+                            </div>
+                        </div>
+                    </t>
+                    <table class="table table-border" style="margin-top:10px;">
+                        <thead>
+                            <th>Name</th>
+                            <th>Industry</th>
+                            <th>Contact Phone</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                            <th>Addresses</th>
+                            <th>Social Media</th>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="company_contact_ids" t-as="contact">
+                                <td>
+                                    <t t-esc="contact.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.industry_id.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.phone"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.email"/>
+                                </td>
+                                <td>
+                                    <t t-esc="contact.website"/>
+                                </td>
+                                <td>
+                                    <a t-attf-href="/addresses/{{contact.id}}">
+                                        <i class="fa fa-address-card"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a t-attf-href="/social_media/{{contact.id}}">
+                                        <i class="fa fa-envelope"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="company_addresses_template" name="Lebanese Company Addresses">
+        <t t-call="website.layout">
+            <style>
+                .col-form-label{
+                float:left;
+                }
+                .form-control{
+                direction:ltr;
+                }
+            </style>
+
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                        <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                            <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                <a href="/">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                   data-oe-xpath="/data/xpath/li[1]/a[1]" t-att-href="'/company_contacts' if company_type == 'company' else '/individual_contacts'">
+                                    <t t-if="company_type == 'company'">Lebanese Companies</t>
+                                    <t t-else="">Lebanese Contacts</t>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                   data-oe-xpath="/data/xpath/li[1]/a[1]">Addresses
+                                </a>
+                            </li>
+                        </ol>
+                    </nav>
+                    <table class="table table-border" style="margin-top:10px;">
+                        <thead>
+                            <th>Type</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>PO Box</th>
+                            <th>Phone Number</th>
+                            <th>Mobile</th>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="addresses_ids" t-as="address">
+                                <td>
+                                    <t t-esc="dict(address._fields['type'].selection).get(address.type)"/>
+                                </td>
+                                <td>
+                                    <t t-esc="address.street"/>
+                                </td>
+                                <td>
+                                    <t t-esc="address.city"/>
+                                </td>
+                                <td>
+                                    <t t-esc="address.pobox"/>
+                                </td>
+                                <td>
+                                    <t t-esc="address.phoneNumber"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-esc="address.mobile"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="social_media_template" name="Social Media Template">
+        <t t-call="website.layout">
+            <style>
+                .col-form-label{
+                float:left;
+                }
+                .form-control{
+                direction:ltr;
+                }
+            </style>
+
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar  mt-3 rounded w-100">
+                        <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                            <li class="breadcrumb-item" data-oe-model="ir.ui.view" data-oe-id="483"
+                                data-oe-field="arch" data-oe-xpath="/t[1]/ol[1]/li[1]">
+                                <a href="/">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                   data-oe-xpath="/data/xpath/li[1]/a[1]" t-att-href="'/company_contacts' if company_type == 'company' else '/individual_contacts'">
+                                    <t t-if="company_type == 'company'">Lebanese Companies</t>
+                                    <t t-else="">Lebanese Contacts</t>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a data-oe-model="ir.ui.view" data-oe-id="1080" data-oe-field="arch"
+                                   data-oe-xpath="/data/xpath/li[1]/a[1]">Social Media
+                                </a>
+                            </li>
+                        </ol>
+                    </nav>
+                    <table class="table table-border" style="margin-top:10px;">
+                        <thead>
+                            <th>Type</th>
+                            <th>Name</th>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="social_media_ids" t-as="social_media">
+                                <td>
+                                    <t t-esc="social_media.type_id.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="social_media.name"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

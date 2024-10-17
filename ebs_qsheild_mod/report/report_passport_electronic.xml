@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <template id="report_passport_elec">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="employee">
+                        <span t-field="employee.replacement_reason" style="position:absolute; top:6px;right:255px"/>
+
+                        <t t-if="employee.paid_fee">
+                            <span t-field="employee.paid_fee" style="position:absolute; top:39px;right:311px"/>
+                        </t>
+                        <span t-field="employee.applicant_profession_ar" style ="position:absolute; top:90px;right:180px"/>
+                        <span t-field="employee.applicant_profession_en" style="position:absolute; top:90px;left:218px"/>
+                        <span t-field="employee.order_number" style="position:absolute; top:116px;right:340px"/>
+                        <span t-field="employee.mission_file_number" style="position:absolute; top:116px;left:218px"/>
+                        <span t-field="employee.application_registration_number" style="position:absolute; top:147px;right:282px"/>
+                        <span t-esc="employee._get_arabic_app_date()" style="position:absolute; top:147px;left:218px"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

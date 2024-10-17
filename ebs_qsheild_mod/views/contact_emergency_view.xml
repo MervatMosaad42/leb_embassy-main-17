@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="contact_emergency_tree" model="ir.ui.view">
+            <field name="name">Contact Emergency Tree</field>
+            <field name="model">ebs_mod.contact.emergency</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="emergency_full_name" placeholder="Emergency Full Name..." />
+                    <field name="emergency_phone_number" placeholder="Emergency Phone Number..." />
+                    <field name="emergency_full_name_leb"/>
+                    <field name="emergency_phone_number_leb"/>
+                    <field name="is_active" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="contact_emergency_form" model="ir.ui.view">
+            <field name="name">Contact Emergency Form</field>
+            <field name="model">ebs_mod.contact.emergency</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="emergency_full_name" string="Emergency Full Name"/>
+                                <field name="emergency_phone_number" placeholder="Emergency Phone Number..." />
+                                <field name="emergency_full_name_leb"/>
+                                <field name="emergency_phone_number_leb"/>
+                                <field name="is_active" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

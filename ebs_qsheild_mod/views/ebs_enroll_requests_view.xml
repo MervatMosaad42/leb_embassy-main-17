@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="ebs_enroll_requests_form_view" model="ir.ui.view">
+            <field name="name">ebs.enroll.requests.form</field>
+            <field name="model">ebs.enroll.requests</field>
+            <field name="arch" type="xml">
+                <form delete="0" create="0" edit="0">
+                    <header>
+                        <button name="approve_request" string="Confirm" class="oe_highlight" type="object"
+                                invisible="status != 'submitted'"/>
+                        <button name="%(enroll_request_reject_wizard_action)d" string="Reject"
+                                type="action" context="{'default_enroll_request_id': id}"
+                                invisible="status != 'submitted'"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="contact_type"/>
+                                <field name="date"/>
+                                <field name="create_uid"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group invisible="contact_type != 'company'">
+                                <field name="type"/>
+                                <field name="cr_number"/>
+                                <field name="industry_id"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="website"/>
+                                <field name="authorization_letter"/>
+                                <field name="copy_of_crp"/>
+                                <field name="identification"/>
+                            </group>
+                            <group invisible="contact_type != 'person'">
+                                <field name="type"/>
+                                <field name="job_position"/>
+                                <field name="permission_letter"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="reject_reason"
+                                   invisible="status != 'rejected'"/>
+                        </group>
+                        <notebook>
+                            <page string="Addresses" name="addresses">
+                                <field name="address_ids"/>
+                            </page>
+                            <page string="Social Media" name="social_media">
+                                <field name="social_media_ids">
+                                    <tree>
+                                        <field name="type_id"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ebs_enroll_requests_tree_view" model="ir.ui.view">
+            <field name="name">ebs.enroll.requests.tree</field>
+            <field name="model">ebs.enroll.requests</field>
+            <field name="arch" type="xml">
+                <tree delete="0" create="0" edit="0" default_order="create_date desc">
+                    <field name="name"/>
+                    <field name="contact_type"/>
+                    <field name="type"/>
+                    <field name="partner_id"/>
+                    <field name="cr_number"/>
+                    <field name="industry_id"/>
+                    <field name="date"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="ebs_enroll_requests_act_window" model="ir.actions.act_window">
+            <field name="name">Enroll Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ebs.enroll.requests</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Enroll Requests" id="ebs_enroll_requests_root_menu"/>
+
+        <menuitem name="Enroll Requests" action="ebs_enroll_requests_act_window" id="ebs_enroll_requests_menu"
+                  parent="ebs_qsheild_mod.ebs_enroll_requests_root_menu" sequence="1"/>
+
+    </data>
+
+</odoo>

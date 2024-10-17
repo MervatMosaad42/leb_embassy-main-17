@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_palestiniansejel">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <img src="/ebs_qsheild_mod/static/src/image/palestinanHeader.png"
+                         style="height: 150px;width: 100%;"/>
+                    <t t-foreach="docs" t-as="employee">
+
+
+                        <div class="col-md-6" t-if="employee.first_Nationality == 'pal'">
+                            <!--                            <t t-foreach="contactikama" t-as="contact_ikama">-->
+                            <table class="table table-sm"
+                                   style="table-layout:fixed;border: 1px solid black;text-align:right;font-weight:bold;font-size:12px; font-family: Arial-body !important;">
+                                <tr>
+                                    <td style="border: 1px solid black;">
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <!--                                            <span style="border-bottom: dotted 3px #000000;" t-field="contact_ikama.ikama_no"/>-->
+                                            <span>:رقم الإقامة / التأشيرة</span>
+                                        </p>
+                                        <t t-if="employee.qatarfirstvisit_date">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <!--                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"-->
+                                                <!--                                                  t-field="employee.qatarfirstvisit_date"/>-->
+                                                <span>تاريخ أول دخول إلى قطر:</span>
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                      t-esc="employee._get_arabic_date_employee(employee.qatarfirstvisit_date)"/>
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <span>:تاريخ أول دخول إلى قطر</span>
+                                        </t>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <!--                                            <span style="border-bottom: dotted 3px #000000;" t-field="contact_ikama.ikama_enddate"/>-->
+                                            <span>:تاريخ إنتهاء الإقامة</span>
+                                        </p>
+
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.sponsor"/>
+                                            <span>:إسم الشركة / الكفيل</span>
+                                        </p>
+                                        <t t-if="employee.function">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                POSITION:
+                                                <span>المهنة :</span>
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.function"/>
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                POSITION:
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.function"/>
+                                                <span>:المهنة</span>
+                                            </p>
+
+                                        </t>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.company_name"/>
+                                            <span>: ( عنوان العمل ( المنطقة</span>
+                                        </p>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.phone"/>
+                                            <span>:هاتف العمل</span>
+                                        </p>
+                                        <div style="border: 1px solid black;padding: 5px;">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.nationality"/>
+                                                <span>:الجنسية الثانية اذا وجد</span>
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <!--                                                    <span t-field="employee.second_passport_no"/>-->
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.nationality"/>
+                                                <span>:رقم جواز السفر الاجنبي</span>
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <!--                                            <span t-field="employee.second_passport_place"/>-->
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.nationality"/>
+                                                <span>:مكان وتاريخ صدوره</span>
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <!--                                            <span t-field="employee.second_passport_enddate"/>-->
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.nationality"/>
+                                                <span>:تاريخ انتهائه</span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <t t-if="employee.firstName">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>الإسم</span>
+                                                :
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.firstName"/>
+
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:الإسم</span>
+                                            </p>
+                                        </t>
+                                        <t t-if="employee.middleName">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>إسم الأب</span>
+                                                :
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.middleName"/>
+
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:إسم الأب</span>
+                                            </p>
+                                        </t>
+                                        <t t-if="employee.lastName">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>إلشهرة</span>
+                                                :
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.lastName"/>
+
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:إلشهرة</span>
+                                            </p>
+                                        </t>
+                                        <t t-if="employee.motherFullName">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>إسم الأم وشهرتها</span>
+                                                :
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                      t-field="employee.motherFullName"/>
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:إسم الأم وشهرتها</span>
+                                            </p>
+                                        </t>
+                                        <t t-if="employee.placeOfBirth or employee.date">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>محل وتاريخ الولادة</span>
+                                                :
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:80px;"
+                                                      t-field="employee.placeOfBirth"/>
+                                                <!--                                            <span style="border-bottom: dotted 3px #000000;" t-field="employee.date"/>-->
+                                                <span style="border-bottom: dotted 3px #000000;"
+                                                      t-esc="employee._get_arabic_date_employee(employee.date)"/>
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:محل وتاريخ الولادة</span>
+                                            </p>
+                                        </t>
+                                        <t t-if="employee.file_no or employee.stati_no">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span style="border-bottom: dotted 3px #000000;padding-left:200px;"
+                                                      t-field="employee.file_no"/>
+                                                :
+                                                <span>رقم الملـف</span>
+                                                :
+                                                <span style="border-bottom: dotted 3px #000000;"
+                                                      t-field="employee.stati_no"/>
+                                                <span>رقم البيان</span>
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                :
+                                                <span>رقم الملـف</span>
+                                                :
+                                                &#8195;&#8195;&#8195;
+                                                <span>رقم البيان</span>
+                                            </p>
+                                        </t>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.stati_no"/>
+                                            <span>:الإحصائي</span>
+                                        </p>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.registered_with"/>
+                                            <span>:مسجل/ة مع</span>
+                                        </p>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <!--                                            <span style="border-bottom: dotted 3px #000000;" t-field="employee.maritalStatus"/>-->
+                                            <b>الحالة الإجتماعية :</b>
+                                            <input type="checkbox" id="oe_import_tracking"/>
+                                            اعزب
+                                            <input type="checkbox" id="oe_import_tracking"/>
+                                            متزوج/ة
+                                            <input type="checkbox" id="oe_import_tracking"/>
+                                            مطلق/ة
+                                        </p>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.passport_no"/>
+                                            <span>:رقم وثيقة السفر</span>
+                                        </p>
+                                        <t t-if="contactpassport">
+                                            <t t-foreach="contactpassport" t-as="contact_passports">
+                                                <t t-if="contactpassport.passport_place or contact_passports.passport_start_date">
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <span style="border-bottom: dotted 3px #000000;"
+                                                              t-field="contact_passports.passport_place"/>
+                                                        <!--                                                        <span style="border-bottom: dotted 3px #000000;"-->
+                                                        <!--                                                              t-field="contact_passports.passport_start_date"/>-->
+                                                        <span style="border-bottom: dotted 3px #000000;"
+                                                              t-esc="contact_passports.partner_id._get_arabic_date_employee(contact_passports.passport_start_date)"/>
+                                                        <span>:مكان وتاريخ صدور الوثيقة</span>
+                                                    </p>
+                                                </t>
+                                                <t t-else="">
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <span>:مكان وتاريخ صدور الوثيقة</span>
+                                                    </p>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:مكان وتاريخ صدور الوثيقة</span>
+                                            </p>
+                                        </t>
+                                        <t t-if="contactpassport">
+                                            <t t-foreach="contactpassport" t-as="contact_passports">
+                                                <t t-if="contactpassport.passport_exp_date">
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <!--                                                        <span style="border-bottom: dotted 3px #000000;padding-left:150px;"-->
+                                                        <!--                                                              t-field="contact_passports.passport_exp_date"/>-->
+                                                        <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                              t-esc="contact_passports.partner_id._get_arabic_date_employee(contact_passports.passport_exp_date)"/>
+                                                        <span>:تاريخ انتهاء وثيقة السفر</span>
+                                                    </p>
+                                                </t>
+                                                <t t-else="">
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <span>:تاريخ انتهاء وثيقة السفر</span>
+                                                    </p>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:تاريخ انتهاء وثيقة السفر</span>
+                                            </p>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black;">
+                                        <t t-if="address">
+                                            <t t-foreach="address" t-as="leb_address">
+                                                <t t-if="leb_address.type == 'Lebanon'">
+                                                    <t t-if="leb_address.city">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <u>العنوان في لبنان</u>:
+                                                            <span>مدينه / قرية</span>
+                                                            :
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:200px;"
+                                                                  t-field="leb_address.city"/>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <u>:العنوان في لبنان</u>
+                                                            <span>:مدينه / قرية</span>
+
+                                                        </p>
+                                                    </t>
+                                                    <t t-if="leb_address.street or leb_address.building">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <span>حيٌ شارع :</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="leb_address.street"/>
+                                                            <span>بناية :</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="leb_address.building"/>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                        ...................
+                                                        :
+                                                        <span>حيٌ شارع:</span>
+                                                        .................
+                                                        <span>بناية</span>
+                                                    </p>
+                                                    </t>
+                                                    <t t-if="leb_address.floor">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <span>ملك / اّجار :</span>
+                                                            <span>طابق / شقة :</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="leb_address.floor"/>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                        .............
+                                                        :
+                                                        <span>ملك / اّجار:</span>
+                                                        .............
+                                                        <span>طابق : / شقة</span>
+                                                    </p>
+                                                    </t>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                              t-field="leb_address.phoneNumber"/>
+                                                        <span>:رقم الهاتف في لبنان</span>
+                                                    </p>
+                                                </t>
+                                                <t t-else="">
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <u>:العنوان في لبنان</u>
+                                                        <span>:مدينه / قرية</span>
+                                                    </p>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        ...................
+                                                        :
+                                                        <span>حيٌ شارع:</span>
+                                                        .................
+                                                        <span>بناية</span>
+                                                    </p>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        .............
+                                                        :
+                                                        <span>ملك / اّجار:</span>
+                                                        .............
+                                                        <span>طابق : / شقة</span>
+                                                    </p>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        00961..../.................
+                                                        <span>:رقم الهاتف في لبنان</span>
+                                                    </p>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <!--                                                    <h5 style="text-align:right">-->
+                                                <u>:العنوان في لبنان</u>
+                                                <!--                                                    </h5>-->
+                                                <!--                                                    <span style="text-align:right; margin-right: 10px;">-->
+                                                <span>:مدينه / قرية</span>
+                                                <!--                                                    </span>-->
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                ...................
+                                                <span>:حيٌ شارع</span>
+                                                <!--                                                </p>-->
+                                                <!--                                                <span style="text-align:right; margin-right: 10px;">-->
+                                                .................
+                                                <span>:بناية</span>
+                                                <!--                                                </span>-->
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>:ملك / اّجار</span>.....................
+                                                <!--                                                </p>-->
+                                                <!--                                                <p style="text-align:right; margin-right: 10px;">-->
+                                                .....................
+                                                <span>:طابق : / شقة</span>
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                00961..../.................
+                                                <span>:رقم الهاتف في لبنان</span>
+                                            </p>
+                                        </t>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <t t-if="address">
+                                            <t t-foreach="address" t-as="qatar_address">
+                                                <t t-if="qatar_address.type == 'Qatar'">
+                                                    <t t-if="qatar_address.city">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <u>
+                                                                العنوان في قطر:
+                                                            </u>
+                                                            <span>المنطقة:</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:200px;"
+                                                                  t-field="qatar_address.city">
+                                                            </span>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <u>
+                                                                :العنوان في قطر
+                                                            </u>
+                                                            <span>:المنطقة</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:200px;"
+                                                                  t-field="qatar_address.city">
+                                                            </span>
+                                                        </p>
+                                                    </t>
+                                                    <t t-if="qatar_address.floor or qatar_address.street">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            <span>شارع:</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="qatar_address.street"/>
+
+                                                            <span>شقة / طابق رقم:</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="qatar_address.floor"/>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="text-align:right; margin-right: 10px;">
+                                                            :
+                                                            <span>شارع:</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="qatar_address.street"/>
+
+                                                            <span>شقة / طابق رقم</span>
+                                                            <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                                  t-field="qatar_address.floor"/>
+                                                        </p>
+                                                    </t>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                              t-field="qatar_address.mojama3"/>
+                                                        <span style="border-bottom: dotted 3px #000000;padding-left:100px;"
+                                                              t-field="qatar_address.building"/>
+                                                        <span>:VILLA/بناية / مجمع</span>
+                                                    </p>
+                                                    <p style="text-align:right; margin-right: 10px;">
+
+                                                        <span>MOBILE</span>
+                                                        <span style="border-bottom: dotted 3px #000000;padding-left:200px;"
+                                                              t-field="qatar_address.phoneNumber"/>
+                                                        <span>:رقم الهاتف في قطر</span>
+                                                    </p>
+                                                </t>
+                                                <t t-else="">
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <u>:العنوان في قطر</u>
+                                                        <span>:المنطقة</span>
+                                                    </p>
+                                                    <p>
+                                                        ....................:
+                                                        <span style="text-align:right; margin-right: 10px;">
+                                                            الشارع:...................
+                                                        </span>
+                                                        <span style="text-align:right; margin-right: 10px;">
+                                                            شقة /طابق رقم
+                                                        </span>
+                                                    </p>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        <span>..............................:VILLA/بناية / مجمع</span>
+                                                    </p>
+                                                    <p style="text-align:right; margin-right: 10px;">
+                                                        MOBILE....................
+                                                        <span>:رقم الهاتف في قطر</span>
+                                                    </p>
+
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <u>:العنوان في قطر</u>
+                                                <span>:المنطقة</span>
+                                            </p>
+                                            <p>
+                                                ....................:
+                                                <span style="text-align:right; margin-right: 10px;">
+                                                    الشارع:...................
+                                                </span>
+                                                <span style="text-align:right; margin-right: 10px;">
+                                                    شقة /طابق رقم
+                                                </span>
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                <span>..............................:VILLA/بناية / مجمع</span>
+                                            </p>
+                                            <p style="text-align:right; margin-right: 10px;">
+                                                MOBILE....................
+                                                <span>:رقم الهاتف في قطر</span>
+                                            </p>
+
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span>:(الإسم الثلأثي ورقم جوال اقرب المقربين في قطر بحالة الطوارئ (صديق او
+                                                قريب
+                                            </span>
+                                        </p>
+                                        <p>
+
+
+                                            <span style="text-align:right; margin-right: 10px;">
+                                                <t t-if="contactemergency and contactemergency.emergency_full_name">
+                                                    <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                          t-esc="contactemergency.emergency_full_name"/>
+                                                </t>
+                                                <t t-if="contactemergency and contactemergency.emergency_phone_number">
+                                                    <span style="border-bottom: dotted 3px #000000;"
+                                                          t-field="contactemergency.emergency_phone_number"/>
+                                                </t>
+                                            </span>
+                                            <!--                                                <span style="text-align:left; margin-right: 10px;">-->
+                                            <!--                                                </span>-->
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span>البريد الالكتروني :EMAIL</span>
+                                        </p>
+                                        <p style="text-align:right; margin-right: 10px;">
+                                            <span style="border-bottom: dotted 3px #000000;padding-left:150px;"
+                                                  t-field="employee.email"/>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--                            <p style="text-align:center">معلومات خاصة بالزوج او الزوجة : معلومات عن الاولاد</p>-->
+                            <table class="table table-borderless table-sm"
+                                   style="text-align:right;font-weight:bold;font-size:12px; font-family: Arial-body !important;">
+                                <tr>
+                                    <td style="padding-left:35px;">
+                                    </td>
+                                    <td style="padding-left:35px;">
+                                        <span>: معلومات خاصة بالأولاد</span>
+                                    </td>
+                                    <td>
+                                        <span>: معلومات خاصة بالزوج او الزوجة</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered table-sm"
+                                   style="border: 1pt solid black;margin-top:-18px;margin-bottom:0px;font-weight:bold; font-family: Arial-body !important;font-size:12px;">
+                                <thead>
+                                    <tr>
+                                        <td style="text-align:center;padding-top: 5px;padding-bottom: 5px;font-weight:bold;border:1pt solid black;">
+                                            <span>المدرسة</span>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                        </td>
+                                        <td style="text-align:center;padding-top: 5px;padding-bottom: 5px;font-weight:bold;border:1pt solid black;">
+                                            <span>مكان وتاريخ الميلا</span>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                            <p>....................................</p>
+                                        </td>
+                                        <td style="text-align:center;padding-top: 5px;padding-bottom: 5px;font-weight:bold;border:1pt solid black;">
+                                            <span>الاسم</span>
+                                            <p>....................................1</p>
+                                            <p>....................................2</p>
+                                            <p>....................................3</p>
+                                            <p>....................................4</p>
+                                            <p>....................................5</p>
+                                            <p>....................................6</p>
+                                            <p>....................................7</p>
+                                        </td>
+                                        <td style="text-align:right;padding-top: 50px;padding-bottom: 5px;font-weight:bold;border:1pt solid black;">
+                                            <span>............................................................ :
+                                                الإسم والشهرة
+                                            </span>
+                                            <br/>
+                                            <span>............................................................ : إسم
+                                                الأب
+                                            </span>
+                                            <br/>
+                                            <span>.................................................. : إسم الأم
+                                                وشهرتها
+                                            </span>
+                                            <br/>
+                                            <span>..................................................: تاريخ ومحل
+                                                الولادة
+                                            </span>
+                                            <br/>
+                                            <span>....................................................: الجنسية
+                                                الأصلية
+                                            </span>
+                                            <br/>
+                                            <span>.............................................: رقم جواز السفر/
+                                                الوثيقة
+                                            </span>
+                                            <br/>
+                                            <span>................................................: مكان وتاريخ
+                                                الزواج
+                                            </span>
+                                            <br/>
+                                            <span>.......................................................: المهنة في
+                                                قطر
+                                            </span>
+                                            <br/>
+                                            <span>............................................................: اسم
+                                                الشركة
+                                            </span>
+                                            <br/>
+                                            <span>.......................................................: عنوان
+                                                العمل
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                .......................................................................:
+                                                هاتف
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table class="table table-bordered table-sm"
+                                   style="border:1pt solid black;font-weight:bold; font-family: Arial-body !important;font-size:12px;">
+                                <tr>
+                                    <td style="border: 1pt solid black;width:40%;">
+                                        <p style="text-align:right;">
+                                            <b>............................................. تاريخ تقديم الطلب</b>
+                                        </p>
+                                        <p style="text-align:right;">
+                                            <b>.......................................... توقيع صاحب الطلب</b>
+                                        </p>
+                                        <p style="text-align:right;">
+
+                                            <b>...........................................اسم مستلم الطلب الطلب</b>
+                                        </p>
+                                        <!--                                        <hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>-->
+                                        <!--                                            <p style="text-align:right;">.-->
+                                        <!--                                            </p>-->
+                                        <br/>
+                                        <!--                                        <p style="text-align:right;font-weight:bold;">: توقيع صاحب الطلب</p>-->
+                                        <!--                                        <br/>-->
+                                        <!--                                        <p style="text-align:right;font-weight:bold;">: الطلب مستلم اسم</p>-->
+                                        <!--                                        <br/>-->
+                                    </td>
+                                    <td style="border: 1pt solid black;border-right:none;">
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">المستندات
+                                            :المطلوبة لجميع أفراد العائلة
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">(صورة شمسية
+                                            لصاحب/ة العلاقة و صورة شمسية لأفراد العائلة (خلفية بيضاء
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">صورة عن جواز
+                                            السفر والصفحات الاساسيه. .
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">صورة عن
+                                            الإقامة القطرية. .
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">(. صورة عن
+                                            الهوية وصورة عن بطاقة الاونروا (الإعاشة
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">صورة عن
+                                            جوازات سفر والإقامة لجميع افراد العائلة في حال تواجدهم في قطر.
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">عن وثيقة
+                                            الزواج وصورة عن اخراج قيد عائلي.
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">على المتزوجة
+                                            ضرورة إبراز الهوية اللبنانية او بيان قيد افرادي يظهر وضعها العائلي
+                                            الحالي.
+                                        </p>
+                                        <p style="text-align:right;font-weight:bold;margin-bottom:0px;">حضور صاحب
+                                            العلاقة شخصيا الى السفارة.
+                                        </p>
+                                    </td>
+                                    <td style="border-left: none;border-bottom:1px solid;border-top:1px solid;border-right:1px solid;">
+                                        <p style="margin-bottom:0px;">*</p>
+                                        <p style="margin-bottom:0px;">1</p>
+                                        <p style="margin-bottom:0px;">2</p>
+                                        <p style="margin-bottom:0px;">3</p>
+                                        <p style="margin-bottom:0px;">4</p>
+                                        <p style="margin-bottom:0px;">5</p>
+                                        <p style="margin-bottom:0px;">6</p>
+                                        <p style="margin-bottom:0px;">7</p>
+                                        <p style="margin-bottom:0px;">8</p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--                            </t>-->
+                        </div>
+                    </t>
+                </t>
+            </t>
+            <!--            </t>-->
+
+        </template>
+    </data>
+</odoo>

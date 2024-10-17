@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_lebanese_nationality_by_marriage_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 24px;" align="center">
+                                <span>إكتساب جنسية لبنانية بالزواج</span>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 22px;" align="center">
+                                <span>جانب مأمور نفوس</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right">
+                                <span>: المستدعي</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right">
+                                <span>الإسم</span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right">
+                                <span>إسم الأب</span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right">
+                                <span>المستدعي</span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right">
+                                <span>إسم الأم</span>
+                            </td>
+                        </tr>
+                        <br/>
+                        <br/>
+                    </table>
+                    <br/>
+                    <br/>
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="4">
+                                <b>: الجنسية</b>
+                            </td>
+                        </tr>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="2">
+                                <b>: المذهب</b>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="2">
+                                <b>: زوجة اللبناني</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="4">
+                                <b>: محل ورقم القيد</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="4">
+                                <b>: تاريخ تنفيذ الزواج</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="4">
+                                <b>: عنوان السكن</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="4">
+                                <b>: رقم الهاتف</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="4">
+                                <b>: محل ورقم القيد</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="2">
+                                <b>توقيع المستدعية</b>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="2">
+                                <span>التاريخ</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="2">
+                                <div style="border: 1px solid;padding: 5px;" >
+                                <b>طابع مالي</b>
+                                </div>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 20px;" align="right"
+                                colspan="2">
+                                <b>: المستندات المطلوبة</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> جانب رئيس دائرة نفوس</span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> بيان قيد عائلي للزوج مدرج عليه كافة الملاحظات.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> ربطاً كامل الملف عملاً بالمذكرة رقم  35 </span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> طبق الأصل عن وثيقة الزواج .</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> تاريخ :  18/03/2019</span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> طبق الأصل عن جواز سفر صالح للزوجة.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="4">
+                                <span> أو بيان قيد سوري حديث أو بيان قيد فلسطيني حديث  .</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> توقيع مأمور النفوس</span>
+                            </td>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> إقامة صالحة أو تأشيرة دخول.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="2">
+                                <span> وثيقة ولادة للزوجة ، مترجمة ومصدّقة.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 4px;font-size: 16px;" align="right" colspan="4">
+                                <span>*  تُملأ كافة الخانات باللغة العربية .</span>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

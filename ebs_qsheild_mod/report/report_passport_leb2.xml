@@ -1,0 +1,161 @@
+<odoo>
+    <data>
+        <template id="report_passport_leb2">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <span t-esc="'قطر'"
+                          style="text-align: right!important;width:200px;position:absolute; top:4px;right:105px"/>
+                    <t t-foreach="docs" t-as="employee">
+                        <span t-esc="employee._get_arabic_req_date()" style="position:absolute; top:236px;left:52px"/>
+                        <span style="position:absolute; top:233px;right:87px">لبنان لدى قطر</span>
+                        <span t-field="employee.mission_file_number" style="position:absolute; top:263px;left:302px"/>
+                        <span t-field="employee.application_registration_number"
+                              style="position:absolute; top:263px;right:150px"/>
+
+                        <t t-if="employee.paid_fee">
+                            <span t-field="employee.paid_fee" style="position:absolute; top:318px;right:150px"/>
+                        </t>
+                        <span t-field="employee.service_beneficiary.firstName"
+                              style="text-align: right!important;width:200px;position:absolute;top:372px;right:113px"/>
+                        <span t-field="employee.service_beneficiary.first_name_en"
+                              style="position:absolute; top:372px;left:113px"/>
+                        <span t-field="employee.service_beneficiary.lastName"
+                              style="text-align: right!important;width:200px;position:absolute; top:403px;right:113px"/>
+                        <span t-field="employee.service_beneficiary.last_name_en"
+                              style="position:absolute; top:403px;left:113px"/>
+
+                        <span t-field="employee.service_beneficiary.middleName"
+                              style="text-align: right!important;width:200px;position:absolute; top:437px;right:113px"/>
+                        <span t-field="employee.service_beneficiary.middle_name_en"
+                              style="position:absolute; top:437px;left:113px"/>
+
+                        <span t-field="employee.service_beneficiary.motherFullName"
+                              style="text-align: right!important;width:200px;position:absolute; top:468px;right:113px"/>
+                        <span t-field="employee.service_beneficiary.mother_full_name_en"
+                              style="position:absolute; top:468px;left:113px"/>
+
+                        <span t-field="employee.service_beneficiary.placeOfBirth"
+                              style="text-align: right!important;width:200px;position:absolute; top:497px;right:113px"/>
+                        <span t-field="employee.service_beneficiary.place_of_birth_en"
+                              style="position:absolute; top:497px;left:113px"/>
+
+
+                        <span t-esc="employee.service_beneficiary._get_arabic_date()"
+                              style="position:absolute; top:529px;right:264px"/>
+                        <span t-field="employee.service_beneficiary.date"
+                              style="position:absolute; top:529px;left:264px"/>
+                        <span t-field="employee.service_beneficiary.sejelNo"
+                              style="position:absolute; top:553px;right:400px"/>
+                        <span t-field="employee.service_beneficiary.sejel_place"
+                              style="position:absolute;width:200px; top:553px;right:113px"/>
+
+
+                        <t t-foreach="employee.partner_id.address_ids" t-as="qatar_address">
+                            <t t-if="qatar_address.type =='Qatar' and qatar_address.is_active">
+                                <t t-if="qatar_address.city and qatar_address.street and qatar_address.building">
+                                    <t t-set="qtr_address"
+                                       t-value="qatar_address.city+' ' +qatar_address.street+' '+qatar_address.building"></t>
+                                </t>
+                                <t t-elif="qatar_address.city and qatar_address.street">
+                                    <t t-set="qtr_address" t-value="qatar_address.city+' ' +qatar_address.street"></t>
+                                </t>
+                                <t t-elif="qatar_address.city and qatar_address.building">
+                                    <t t-set="qtr_address" t-value="qatar_address.city+' ' +qatar_address.building"></t>
+                                </t>
+                                <t t-elif="qatar_address.street and qatar_address.building">
+                                    <t t-set="qtr_address"
+                                       t-value="qatar_address.street+' ' +qatar_address.building"></t>
+                                </t>
+                                <t t-elif="qatar_address.street">
+                                    <t t-set="qtr_address" t-value="qatar_address.street"></t>
+                                </t>
+                                <t t-elif="qatar_address.building">
+                                    <t t-set="qtr_address" t-value="qatar_address.building"></t>
+                                </t>
+                                <t t-elif="qatar_address.city">
+                                    <t t-set="qtr_address" t-value="qatar_address.city"></t>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="lb_address" t-value="''"></t>
+                                </t>
+                                <span t-esc="qtr_address" style="position:absolute;top:589px;right:171px"/>
+                                <t t-if="qatar_address.mobile">
+                                    <span t-field="qatar_address.mobile"
+                                          style="position:absolute;top:589px;left:17px"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="qatar_address.phoneNumber"
+                                          style="position:absolute;top:589px;left:17px"/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-foreach="employee.partner_id.address_ids" t-as="leb_address">
+                            <t t-if="leb_address.type == 'Lebanon' and leb_address.is_active">
+
+                                <t t-if="leb_address.kaza">
+                                    <span t-field="leb_address.kaza.name"
+                                          style="position:absolute; top:616px;right:303px"/>
+                                </t>
+                                <t t-if="leb_address.city">
+                                    <span t-field="leb_address.city" style="position:absolute; top:616px;right:471px"/>
+                                </t>
+                                <t t-if="leb_address.street">
+                                    <span t-field="leb_address.street"
+                                          style="position:absolute; top:616px;right:717px"/>
+                                </t>
+                                <t t-if="leb_address.owned">
+                                    <t t-set="lb_owned" t-value="''"></t>
+                                    <span t-esc="lb_owned" style="position:absolute; top:629px;left:125px"/>
+                                </t>
+
+                                <t t-if="leb_address.phoneNumber">
+                                    <span t-field="leb_address.phoneNumber"
+                                          style="position:absolute; top:641px;right:282px"/>
+                                </t>
+                                <t t-if="leb_address.mobile">
+                                    <span t-field="leb_address.mobile"
+                                          style="position:absolute; top:641px;right:439px"/>
+                                </t>
+                                <t t-if="leb_address.partner_id.email">
+                                    <span t-field="employee.partner_id.email"
+                                          style="position:absolute; top:641px;left:17px"/>
+                                </t>
+
+                            </t>
+                        </t>
+
+                        <t t-foreach="employee.service_beneficiary.employee_dependants" t-as="dep">
+                            <t t-if="employee.service_beneficiary.gender == 'female'">
+                                <t t-if="dep.dependent_type == 'spouse'">
+                                    <t t-set="full_name" t-value="dep.firstName+' ' +dep.lastName"></t>
+                                    <t t-set="full_nameEnglish" t-value="dep.first_name_en+' ' +dep.last_name_en"></t>
+
+                                    <span t-field="employee.service_beneficiary.maritalStatus"
+                                          style="position:absolute; top:676px;left:228px"/>
+                                    <span t-field="dep.firstName"
+                                          style="text-align: right!important;width:200px;position:absolute; top:707px;right:113px"/>
+                                    <span t-field="dep.first_name_en" style="position:absolute; top:707px;left:228px"/>
+
+                                    <span t-field="dep.lastName"
+                                          style="text-align: right!important;width:200px;position:absolute; top:735px;right:113px"/>
+                                    <span t-field="dep.last_name_en" style="position:absolute; top:735px;left:228px"/>
+
+                                    <span t-esc="dep._get_arabic_nationality()"
+                                          style="position:absolute; top:761px;right:113px"/>
+                                    <span t-field="dep.first_Nationality"
+                                          style="position:absolute; top:761px;left:228px"/>
+                                </t>
+                            </t>
+                        </t>
+                        <span t-field="employee.applicant_profession_ar"
+                              style="position:absolute; top:837px;right:210px"/>
+                        <span t-field="employee.applicant_profession_en"
+                              style="position:absolute; top:894px;right:225px"/>
+
+
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

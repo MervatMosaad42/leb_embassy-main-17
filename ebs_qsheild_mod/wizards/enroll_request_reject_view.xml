@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="enroll_request_reject_wizard_form" model="ir.ui.view">
+            <field name="name">enroll.request.reject.wizard.form</field>
+            <field name="model">enroll.request.reject.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <footer>
+                        <button name="confirm_button" string="Confirm" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="enroll_request_reject_wizard_action" model="ir.actions.act_window">
+            <field name="name">Reject Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">enroll.request.reject.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="enroll_request_reject_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+
+</odoo>

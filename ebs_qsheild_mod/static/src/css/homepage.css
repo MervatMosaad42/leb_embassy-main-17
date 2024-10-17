@@ -1,0 +1,1148 @@
+/*
+.version2 {
+      width: 1366px;
+      height: 585px;
+      margin: 0 0 80px;
+      padding: 0 0 130px;
+      object-fit: contain;
+}
+.img_display_class{
+    width:100%
+    height:
+}*/
+.border_bottom_class{
+    margin:auto;
+    padding-bottom:40px !important;
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-color: #ed5f34;
+}
+.content_size_class{
+    font-size:20px;
+    width: 90%;
+    margin: auto;
+}
+.border_bottom_class{
+width: 90%;
+    margin: auto;
+}
+.bg_color{
+    background:#f9f9f9;
+}
+.who_we_are_content_class{
+    margin-bottom:120px;
+    margin-top:90px;
+}
+
+
+
+
+.Path-2019 {
+  width: auto;
+  height: 15px;
+  margin: 0px 0 0;
+  padding: 0px 0 0px;
+  background-color: #ed1c24;
+}
+
+.Path-2021 {
+  width: 29.5px;
+  height: 29.9px;
+  margin-bottom: -9px;
+}
+
+/*@media (max-width: 767px) {
+.what_we_can_button {
+left: 30%;
+top: 11%;
+}
+}
+
+@media (max-width: 400px) {
+.what_we_can_button {
+left: 10%;
+top: 8%;
+padding: 11px 9px 15px 10px;
+}
+}
+
+@media (max-width: 576px) {
+.what_we_can_button {
+left: 2%;
+top: 10%;
+padding: 2px 2px 2px 3px;
+position:relative;
+bottom:52px;
+}
+}*/
+
+.navbar-toggler-icon{
+    padding: 0.25rem 0.75rem;
+    font-size: 1.09375rem;
+    line-height: 1;
+    background-color: #d2bcbc;
+    border: 1px solid grey;
+}
+
+/*@media (max-width: 576px) {
+.banner_inner_content{
+    top: 25% !important;
+}
+}
+
+@media (max-width: 767px) {
+.banner_inner_content{
+    top: 22% !important;
+    font-size: 18px !important;
+}
+}*/
+
+
+
+
+/*@media (max-width: 424px) {
+.image_height{
+ width:100%;
+ height:250px;
+}
+}*/
+
+/*@media (max-width: 424px) {
+.banner_inner_content{
+top: 525px !important;
+font-size: 13px !important;
+margin-top:-56%;
+}
+}*/
+
+.what_we_can_button:hover {
+    text-decoration:none;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+}
+.who_we_can_header{
+    margin-top:30px;
+}
+#footer{
+    background:#000;
+}
+.for_btn_center{
+    text-align:center;
+    margin-top:45px;
+    font-size: 17px;
+}
+.img_search_icon{
+    margin-left: 10px;
+    background-color: white;
+}
+.connect_with_us_hrader_class, .electronic_service_header_class, .about_us_header_class{
+    color:#d90000 !important;
+}
+.about_menu_content_class, .about_menu_content_class, .electronic_service_menu_class ul li a,#connect ul li span,#connect ul li a,.about_menu_class small a,#connect ul li{
+    color:#ffffff;
+}
+#connect ul li i{
+    color:red;
+}
+.electronic_service_submenu_class span{
+    color:#fff;
+}
+.about_menu_class span {
+    color:#fff;
+}
+
+#wrapwrap #top{
+    /*position: fixed;*/
+    width: 100%;
+    float: left;
+    background-color: var(--white) !important;
+}
+.o_header_affix {
+    background-color:#f9f9f9;
+    color:black;
+}
+#top_menu_collapse_clone .nav-link{
+    color:#0f205f !important;
+    margin-left:12px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+#wrapwrap #top .navbar.navbar-expand-md{
+    color:#black !important;
+}
+
+#top_menu_collapse ul li a{
+    color:#0f205f;
+     margin-left:12px;
+     font-weight:bold;
+     font-size:18px;
+
+}
+#wrapwrap{
+    overflow:hidden;
+}
+
+.dropdown-menu.js_usermenu.dropdown-menu-right.show{
+    background:white;
+}
+
+.dropdown-item {
+    color: #0f205f;
+    margin-left: 12px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+ .dropdown-menu.js_usermenu.dropdown-menu-right.show a:hover{
+    color:black !important;
+ }
+ .bglogin{
+    background-image: url("/ebs_qsheild_mod/static/src/image/logoflagnew.png") !important;
+    background-position: center;
+    background-size: cover;
+    height:600px;
+ }
+  #wrap{
+         /*margin-top:50px;*/
+         background-color:#fff;
+      }
+      .image_display_class img{
+        width:200px;
+        height:200px;
+         border: solid 2px #f1f1f1;
+         border-radius: 5px;
+      }
+      .grid_service_types {
+        margin-right:0px;
+      }
+      .image_display_class{
+        text-align:center;
+      }
+      .image_section_class{
+            margin-bottom:88px;
+            margin:auto;
+            font-weight:bold;
+            font-size:21px;
+      }
+      .subimage_display_class img{
+        width:100px;
+         border: solid 2px #f1f1f1;
+         border-radius: 5px;
+      }
+      .subimage_display_class{
+        text-align:center;
+      }
+      .subimage_section_class{
+            margin-bottom:15px;
+      }
+  main{
+    background-color:#fff;
+  }
+  .js_language_selector .btn{
+        background-color:black !important;
+        border: 1px solid red;
+        color: white;
+  }
+.oe_login_form .justify-content-between a{
+    color:black;
+}
+.oe_login_form .btn-link{
+    color:black;
+}
+
+.oe_login_form, .oe_signup_form, .oe_reset_password_form {
+    margin: 50px auto !important;
+    right: 35% !important;
+    direction:rtl;
+}
+
+#top_menu_collapse .dropdown-menu{
+    background:#fff;
+}
+.news-section {
+    margin-top: 0px !important;
+
+}
+.news-section .card-body{
+    padding:10px;
+    padding-left:80px;
+    color:red;
+    font-weight: bold;
+    border-style: none !important;
+}
+.news-section .red-heading {
+    padding-bottom: 20px !important;
+}
+.list-unstyled li{
+    padding-bottom:10px;
+}
+.oe_login_buttons .btn-primary{
+    background-color: black;
+    border-color: black;
+}
+button .close {
+    display:block !important;
+}
+.star-rating {
+  line-height:32px;
+  font-size:1.25em;
+}
+
+.star-rating .fa-star{color: yellow;}
+
+.ebs_contactus_address{
+    margin-top:15px;
+}
+.ebs_contactus_address,.ebs_contactus_address_field{
+    font-size:18px;
+}
+
+
+body,h1,h2,h3,h4,h5,h6{
+    font-family:HelveticaNeue-Medium !important;
+}
+
+.border_bottom_class_contactus{
+    margin:auto;
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-color: #000;
+}
+
+#footer{
+    direction: initial;
+}
+#wrap .oe_structure .pt8.pb8 .container .row.s_nb_column_fixed .col-lg-12.s_title.pt16.pb16 h1{
+font-size:27px;
+font-family:HelveticaNeue-Medium !important;
+}
+
+.form-group {
+    color:white;
+}
+
+
+.news-list li {
+    margin-right: 20px;
+    float: left;
+    margin-left: 20px;
+}
+
+.news-list {
+    list-style-type: disc;
+}
+
+
+@media (max-width: 424px) {
+.news-list li {
+    margin-right: 20px;
+    float: left;
+    margin-left: 20px;
+    display:contents
+}
+}
+
+@media (max-width: 424px) {
+.news-list {
+    list-style-type: disc;
+
+}
+}
+
+@media (max-width:424px) {
+.oe_login_form {
+    left:0%;
+}
+}
+
+@media (max-width:424px) {
+.oe_signup_form {
+    left:0%;
+}
+}
+
+@media (max-width:424px) {
+.oe_reset_password_form {
+    left:0%;
+}
+}
+
+/*@media (max-width:424px) {
+.img_search_icon{
+    height: 23px;
+}
+}*/
+
+.management_team_bg_black{
+    background:#f9f9f9;
+}
+ .management_team_bg_black .owl-carousel .owl-stage-outer .owl-stage .owl-item{
+        background:#ffffff;
+        border-radius:5px;
+     }
+
+      .item.management_item .img-responsive,.home_page_announchment_slider_image{
+             border-top-left-radius:5px;
+             border-top-right-radius:5px;
+             }
+
+     .management_title_border_class{
+        border-bottom:3px solid #ed5f34;
+        width:15%;
+        margin:auto;
+        margin-bottom:40px !important;
+     }
+
+     .home_page_announchment_slider_image{
+        width:100%;
+        height:180px;
+        max-height:180px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+     }
+
+    /* .management_item_slider .owl-next, .management_item_slider .owl-prev{
+        display:none;
+     }*/
+   .management_item_slider .owl-item{
+    margin-bottom:50px;
+   }
+   .management_item_slider .owl-item{
+        border: 1px solid #cdcdcd;
+   }
+   #multi-item-example .carousel-indicators li, #multi-item-examples .carousel-indicators li{
+        background-color: #000 !important;
+    }
+
+@media (min-width: 768px) {
+    #desktop_view_display{
+        display:block !important;
+    }
+    #mobile_view_display{
+        display:none !important;
+    }
+}
+
+@media (max-width: 767px) {
+    #desktop_view_display{
+            display:none !important;
+        }
+        #mobile_view_display{
+            display:block !important;
+        }
+}
+@media screen and (min-width: 360px) and (max-width: 369px) {
+
+     .what_we_can_button.exist_announcement_page {
+              max-width: 100%;
+/*
+              padding: 9px 16px 12px 15px;
+*/
+              box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+              background-color: #ffffff;
+              border-radius: 7px;
+              border: 2px solid red;
+              color:#aa110c !important;
+              font-size: 18px;
+              /*top: 7%;*/
+              position:relative;
+              bottom:80px;
+              left:1%
+        }
+        .banner_inner_content.exist_announcement_page{
+            position: absolute;
+            margin-left:15px;
+            color: white;
+           /* top: 8%;*/
+           position:relative;
+            bottom:21px;
+            font-size: 13px;
+            direction:initial;
+        }
+
+        .what_we_can_button_without_announchment{
+                  max-width: 100%;
+                  /*padding: 9px 16px 12px 15px;*/
+                  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                  background-color: #ffffff;
+                  border-radius: 7px;
+                  border: 2px solid red;
+                  color:#aa110c !important;
+                  font-size: 18px;
+                   bottom:80px;
+                  /*top: 8%;*/
+                  position:relative;
+                  left:1%
+            }
+                .banner_inner_content_without_announchment{
+                   position:relative;
+                    margin-left:15px;
+                    color: white;
+                  /*  top: 9%;*/
+                    font-size: 13px;
+                     bottom:21px;
+                    direction:initial;
+                }
+          .image_height{
+                     width:100%;
+                     height:250px;
+                }
+                 .version2{
+                        height:251px;
+                    }
+                header .dropdown-item {
+                    padding:0 !important;
+                }
+                .eve_and_meeting_page_content_set{
+                    width:100%;
+                    border-radius:5px;
+                }
+                .eve_and_meeting_page_img_set{
+                    padding:5px;
+                     border:1px solid #f1f1f1;
+                     border-radius: 5px;
+                    width:100%;
+                    max-height: 185px;
+                    height: 185px;
+                     border-radious:5px;
+                }
+                .event_and_meeting_page_align_right,.event_and_meeting_page_align_left{
+                    margin:50px !important;
+                }
+                .home_page_ambassy_image_height,ambassy_page_image_height{
+                    height:154px;
+                }
+
+
+}
+@media screen and (min-width: 370px) and (max-width: 480px) {
+
+    .what_we_can_button.exist_announcement_page {
+              max-width: 100%;
+              /*padding: 9px 16px 12px 15px;*/
+              box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+              background-color: #ffffff;
+              border-radius: 7px;
+              border: 2px solid red;
+              color:#aa110c !important;
+              font-size: 18px;
+               bottom:80px;
+             /* top: 8%;*/
+              position:relative;
+              left:1%
+        }
+        .banner_inner_content.exist_announcement_page{
+            position:relative;
+            margin-left:15px;
+            color: white;
+             bottom:21px;
+            /*top: 9%;*/
+            font-size: 13px;
+            direction:initial;
+        }
+
+        .what_we_can_button_without_announchment {
+                  max-width: 100%;
+                  /*padding: 6px 16px 6px 15px;*/
+                  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                  background-color: #ffffff;
+                  border-radius: 7px;
+                  border: 2px solid red;
+                  color:#aa110c !important;
+                  font-size: 18px;
+                   bottom:80px;
+                  /*top: 10%;*/
+                  position:relative;
+                  left:1%
+                }
+                .banner_inner_content_without_announchment{
+                position:relative;
+                margin-left:15px;
+                color: white;
+                 bottom:21px;
+                /*top: 11%;*/
+                font-size: 13px;
+                direction:initial;
+                }
+          .image_height{
+                     width:100%;
+                     height:250px;
+                }
+                 .version2{
+                        height:251px;
+                    }
+                     header .dropdown-item {
+                            padding:0 !important;
+                        }
+        .eve_and_meeting_page_content_set{
+                width:100%;
+               border-radius:5px;
+            }
+            .eve_and_meeting_page_img_set{
+                padding:5px;
+                 border:1px solid #f1f1f1;
+                width:100%;
+                max-height: 185px;
+                border-radius: 5px;
+                height: 185px;
+                 border-radious:5px;
+            }
+             .event_and_meeting_page_align_right,.event_and_meeting_page_align_left{
+                    margin:50px !important;
+                }
+            .home_page_ambassy_image_height,ambassy_page_image_height{
+                height:154px;
+            }
+
+}
+
+
+
+/*#lightbox .lb-image{
+    height:350px !important;
+   max-height:350px !important;
+   width:100% !important;
+}*/
+
+
+
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+
+    .what_we_can_button.exist_announcement_page {
+                  max-width: 100%;
+                  padding: 9px 16px 12px 15px;
+                  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                  background-color: #ffffff;
+                  border-radius: 7px;
+                  border: 2px solid red;
+                  color:#aa110c !important;
+                  font-size: 18px;
+                 /* top: 7%;*/
+                  position:relative;
+                  bottom:120px;
+                  left:1%
+            }
+            .banner_inner_content.exist_announcement_page{
+                position:relative;
+                margin-left:15px;
+                color: white;
+                /*top: 9%;*/
+                bottom:35px;
+                font-size: 18px;
+                direction:initial;
+            }
+             .what_we_can_button_without_announchment{
+                              max-width: 100%;
+                              padding: 7px 16px 7px 15px;
+                              box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                              background-color: #ffffff;
+                              border-radius: 7px;
+                              border: 2px solid red;
+                              color:#aa110c !important;
+                              font-size: 18px;
+                              /*top: 9%;*/
+                              position:relative;
+                              bottom:120px;
+                              left:1%
+                        }
+                        .banner_inner_content_without_announchment{
+                           position:relative;
+                            margin-left:15px;
+                            color: white;
+                            /*top: 11%;*/
+                            font-size: 18px;
+                            bottom:35px;
+                            direction:initial;
+                        }
+               .image_height{
+                         width:100%;
+                         height:250px;
+                    }
+                    .version2{
+                            height:251px;
+                        }
+                         header .dropdown-item {
+                                padding:0 !important;
+                            }
+        .eve_and_meeting_page_content_set{
+                width:100%;
+                border-radius:5px;
+            }
+            .eve_and_meeting_page_img_set{
+                padding:5px;
+                width:100%;
+                 border:1px solid #f1f1f1;
+                 border-radius: 5px;
+                max-height: 185px;
+                height: 185px;
+                 border-radious:5px;
+            }
+            .event_and_meeting_page_align_right,.event_and_meeting_page_align_left{
+                margin:100px !important;
+            }
+             .home_page_ambassy_image_height,ambassy_page_image_height{
+                height:260px;
+            }
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 969px) {
+    .what_we_can_button.exist_announcement_page {
+              max-width: 100%;
+              padding: 9px 16px 12px 15px;
+              box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+              background-color: #ffffff;
+              border-radius: 7px;
+              border: 2px solid red;
+              color:#aa110c !important;
+              font-size: 18px;
+              bottom:120px;
+              /*top: 15%;*/
+             position:relative;
+              left:1%
+        }
+            .banner_inner_content.exist_announcement_page{
+                position:relative;
+                margin-left:15px;
+                color: white;
+                /*top: 17%;*/
+                font-size: 18px;
+                bottom:35px;
+                direction:initial;
+            }
+            .what_we_can_button_without_announchment{
+                  max-width: 100%;
+                  padding: 7px 16px 7px 15px;
+                  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                  background-color: #ffffff;
+                  border-radius: 7px;
+                  border: 2px solid red;
+                  color:#aa110c !important;
+                  font-size: 18px;
+                  bottom:120px;
+                  /*top: 17%;*/
+                 position:relative;
+                  left:1%
+            }
+            .banner_inner_content_without_announchment{
+                position:relative;
+                margin-left:15px;
+                color: white;
+               /* top: 19%;*/
+               bottom:35px;
+                font-size: 18px;
+                direction:initial;
+            }
+               .image_height{
+                         width:100%;
+                         height:400px;
+                    }
+           .version2{
+                    height:401px;
+                }
+             .event_and_meeting_page_align_right{
+                    margin-left:30px;
+                    text-align: -webkit-center;
+                }
+                event_and_meeting_page_align_left{
+                    margin-right:30px;
+                    text-align: -webkit-center;
+                }
+                    .main_class_of_eve_and_meet{
+
+                        margin-top:130px;
+                        margin-bottom:130px;
+
+                    }
+                   .eve_and_meeting_page_content_set{
+                       width:100%;
+                       border-radius:5px;
+                   }
+                   .eve_and_meeting_page_img_set{
+                       padding:5px;
+                       border-radius: 5px;
+                        border:1px solid #f1f1f1;
+                       width:100%;
+                       max-height: 300px;
+                       height: 300px;
+                        border-radious:5px;
+                   }
+                   .home_page_ambassy_image_height{
+                           height:180px;
+                       }
+                    .ambassy_page_image_height{
+                        height:328px;
+                   }
+}
+@media screen and (min-width: 970px) and (max-width: 991px) {
+
+    .what_we_can_button.exist_announcement_page {
+                  max-width: 100%;
+                  padding: 9px 16px 12px 15px;
+                  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                  background-color: #ffffff;
+                  border-radius: 7px;
+                  border: 2px solid red;
+                  color:#aa110c !important;
+                  font-size: 18px;
+                 /* top: 15%;*/
+                 position:relative;
+                 bottom:110px;
+                  left:1%
+            }
+                .banner_inner_content.exist_announcement_page{
+                    position:relative;
+                    margin-left:15px;
+                    color: white;
+                    /*top: 17%;*/
+                    bottom:35px;
+                    font-size: 18px;
+                    direction:initial;
+                }
+                .what_we_can_button_without_announchment{
+                      max-width: 100%;
+                      padding: 7px 16px 7px 15px;
+                      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                      background-color: #ffffff;
+                      border-radius: 7px;
+                      border: 2px solid red;
+                      color:#aa110c !important;
+                      font-size: 18px;
+                      bottom:110px;
+                      /*top: 19%;*/
+                      position:relative;
+                      left:1%
+                }
+                .banner_inner_content_without_announchment{
+                    position:relative;
+                    margin-left:15px;
+                    color: white;
+                    bottom:35px;
+                    /*top: 22%;*/
+                    font-size: 18px;
+                    direction:initial;
+                }
+                   .image_height{
+                             width:100%;
+                             height:400px;
+                        }
+                        .version2{
+                                height:401px;
+                            }
+             .event_and_meeting_page_align_right{
+                    margin-left:30px;
+                    text-align: -webkit-center;
+                }
+                event_and_meeting_page_align_left{
+                    margin-right:30px;
+                    text-align: -webkit-center;
+                }
+                    .main_class_of_eve_and_meet{
+
+                        margin-top:150px;
+                        margin-bottom:150px;
+
+                    }
+                     .eve_and_meeting_page_content_set{
+                           width:100%;
+                          border-radius:5px;
+                       }
+                       .eve_and_meeting_page_img_set{
+                           padding:5px;
+                            border:1px solid #f1f1f1;
+                            border-radius: 5px;
+                           width:100%;
+                           max-height: 300px;
+                           height: 300px;
+                            border-radious:5px;
+                       }
+                       .home_page_ambassy_image_height{
+                              height:200px;
+                          }
+                       .ambassy_page_image_height{
+                           height:450px;
+                      }
+
+}
+
+
+@media screen and (min-width: 992px) and (max-width: 1023px) {
+
+    .what_we_can_button.exist_announcement_page {
+                      max-width: 100%;
+                      padding: 9px 16px 12px 15px;
+                      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                      background-color: #ffffff;
+                      border-radius: 7px;
+                      border: 2px solid red;
+                      color:#aa110c !important;
+                      font-size: 18px;
+                      /*top: 22%;*/
+                      bottom:110px;
+                      position:relative;
+                      left:1%
+                }
+                .banner_inner_content.exist_announcement_page{
+                    position:relative;
+                    margin-left:15px;
+                    color: white;
+                    bottom:35px;
+                    /*top: 25%;*/
+                    font-size: 18px;
+                    direction:initial;
+                }
+                .what_we_can_button_without_announchment {
+                      max-width: 100%;
+                      padding: 8px 16px 10px 15px;
+                      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                      background-color: #ffffff;
+                      border-radius: 7px;
+                      bottom:110px;
+                      border: 2px solid red;
+                      color:#aa110c !important;
+                      font-size: 18px;
+                     /* top: 27%;*/
+                      position:relative;
+                      left:1%
+                }
+                .banner_inner_content_without_announchment{
+                    position:relative;
+                    margin-left:15px;
+                    color: white;
+                    bottom:35px;
+                  /*  top: 31%;*/
+                    font-size: 18px;
+                    direction:initial;
+                }
+                   .image_height{
+                             width:100%;
+                             height:500px;
+                        }
+                        .version2{
+                                height:503px;
+                            }
+                     .event_and_meeting_page_align_right{
+                            margin-left:30px;
+                            text-align: -webkit-center;
+                        }
+                        event_and_meeting_page_align_left{
+                            margin-right:30px;
+                            text-align: -webkit-center;
+                        }
+                            .main_class_of_eve_and_meet{
+
+                                margin-top:150px;
+                                margin-bottom:150px;
+
+                            }
+             .eve_and_meeting_page_content_set{
+                   width:100%;
+                 border-radius:5px;
+               }
+               .eve_and_meeting_page_img_set{
+                   padding:5px;
+                   width:100%;
+                   border-radius: 5px;
+                    border:1px solid #f1f1f1;
+                   max-height: 300px;
+                   height: 300px;
+                    border-radious:5px;
+               }
+                .home_page_ambassy_image_height{
+                     height:210px;
+                 }
+              .ambassy_page_image_height{
+                  height:450px;
+             }
+
+}
+
+@media screen and (min-width: 1024px){
+
+    .what_we_can_button.exist_announcement_page {
+          max-width: 100%;
+          padding: 9px 16px 12px 15px;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+          background-color: #ffffff;
+          border-radius: 7px;
+          border: 2px solid red;
+          color:#aa110c !important;
+          font-size: 20px;
+          bottom:150px;
+          /*top: 20%;*/
+         position:relative;
+          left:1%
+    }
+    .banner_inner_content.exist_announcement_page{
+        position:relative;
+        margin-left:15px;
+        color: white;
+        bottom:50px;
+       /* top: 23%;*/
+        font-size: 32px;
+        direction:initial;
+    }
+
+    .what_we_can_button_without_announchment {
+              max-width: 100%;
+              padding: 9px 16px 12px 15px;
+              box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+              background-color: #ffffff;
+              border-radius: 7px;
+              border: 2px solid red;
+              color:#aa110c !important;
+              font-size: 20px;
+              bottom:150px;
+            /*  top: 25%;*/
+              position:relative;
+              left:1%
+        }
+        .banner_inner_content_without_announchment{
+           position:relative;
+            margin-left:15px;
+            color: white;
+           /* top: 28%;*/
+           bottom:51px;
+            font-size: 32px;
+            direction:initial;
+        }
+    .image_height{
+         width:100%;
+         height:500px;
+    }
+    .version2{
+        height:503px;
+    }
+    .event_and_meeting_page_align_right{
+        margin-left:30px;
+        text-align: -webkit-center;
+    }
+    .event_and_meeting_page_align_left{
+        margin-right:30px;
+        text-align: -webkit-center;
+    }
+    .main_class_of_eve_and_meet{
+
+        margin-top:150px;
+        margin-bottom:150px;
+
+    }
+     .eve_and_meeting_page_content_set{
+       width:185px;
+      border-radius:5px;
+   }
+   .eve_and_meeting_page_img_set{
+       padding:5px;
+        border:1px solid #f1f1f1;
+        border-radius: 5px;
+       width:185px;
+       max-height: 185px;
+       height: 185px;
+        border-radious:5px;
+   }
+
+    .home_page_ambassy_image_height{
+            height:332px;
+        }
+
+}
+
+
+
+.name_class_eve_and_meet{
+    text-align:center;
+    margin-top:20px;
+    color:#000
+
+}
+.a_hover_class:hover {
+    text-decoration:none !important;
+}
+
+
+
+#bottomlogos {
+  width: 100%;
+  height: 80px;
+}
+
+.ticker-wrap .ticker__item{
+    font-size:18px;
+    font-weight:bold;
+}
+
+header .dropdown-item {
+    overflow:hidden !important;
+}
+
+/*
+#tick li, #tick2 li { list-style-type:none; float:left; padding-right:20px; position:absolute; left:0px;}
+#tick, #tick2 { position:relative; display:block; width:5000px; margin:0; content=""; display:table; height:0px; }
+#outer{width:100%;height:25px; overflow:hidden; background:#ffffff;}
+#outer a {text-decoration:none; color:#753939; HelveticaNeue-Medium !important; font-size:18px; font-weight:bold;}*/
+
+.name_class_eve_and_meet{
+        font-family:HelveticaNeue-Medium !important;
+        font-size:20px;
+    }
+
+    body{
+
+        background:white !important;
+    }
+
+@media screen and (min-width: 360px) and (max-width: 575px) {
+    .activities_img, .meetings_img{
+        width:100% !important;
+    }
+}
+
+
+@media (max-width: 767.98px){
+    .btn.btn-primary.btn-lg.mt-5 > .description_arrow{
+            transform: rotate(180deg) !important;
+    }
+}
+
+/*.nationality_new_field .other_nationality_div{
+    display:block;
+}*/
+/*.other_nationality_div,.nationality_new_field .other_nationality_first_div{
+    display:none;
+}*/
+#print_data_report_form,.other_nationality_second_div{
+    display:none;
+}
+
+/*
+.bglogin{
+        display: flex;
+        align-items: center;
+    }*/
+
+.applicant_educational_info .col-form-label{
+    border-bottom:1px solid Black;
+}
+.job_history_table_div ,.job_line_button{
+    display:none;
+}
+
+.applicant_data_class .job_history_table_div,.applicant_data_class .job_line_button{
+    display:block;
+}
+.applicant_data_class .educational_info_table_div,.applicant_data_class .education_line_button{
+    display:none;
+}
+.applicant_data_class .applicant_educational_info .col-form-label{
+    border-bottom:none;
+}
+.applicant_data_class .applicant_job_history .col-form-label{
+    border-bottom:1px solid Black;
+}
+.recruitment_access_button{
+    display:none;
+}
+.recruitment_show_class .recruitment_access_button{
+    display:block;
+}

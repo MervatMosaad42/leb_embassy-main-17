@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="country_regions_tree" model="ir.ui.view">
+            <field name="name">Country Regions Tree</field>
+            <field name="model">ebs_mod.country.region</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="code"/>
+                     <field name="name"/>
+                    <field name="name_en"/>
+                </tree>
+            </field>
+        </record>
+
+          <record id="country_regions_form" model="ir.ui.view">
+            <field name="name">Country Regions Form</field>
+            <field name="model">ebs_mod.country.region</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                                <field name="code"/>
+                                <field name="name"/>
+                            <field name="name_en"/>
+                        </group>
+                         <notebook>
+                            <page name="kaza_page" string="Kaza">
+                                <field name="region_kaza"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+               <!--list view -->
+        <record id="country_kaza_tree" model="ir.ui.view">
+            <field name="name">Country Kaza Tree</field>
+            <field name="model">ebs_mod.country.kaza</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="code"/>
+                     <field name="name"/>
+                    <field name="name_en"/>
+                     <field name="region_id"/>
+                </tree>
+            </field>
+        </record>
+
+          <record id="country_kaza_form" model="ir.ui.view">
+            <field name="name">Country Kaza Form</field>
+            <field name="model">ebs_mod.country.kaza</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                                <field name="code"/>
+                                <field name="name"/>
+                            <field name="name_en"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="contact_religion_tree" model="ir.ui.view">
+            <field name="name">Contact Religion Tree</field>
+            <field name="model">ebs_mod.contact.religion</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="name"/>
+                    <field name="name_en"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="contact_religion_form" model="ir.ui.view">
+            <field name="name">Contact Religion Form</field>
+            <field name="model">ebs_mod.contact.religion</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                                <field name="name"/>
+                            <field name="name_en"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--window -->
+        <record id="country_regions_window" model="ir.actions.act_window">
+            <field name="name">Country Regions</field>
+            <field name="res_model">ebs_mod.country.region</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="contact_religion_window" model="ir.actions.act_window">
+            <field name="name">Contact Religion/Sect</field>
+            <field name="res_model">ebs_mod.contact.religion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <record id="country_kaza_window" model="ir.actions.act_window">
+            <field name="name">Country Kaza</field>
+            <field name="res_model">ebs_mod.country.kaza</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+         <record id="ikama_window" model="ir.actions.act_window">
+            <field name="name">Ikama </field>
+            <field name="res_model">ebs_mod.contact.ikama</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="contact_window" model="ir.actions.act_window">
+            <field name="name">All Contacts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--menu -->
+        <menuitem id="res_partner_menu_config"
+                name="Configuration"
+                parent="lebanese_menu_contacts"
+                groups="base.group_system"
+                sequence="2"/>
+
+        <menuitem id="menu_localisation" name="Configuration"
+            parent="lebanese_menu_contacts" sequence="5"/>
+
+        <menuitem id="menu_country_regions"
+                    action="country_regions_window"
+                    parent="menu_localisation"
+                    sequence="4"/>
+
+         <menuitem id="menu_contact_religion"
+                    action="contact_religion_window"
+                    parent="menu_localisation"
+                    sequence="2"/>
+
+        <menuitem id="menu_country_kaza"
+                    action="country_kaza_window"
+                    parent="menu_localisation"
+                    sequence="5"/>
+
+        <menuitem id="menu_ikama"
+            action="ikama_window"
+            parent="menu_localisation"
+            sequence="6"/>
+
+        <menuitem id="menu_contacts"
+            action="contact_window"
+            parent="menu_localisation"
+            sequence="7"/>
+
+
+    </data>
+</odoo>

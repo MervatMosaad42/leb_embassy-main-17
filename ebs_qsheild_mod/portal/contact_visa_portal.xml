@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="portal_my_home_menu_contact_visa" name="Portal layout : Contact visa menu entries"
+                  inherit_id="portal.portal_breadcrumbs" priority="50">
+
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ('visa_insert', 'visa' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/ta2shirat">Visa</a>
+                </li>
+
+                <li t-if="page_name == 'visa_insert'" class="breadcrumb-item active">
+                </li>
+            </xpath>
+        </template>
+
+        <template id="create_visa_service_request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Create new service order</t>
+                </t>
+                <div class="bg-white" style="padding:20px;">
+                    <script>
+                        function viewService(e)
+                        {
+                        $(location).attr('href','/my/ta2shirat/insert_doc_form/'+e);
+                        }
+
+                        function submit_info()
+                        {
+                        var url='/my/authorization/insert_form';
+                        formValues = $('#visa_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(location).attr('href','/my/ta2shirat/insert_doc_form/'+data.data.id);
+                        });
+                        }
+                    </script>
+                    <form id="visa_form" action="/my/ta2shirat" method="post">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <h4>New Request</h4>
+
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <select name="service" required="required" data-live-search="true"
+                                        t-attf-class="form-control selectpicker" id="service">
+                                    <t t-foreach="visa_services" t-as="visa">
+                                        <option t-value="visa.id">
+                                            <t t-esc="visa._get_name()"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-6'>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <br/>
+                                <input type="button" id="submit-info-btn" class="btn btn-primary float-right mb32"
+                                       width="100%" value="Next"
+                                       onclick="submit_info()"/>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_contact_visa" name="contact Visa">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Visa</t>
+                </t>
+                <t t-if="partner.status != 'confirm'">
+                    <div class="alert alert-warning" role="alert">
+                        Please complete your application from My Profile page to access this.
+                    </div>
+                </t>
+                <t t-if="partner.status == 'confirm'">
+                    <div t-if="visa" t-call="portal.portal_table">
+                        <br/>
+                        <div class="row grid_service_types">
+                            <t t-foreach="visa_services" t-as="visa_service">
+                                <div class="col-md-2 subimage_section_class">
+                                    <div class="subimage_display_class">
+                                        <a class="image_click" href="#">
+                                            <img t-if="visa_service.service_image"
+                                                 t-attf-src="data:image/png;base64,{{visa_service.service_image}}"></img>
+                                            <img t-if="not visa_service.service_image"
+                                                 src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                            <div class="image-type">
+                                                <t t-esc="visa_service._get_name()"></t>
+                                            </div>
+                                        </a>
+                                        <input type="hidden" name="type_id" class="type_id"
+                                               t-att-value="visa_service.name"/>
+                                        <input type="hidden" name="service_name" class="service_name"
+                                               value="ta2shirat"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <br/>
+                        <br/>
+                        <form class="form-horizontal" method="post" id="service_form">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <h4>Service Requests</h4>
+                            <thead style="display:block;">
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Service Description</th>
+                                    <th>Service Date</th>
+                                    <th>Service Status</th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll; height:300px; display:block;">
+                                <tr class="table-row" t-foreach="service_request or []" t-as="service">
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-esc="service.service_type_id._get_name()"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.desc"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.date"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.status"/>
+                                    </td>
+                                    <td width="10px" t-if="service.status in ('draft')">
+                                        <i class="fa fa-lg fa-trash" id="btn_delete_record"
+                                           t-attf-onclick="serviceDelete('#{service.id}');"></i>
+                                    </td>
+                                    <td width="10px" t-if="service.status not in ('draft')"
+                                        t-attf-onclick="viewService('#{service.id}');">
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <br/>
+                        </form>
+                    </div>
+                </t>
+            </t>
+
+            <xpath expr="." position="inside">
+                <style>
+                    .table-row:hover{
+                    cursor:pointer;
+                    }
+                    thead th, tbody td {
+                    width:1110px;
+                    }
+                </style>
+                <script>
+                    function viewService(e)
+                    {
+                    $(location).attr('href','/my/ta2shirat/insert_doc_form/'+e);
+                    }
+
+                    function serviceDelete(e)
+                    {
+                    var url='/my/services/delete/'+e;
+                    var formValues= $('#service_form').serialize();
+
+                    $.post(url, formValues, function(data)
+                    {
+                    location.reload();
+                    });
+                    }
+
+                    function submit_info()
+                    {
+                    var url='/my/authorization/insert_form';
+                    formValues = $('#visa_form').serialize();
+                    $.post(url, formValues, function(data)
+                    {
+                    $(location).attr('href','/my/ta2shirat/insert_doc_form/'+data.data.id);
+                    });
+                    }
+                </script>
+            </xpath>
+        </template>
+
+
+        <template id="portal_contact_visa_form" name="contact visa form">
+            <t t-call="portal.portal_layout">
+                <br/>
+                <div class="success_alert alert alert-success" role="alert">
+                    Your application has been submitted successfully. We will review it and get back to you shortly.
+                </div>
+                <div class="card col-lg-12 mt16">
+                    <div id="introduction"
+                         t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+                        <div class="row no-gutters">
+                            <div class="col-md">
+                                <h5 class="mb-1 mb-md-0">
+                                    <em t-esc="service_request.service_type_id._get_name()"/>
+                                </h5>
+                            </div>
+                            <div class="col-md" hidden="1">
+                                <h5 class="mb-1 mb-md-0">
+                                    Diplomatic Pouch
+                                    <em t-esc="service_request.bag_no"/>
+                                </h5>
+                            </div>
+                            <div class="col-md text-md-right">
+                                <small class="text-right">Status:</small>
+                                <span t-field="service_request.status" class=" badge badge-pill badge-info"
+                                      title="Current status of this service request"/>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="/my/authorization/submit_authorization" method="post"
+                          id="visa_form">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" id="service_id" name="service_id" t-att-value="service_request.id"/>
+                        <input type="hidden" id="status" name="status" t-att-value="service_request.status"/>
+                        <div class="row">
+                            <div class="col-lg-12" id="success_message_div">
+                                <div t-if="len(service_request.service_type_id.terms_conditions)>11"
+                                     class="alert alert-success" role="status">
+                                    <div t-field="service_request.service_type_id.terms_conditions"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <input type="text" name="service" t-attf-class="form-control "
+                                       t-att-value="service_request.service_type_id._get_name()" disabled="disabled"/>
+                            </div>
+
+                            <div class='col-md-6'>
+                                <label class="col-form-label" for="description">Remarks</label>
+                                <input type="text" name="description" id="description" t-attf-class="form-control "
+                                       t-att-value="service_request.desc" onBlur="auto_save()"/>
+                            </div>
+                        </div>
+
+                        <div id="beneficiary-div">
+                            <br></br>
+                            <h4>Beneficiary</h4>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label" for="beneficiary">Service Beneficiary</label>
+                                    <select name="beneficiary" id="beneficiary" t-attf-class="form-control  "
+                                            onchange="getDocuments();" data-init="1" onBlur="auto_save()">
+                                        <option t-att-value="service_request.partner_id.id"
+                                                t-att-selected="service_request.partner_id.id == service_request.service_beneficiary.id">
+                                            <t t-esc="service_request.partner_id.name"/>
+                                        </option>
+                                        <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="d">
+                                            <option t-att-value="d.id"
+                                                    t-att-selected="d.id == service_request.service_beneficiary.id">
+                                                <t t-esc="d.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-4'></div>
+                                <div class='col-md-4'></div>
+                            </div>
+                        </div>
+
+                        <br></br>
+                        <h4>Personal Info</h4>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">First Name :</label>
+                                <t t-esc="service_request.partner_id.firstName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Middle Name :</label>
+                                <t t-esc="service_request.partner_id.middleName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Last Name :</label>
+                                <t t-esc="service_request.partner_id.lastName"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Full Name :</label>
+                                <t t-esc="service_request.partner_id.motherFullName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Nationality :</label>
+                                <t t-esc="service_request.partner_id.country_id.name"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Second Nationality :</label>
+                                <t t-esc="service_request.partner_id.nationality.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Date Of Birth :</label>
+                                <t t-esc="service_request.partner_id.date and service_request.partner_id.date.strftime('%d/%m/%Y')"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Place Of Birth :</label>
+                                <t t-esc="service_request.partner_id.placeOfBirth"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Marital Status :</label>
+                                <t t-esc="service_request.partner_id.maritalStatus"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Qatar ID :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.ikama_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Qatar ID Start Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.ikama_issue_date and i.ikama_issue_date.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Qatar ID End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.ikama_enddate and i.ikama_enddate.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Sponsor :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.guarantor"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Occupation :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.occupation"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <br></br>
+                        <h4>VISA Information</h4>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="purpose_of_trip">Purpose of the trip</label>
+                                <select name="purpose_of_trip" id="purpose_of_trip" t-attf-class="form-control"
+                                        onBlur="auto_save()">
+                                    <option value="">Select...</option>
+                                    <option value="Family"
+                                            t-att-selected="service_request.purpose_of_trip == 'Family' ">Family
+                                    </option>
+                                    <option value="Tourism"
+                                            t-att-selected="service_request.purpose_of_trip == 'Tourism'">Tourism
+                                    </option>
+                                    <option value="Business"
+                                            t-att-selected="service_request.purpose_of_trip == 'Business'">Business
+                                    </option>
+                                    <option value="Transit"
+                                            t-att-selected="service_request.purpose_of_trip == 'Transit'">Transit
+                                    </option>
+                                    <option value="Work" t-att-selected="service_request.purpose_of_trip == 'Work'">
+                                        Work
+                                    </option>
+                                    <option value="Other" t-att-selected="service_request.purpose_of_trip == 'Other'">
+                                        Other
+                                    </option>
+                                </select>
+
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="visa_duration">Visa Duration</label>
+                                <select name="visa_duration" id="visa_duration" t-attf-class="form-control"
+                                        onBlur="auto_save()">
+                                    <option value="">Select...</option>
+                                    <option value="15D" t-att-selected="service_request.visa_duration == '15D' ">15
+                                        Days
+                                    </option>
+                                    <option value="1M" t-att-selected="service_request.visa_duration == '1M'">1 month
+                                    </option>
+                                    <option value="2M" t-att-selected="service_request.visa_duration == '2M'">2 months
+                                    </option>
+                                    <option value="3M" t-att-selected="service_request.visa_duration == '3M'">3 months
+                                    </option>
+                                    <option value="6M" t-att-selected="service_request.visa_duration == '6M'">6 months
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="nb_entries">Number of Entries</label>
+                                <select name="nb_entries" id="nb_entries" t-attf-class="form-control"
+                                        onBlur="auto_save()">
+                                    <option value="">Select...</option>
+                                    <option value="One" t-att-selected="service_request.nb_entries == 'One' ">One
+                                    </option>
+                                    <option value="Double" t-att-selected="service_request.nb_entries == 'Double'">
+                                        Double
+                                    </option>
+                                    <option value="Multiple" t-att-selected="service_request.nb_entries == 'Multiple'">
+                                        Multiple
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="entry_point">Entry Point</label>
+                                <select name="entry_point" id="entry_point" t-attf-class="form-control"
+                                        onBlur="auto_save()">
+                                    <option value="">Select...</option>
+                                    <option value="Port" t-att-selected="service_request.entry_point == 'Port' ">Port
+                                    </option>
+                                    <option value="Airport" t-att-selected="service_request.entry_point == 'Airport'">
+                                        Airport
+                                    </option>
+                                    <option value="Others" t-att-selected="service_request.entry_point == 'Others'">
+                                        Others
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="expected_arrival_day">Expected Arrival day</label>
+                                <input id="expected_arrival_day" name="expected_arrival_day"
+                                       t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                       t-att-value="expected_arrival_day or service_request.expected_arrival_day and service_request.expected_arrival_day.strftime('%d/%m/%Y')"
+                                       onBlur="parseDMY(this);"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="expected_departure_day">Expected Departure day
+                                </label>
+                                <input id="expected_departure_day" name="expected_departure_day"
+                                       t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                       t-att-value="expected_departure_day or service_request.expected_departure_day and service_request.expected_departure_day.strftime('%d/%m/%Y') "
+                                       onBlur="parseDMY(this);"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="visa_no">VISA NO</label>
+                                <input type="text" id="visa_no" name="visa_no" t-attf-class="form-control"
+                                       t-att-value="service_request.visa_no or visa_no" onBlur="auto_save()"/>
+                            </div>
+                            <div class='col-md-3' style="display:none">
+                                <label class="col-form-label" for="receipt_no">Receipt No</label>
+                                <input type="text" id="receipt_no" name="receipt_no" t-attf-class="form-control"
+                                       t-att-value="service_request.receipt_no or receipt_no" onBlur="auto_save()"/>
+                            </div>
+                        </div>
+                        <br></br>
+                        <h4>Travel Document</h4>
+                        <table class="table table-responsive table-hover" id="passportTab">
+                            <thead>
+                                <tr>
+                                    <th>Family Member</th>
+                                    <th>Dependent</th>
+                                    <th>Travel Document Type</th>
+                                    <th>Passport No</th>
+                                    <th>Passport Place</th>
+                                    <th>Passport Start Date</th>
+                                    <th>Passport Expiry Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'me' and passport.is_active">
+                                        <td>
+                                            <span t-field="passport.family_member"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="passport.dependent"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="passport.travel_doc_type"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="passport.passport_no"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="passport.passport_place"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="passport.passport_start_date"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="passport.passport_exp_date"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br></br>
+                        <h4>Lebanon Address</h4>
+                        <table class="table table-responsive table-hover" id="lebanonTab">
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>Kaza</th>
+                                    <th>Town</th>
+                                    <th>City</th>
+                                    <th>Street</th>
+                                    <th>District</th>
+                                    <th>Building</th>
+                                    <th>Floor</th>
+                                    <th>Flat</th>
+                                    <th>Mobile</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="service_request.partner_id.address_ids or []" t-as="address">
+                                    <t t-if="address.type == 'Lebanon' and  address.is_active">
+                                        <tr>
+                                            <td>
+                                                <span t-esc="address.region._get_name()"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="address.kaza._get_name()"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.town"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.city"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.street"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.district"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.building"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.floor"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.flat"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.mobile"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.phoneNumber"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                        <br></br>
+                        <h4>Qatar Address</h4>
+                        <table class="table table-responsive table-hover" id="qatarTab">
+                            <thead>
+                                <tr>
+                                    <th>City</th>
+                                    <th>Street</th>
+                                    <th>Region</th>
+                                    <th>Building</th>
+                                    <th>Floor</th>
+                                    <th>Mojama3</th>
+                                    <th>Flat</th>
+                                    <th>Phone</th>
+                                    <th>Mobile</th>
+                                    <th>Po Box</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="service_request.partner_id.address_ids or []" t-as="address">
+                                    <t t-if="address.type == 'Qatar' and address.is_active">
+                                        <tr>
+                                            <td>
+                                                <span t-field="address.city"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.street"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.qatar_region"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.building"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.floor"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.mojama3"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.flat"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.phoneNumber"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.mobile"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="address.pobox"/>
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                        <br></br>
+                        <div class="form-group">
+                            <div class="container">
+                                <button type="button" class="btn btn-primary float-left mb32 " id="docBtn">Add
+                                    Document
+                                </button>
+                                <table class="table table-responsive table-hover" id="docTab">
+                                    <thead>
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>رقم المستند</th>
+                                            <th>Document Name</th>
+                                            <th>Issue Date</th>
+                                            <th>Expiry Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="service_request.status == 'draft'">
+                                            <tr t-foreach="documents or []" t-as="doc"
+                                                t-attf-onclick="openModal('#{doc.id}');">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-lg fa-pencil" id="btn_new_record"
+                                                       t-attf-onclick="openModal('#{doc.id}');"></i>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr t-foreach="documents or []" t-as="doc">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <t t-if="service_request.status == 'draft'">
+                                        <button type="button" id="submit_btn" onclick="submitvisa();"
+                                                class="btn btn-info">Submit
+                                        </button>
+                                    </t>
+                                </div>
+                                <div class='col-md-4' t-if="service_request.status == 'draft'">
+                                    <button type="button" id="delete_btn" onclick="deleteVisa();" class="btn btn-info">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--   Document Modal  -->
+                    <xpath expr="//form" position='after'>
+                        <!-- Modal -->
+                        <div class="modal fade" id="docModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding:25px 60px;">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Documents
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="doc_form" role="form" action="/my/ta2shirat/insert_documents"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id" value=""/>
+                                            <input type="hidden" name="is_required_issue_date"
+                                                   id="is_required_issue_date"/>
+                                            <input type="hidden" name="is_required_expiry_date"
+                                                   id="is_required_expiry_date"/>
+                                            <input type="hidden" name="is_required_doc_no" id="is_required_doc_no"/>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" required="required"
+                                                           for="document_type">Document Type
+                                                    </label>
+                                                    <select name="document_type" id="document_type"
+                                                            t-attf-class="form-control">
+                                                        <t t-foreach="documentTypes or []" t-as="types">
+                                                            <option t-att-value="types.id">
+                                                                <t t-esc="types._get_name()"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6' id="docNodiv">
+                                                    <label class="col-form-label" for="docNo">رقم المستند</label>
+                                                    <input type="text" id="docNo" name="docNo"
+                                                           t-attf-class="form-control "
+                                                           t-att-value="docNo"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner">Document Owner
+                                                    </label>
+                                                    <select name="document_owner" required="required"
+                                                            t-attf-class="form-control" id="document_owner">
+                                                        <option value="me">Applicant</option>
+                                                        <option value="family">Family Member</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class='col-md-6' id="issueDatediv">
+                                                    <label class="col-form-label" for="issueDate">Issue Date</label>
+                                                    <input id="issueDate" name="issueDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="issueDate" onBlur="parseDMY(this);"/>
+                                                </div>
+                                                <div class='col-md-6' id="expiryDatediv">
+                                                    <label class="col-form-label" for="expiryDate">Expiry Date</label>
+                                                    <input id="expiryDate" name="expiryDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="expiryDate" onBlur="parseDMY(this);"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="file_attach">File</label>
+                                                    <input type="file" id="file_attach" name="files[]"
+                                                           class="o_sign_load btn btn-link" required="required"
+                                                           role="button"/>
+                                                </div>
+                                                <div class='col-md-6'>
+
+                                                </div>
+                                            </div>
+
+                                            <br></br>
+                                            <input type="submit" id="save-doc-btn" class="btn btn-default btn-block"
+                                                   value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ratingModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Feedback
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="feedback_form" role="form" action="/my/service/submit_feedback"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id"
+                                                   t-att-value="service_request.id"/>
+                                            <h4>
+                                                <span class="glyphicon glyphicon-lock"></span>
+                                                Feedback
+                                            </h4>
+                                            <div class="row">
+                                                <label class="col-form-label" for="rating-value">Rating
+                                                </label>
+                                            </div>
+                                            <div class="row" style="width:100%;">
+                                                <div style="width:20%;place-self: flex-end;text-align: right;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+
+                                                </div>
+                                                <div style="width:80%;padding-left: 10px;">
+                                                    <input type="radio" id="one_star" name="rating" value="1"/>
+                                                    <br/>
+                                                    <input type="radio" id="two_star" name="rating" value="2"/>
+                                                    <br/>
+                                                    <input type="radio" id="three_star" name="rating"
+                                                           value="3"/>
+                                                    <br/>
+                                                    <input type="radio" id="four_star" name="rating"
+                                                           value="4"/>
+                                                    <br/>
+                                                    <input type="radio" id="five_star" name="rating"
+                                                           value="5"/>
+                                                </div>
+                                                <input type="hidden" name="type" id="type" value="visa"/>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <label class="col-form-label" for="comments">Comments</label>
+                                                    <textarea id="comments" class="comments" name="comments"
+                                                              t-attf-class="form-control"/>
+
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <center>
+                                                <i class="loader_for_service_submit"/>
+                                            </center>
+                                            <input type="button" id="save-feedback-btn"
+                                                   class="btn btn-default btn-block" value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </xpath>
+                    <xpath expr="." position="inside">
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                        <script>
+                            $("#docBtn").click(function(){
+                            $("#docModal").modal();
+                            var service_id = $('#service_id').val();
+                            $(".modal-body #service_id").val(service_id);
+                            $(".modal-body #partner_doc_Id").val('');
+                            });
+
+                            function validate(isDate)
+                            {
+                            isValid = true;
+                            tmp = isDate.split("/");
+                            isLeap = tmp[2]%4;
+                            if (!/[1-9]{1}/.test(tmp[0]) || /[1-9]{2}/.test(tmp[0]) &amp;&amp;
+                            !/10|11|12/.test(tmp[0])){isValid = false}
+                            else if ((/4|6|9|11/.test(tmp[0])) &amp;&amp; tmp[1] > 30){isValid=false}
+                            else if ((/1|3|5|7|8|10|12/.test(tmp[0])) &amp;&amp; tmp[1] > 31){isValid=false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap == 0) &amp;&amp; tmp[1] > 29){isValid = false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap != 0) &amp;&amp; tmp[1] > 28){isValid = false}
+                            else if (tmp[2].length != 4 || (!/^19|20/.test(tmp[2]))){isValid = false}
+                            if (isNaN(Date.parse(isDate)) || !isValid){return true}
+                            else { return true }
+                            }
+
+
+                            function parseDMY(isDate)
+                            {
+                            auto_save();
+                            tmp = isDate.value;
+                            if(tmp){
+                            tmp = tmp.split("-");
+                            refDate = tmp[1]+"/"+tmp[2]+"/"+tmp[0];
+                            if (!validate(refDate))
+                            {
+                            isDate.value = "";
+                            isDate.focus();
+                            }
+                            }
+                            }
+                            $(function ()
+                            {
+                            var status = $('#status').val();
+                            if(status == "progress" || status == "complete")
+                            {
+                            $('button').hide();
+                            $('input[type="submit"]').hide();
+                            $("#description").attr('disabled','disabled');
+                            $('select').attr('disabled','disabled');
+                            $('input[type="text"]').attr('disabled','disabled');
+                            $('input[type="date"]').attr('disabled','disabled');
+                            }
+
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+                            });
+
+
+                            $('#document_type').on('change',function()
+                            {
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+                            }
+                            });
+                            });
+                            function getDocuments()
+                            {
+                            var url='/my/service/change_doc';
+                            var formValues= $('#visa_form').serialize();
+                            $.post(url, formValues, function(data){
+                            location.reload();
+                            });
+                            }
+
+                            function openModal(e)
+                            {
+                            var url='/my/authorization/document/open/'+e;
+                            formValues = $('#visa_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #document_owner").val( data.data.document_owner );
+                            $(".modal-body #service_id").val( data.data.service_id );
+                            $(".modal-body #partner_doc_Id").val( data.data.documentId );
+                            $(".modal-body #document_type").val( data.data.doctype );
+                            $(".modal-body #document_type").prop('disabled', 'disabled');
+                            $(".modal-body #docNo").val( data.data.document_number );
+                            $(".modal-body #issueDate").val( data.data.issue_date );
+                            $(".modal-body #expiryDate").val( data.data.expiry_date );
+
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+                            $('#docModal').modal('toggle');
+                            });
+                            }
+
+                            function auto_save()
+                            {
+                            var url='/my/service/service_auto_save';
+                            var formValues= $('#visa_form').serialize();
+                            $.post(url, formValues, function(data){
+                            });
+                            }
+
+                            $("#save-doc-btn").on("submit", function(event)
+                            {
+                            var url='/my/ta2shirat/insert_documents';
+                            var formValues= $('#visa_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            location.reload();
+                            });
+
+                            });
+
+
+                            function deleteVisa()
+                            {
+                            var url='/my/services/delete';
+                            var formValues= $('#visa_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            $(location).attr('href','/my/ta2shirat');
+                            });
+                            }
+
+
+                            function submitvisa()
+                            {
+                            $('#ratingModal').modal('toggle');
+                            }
+
+
+                        </script>
+                    </xpath>
+                </div>
+                <div class="o_portal_messages_container mt32">
+                    <h4>Message and communication history</h4>
+                    <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="service_request.access_token"/>
+                        <t t-set="object" t-value="service_request"/>
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

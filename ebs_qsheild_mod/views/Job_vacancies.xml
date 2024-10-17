@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+<!--        applicant list view-->
+        <record id="job_vacancies_applicant_list" model="ir.ui.view">
+            <field name="name">job.vacancies.applicant.list</field>
+            <field name="model">job.vacancies.applicant</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name_and_family"/>
+                    <field name="date_of_birth"/>
+                    <field name="resident_in_qatar"/>
+                    <field name="job_position_applicant"/>
+                    <field name="degree_applicant"/>
+                </tree>
+            </field>
+        </record>
+<!--        applicant form view-->
+        <record id="job_vacancies_applicant_form" model="ir.ui.view">
+            <field name="name">job.vacancies.applicant.form</field>
+            <field name="model">job.vacancies.applicant</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                        <group>
+                           <field name="name"/>
+                           <field name="family_name"/>
+                           <field name="date_of_birth"/>
+                           <field name="passport_no"/>
+                           <field name="passport_issuance_place"/>
+                           <field name="passport_issuance_date"/>
+                           <field name="passport_expiry_date"/>
+                            <field name="resident_in_qatar"/>
+                           <field name="qid"
+                                  invisible="resident_in_qatar == 'no'"/>
+                            <field name="qid_expiry_date"
+                                   invisible="resident_in_qatar == 'no'"/>
+                        </group>
+                        <group>
+                           <field name="contact_email"/>
+                           <field name="contact_phone"/>
+                           <field name="notice_period"/>
+                           <field name="marital_status"/>
+                           <field name="qtr_address"/>
+                           <field name="resume"/>
+                           <field name="skills"/>
+                           <field name="user_id"/>
+
+                        </group>
+                        </group>
+                        <notebook>
+                        <page string="Educational Information">
+                                <field name="education_info">
+                                     <tree editable="bottom">
+                                        <field name="degree"/>
+                                        <field name="year_from"/>
+                                        <field name="year_to"/>
+                                        <field name="subject"/>
+                                        <field name="major"/>
+                                        <field name="country_id"/>
+                                     </tree>
+                                </field>
+                        </page>
+                        <page string="Job History">
+                                <field name="job_history">
+                                     <tree editable="bottom">
+                                        <field name="position"/>
+                                        <field name="company_name"/>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                        <field name="description"/>
+                                        <field name="country_id"/>
+                                        <field name="current_position"/>
+                                     </tree>
+                                </field>
+                        </page>
+                        </notebook>
+
+                        <group>
+                           <field name="cover_letter"/>
+                           <field name="cv_attachment"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+<!--        applicant acion view-->
+        <record id="job_vacancies_applicant_action" model="ir.actions.act_window">
+            <field name="name">Job Vacancies Applicant</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.vacancies.applicant</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!--        company list view-->
+        <record id="job_vacancies_company_list" model="ir.ui.view">
+            <field name="name">job.vacancies.company.list</field>
+            <field name="model">job.vacancies.company</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="industry_id"/>
+                    <field name="number_of_employees"/>
+                </tree>
+            </field>
+        </record>
+<!--        company form view-->
+        <record id="job_vacancies_company_form" model="ir.ui.view">
+            <field name="name">job.vacancies.company.form</field>
+            <field name="model">job.vacancies.company</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="industry_id"/>
+                            <field name="number_of_employees"/>
+                            <field name="user_id"/>
+                        </group>
+                        <notebook>
+                        <page string="Point of Contact">
+                            <field name="point_of_contact">
+                                 <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="jb_position"/>
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                 </tree>
+                            </field>
+                        </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+<!--        company acion view-->
+        <record id="job_vacancies_company_action" model="ir.actions.act_window">
+            <field name="name">Job Vacancies company</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.vacancies.company</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!--        vacancy list view-->
+        <record id="job_vacancies_list" model="ir.ui.view">
+            <field name="name">job.vacancies.list</field>
+            <field name="model">job.vacancies</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="position"/>
+                    <field name="publishing_date"/>
+                    <field name="eductional_requirement"/>
+                    <field name="skills_requirement"/>
+                </tree>
+            </field>
+        </record>
+<!--        vacancy form view-->
+        <record id="job_vacancies_form" model="ir.ui.view">
+            <field name="name">job.vacancies.form</field>
+            <field name="model">job.vacancies</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                        <group>
+                           <field name="position"/>
+                           <field name="publishing_date"/>
+                           <field name="description"/>
+                           <field name="eductional_requirement"/>
+                           <field name="skills_requirement"/>
+                        </group>
+                        <group>
+                           <field name="benefits"/>
+                           <field name="joining_limit"/>
+                           <field name="vacancy_expire_date"/>
+                           <field name="application_link"/>
+                           <field name="application_email"/>
+                           <field name="work_location"/>
+                            <field name="company_id"/>
+                        </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+<!--        vacancy acion view-->
+        <record id="job_vacancies_action" model="ir.actions.act_window">
+            <field name="name">Job Vacancies</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.vacancies</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="application_company_sortlisting_list" model="ir.ui.view">
+                    <field name="name">application.company.sortlisting.list</field>
+                    <field name="model">application.company.sortlisting</field>
+                    <field name="arch" type="xml">
+                        <tree>
+                            <field name="position"/>
+                            <field name="company_name"/>
+                            <field name="applicant_name"/>
+                        </tree>
+                    </field>
+                </record>
+        <!--        application.company.sortlisting form view-->
+                <record id="application_company_sortlisting_form" model="ir.ui.view">
+                    <field name="name">application.company.sortlisting.form</field>
+                    <field name="model">application.company.sortlisting</field>
+                    <field name="arch" type="xml">
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="position"/>
+                                    <field name="company_name"/>
+                                    <field name="applicant_name"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+        <!--        application.company.sortlisting acion view-->
+                <record id="application_company_sortlisting_action" model="ir.actions.act_window">
+                    <field name="name">Application/company Sortlisting</field>
+                    <field name="type">ir.actions.act_window</field>
+                    <field name="res_model">application.company.sortlisting</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+        <menuitem name="Job Vacancies"
+                  id="job_vacancies_main_menu"
+                  sequence="8"/>
+
+        <menuitem name="Applicant"
+                  id="job_vacancies_applicant_menu"
+                  sequence="8"
+                  action="job_vacancies_applicant_action"
+                  parent="job_vacancies_main_menu"/>
+
+        <menuitem name="Company"
+                  id="job_vacancies_company_menu"
+                  sequence="9"
+                  action="job_vacancies_company_action"
+                  parent="job_vacancies_main_menu"/>
+
+        <menuitem name="Job Vacancies"
+                          id="job_vacancies_menu"
+                          sequence="10"
+                          action="job_vacancies_action"
+                          parent="job_vacancies_main_menu"/>
+
+        <menuitem name="Applicant Shortlisting/Company Shortlisting"
+                          id="application_company_sortlisting_menu"
+                          sequence="11"
+                          action="application_company_sortlisting_action"
+                          parent="job_vacancies_main_menu"/>
+
+
+    </data>
+
+</odoo>

@@ -1,0 +1,33 @@
+<odoo>
+    <template id="service_instruction_page" name="Service Instruction page  ">
+        <div    >
+            <h1>Service Instruction</h1>
+            <p>this page is define for the instruction</p>
+        </div>>
+    </template>
+    <template id="aboutembassy_webpage" name="About Embassy">
+        <t t-call="website.layout">
+            <div>
+                <form name="ambassadorlist" method="post">
+                    <t t-set="title" t-value="request.env['ebs_mod.about.embassy'].search([],limit=1, order='id desc')"/>
+                    <div>
+                        <div>
+                            <img class="w-100 ambassy_page_image_height" t-attf-src="/web/image/ebs_mod.about.embassy/{{title.id}}/embassy_image"/>
+                        </div>
+                        <div>
+                            <div align="center">
+                                    <b>
+                                        <div>
+                                            <span style="border-bottom: 3px solid red;padding-bottom: 3px;font-size:25px;font-family:HelveticaNeue-Medium !important;" t-field="title.type"/>
+                                        </div>
+                                    </b>
+                                    <br/>
+                                    <span style="font-size:21px;" t-field="title.description"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

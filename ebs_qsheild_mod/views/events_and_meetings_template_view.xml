@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="events_and_meetings_template" name="announcement_template">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section>
+                        <div class="container">
+<!--                            <div class="col-md-12">-->
+<!--                                <h1 style="font-size: 20px;font-family: HelveticaNeue-Medium !important;"><b>نشاطات و مناسبات</b></h1>-->
+<!--                            </div>-->
+
+
+                                <div class="row mb-10 mt-10 main_class_of_eve_and_meet">
+
+
+                                    <div class="col-md-6">
+                                        <div class="event_and_meeting_page_align_left">
+                                            <div class="eve_and_meeting_page_content_set">
+                                                <a href="/embassy_events_and_activities">
+                                                    <img src="/ebs_qsheild_mod/static/src/image/Group 8518@3x.png" class="eve_and_meeting_page_img_set"></img>
+                                                </a>
+                                                    <a href="/embassy_events_and_activities" class="a_hover_class"><h5 class="name_class_eve_and_meet">مناسبات</h5></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="event_and_meeting_page_align_right">
+                                            <div class="eve_and_meeting_page_content_set">
+                                                <a href="/ambassador_activities_and_meetings">
+                                                    <img src="/ebs_qsheild_mod/static/src/image/Mask Group 10@3x.png" class="eve_and_meeting_page_img_set"></img>
+                                                </a>
+                                                    <a href="/ambassador_activities_and_meetings" class="a_hover_class"><h5 class="name_class_eve_and_meet"> أنشطة وإجتماعات</h5></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                    </section>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record model="ir.module.category" id="module_category_qshield">
+        <field name="name">Lebanese Embassy Management</field>
+        <field name="description">Category for Lebanese Embassy</field>
+        <field name="sequence">50</field>
+    </record>
+
+
+    <record model="res.groups" id="qshield_admin">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="module_category_qshield"/>
+    </record>
+
+
+    <record model="res.groups" id="qshield_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_qshield"/>
+    </record>
+
+
+
+     <record model="ir.module.category" id="module_category_qshield_contact">
+        <field name="name">Lebanese Embassy Contact</field>
+        <field name="description">Category for Lebanese Embassy</field>
+        <field name="sequence">45</field>
+    </record>
+
+    <record model="res.groups" id="qshield_contact_admin">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="module_category_qshield_contact"/>
+    </record>
+
+    <record model="res.groups" id="qshield_contact_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_qshield_contact"/>
+    </record>
+
+
+     <record model="ir.module.category" id="module_category_qshield_accountant">
+        <field name="name">Lebanese Embassy Accountant</field>
+        <field name="description">Category for Lebanese Embassy</field>
+        <field name="sequence">55</field>
+    </record>
+
+    <record model="res.groups" id="qshield_accountant_admin">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="module_category_qshield_accountant"/>
+    </record>
+
+    <record model="res.groups" id="qshield_accountant_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_qshield_accountant"/>
+    </record>
+
+
+    <record model="ir.module.category" id="module_category_qshield_payment_gateway">
+        <field name="name">Payment Gateway</field>
+        <field name="description">Category for Lebanese Embassy</field>
+        <field name="sequence">55</field>
+    </record>
+
+    <record model="res.groups" id="qshield_payment_gateway_manager">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="module_category_qshield_payment_gateway"/>
+    </record>
+
+    <record model="res.groups" id="qshield_payment_gateway_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_qshield_payment_gateway"/>
+    </record>
+
+
+    <record model="res.groups" id="company_profile_grp">
+        <field name="name">Recruitment Company</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+    </record>
+</odoo>

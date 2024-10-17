@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <data>
+        <template id="report_visa_application_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="padding-bottom: 4px;">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="50%"/>
+                                <br/>
+                                <img src="/ebs_qsheild_mod/static/src/image/report_icon.png" width="40%"/>
+                            </td>
+                            <td width="50%" style="font-weight: bold;padding-bottom: 4px;font-size: 13px;">
+                                <h4 class="text-center ">
+                                    <span>طلب اصدار جواز مرور فلسطيني</span>
+                                    <span>لمدة ثلاثة أشهر</span>
+                                </h4>
+                                <h7 class="text-center ">
+                                    <span>تعميم المديرية العامة للأمن العام اللبناني رقم 924 / اع/ص بتاريخ 30/6/2000
+                                    </span>
+                                    <span>ملاحظة: إلزامية حضور الوالدين شخصياً</span>
+                                    <span>مزيد من المعلومات يمكن مراسلة السفارة على البريد الألكتروني التالي:</span>
+                                </h7>
+                            </td>
+                            <td style="padding-bottom: 4px;">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="50%"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الاسم باللغة الأجنبية</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: إسم المولود/ة : باللغة العربية</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>الجنس</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>ذكر</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>أنثى</b>
+
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: مكان وتاريخ الولادة</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 4px;padding-bottom: 4px;" align="center">
+                                <b>معلومات عن الأم</b>
+                            </td>
+                            <td style="border: 1px solid black;padding-top: 4px;padding-bottom: 4px;" align="center">
+                                <b>معلومات عن الأب</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="right">
+                                <b>: إسم الأم والشهرة</b>
+                                <br/>
+                                <b>: الولادة مكان وتاريخ</b>
+                                <br/>
+                                <b>: الجنسية الاصلية</b>
+                                <br/>
+                                <b>: المذهب</b>
+                                <br/>
+                                <b>: رقم البيان المهنة</b>
+                                <br/>
+                                <b>: الإحصائي رقم الملـف</b>
+                                <br/>
+                                <b>: السفر رقم الجواز او وثيقة مسجلة مع</b>
+                                <br/>
+                                <b>: الصدور مكان وتاريخ</b>
+                                <br/>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="right">
+                                <b>: إسم الأب والشهرة</b>
+                                <br/>
+                                <b>: مكان وتاريخ الولادة</b>
+                                <br/>
+                                <b>: المهنة</b>
+                                <br/>
+                                <b>: المذهب</b>
+                                <br/>
+                                <b>: رقم البيان الإحصائي</b>
+                                <br/>
+                                <b>: رقم الملـف</b>
+                                <br/>
+                                <b>: السفر مسجل مع )حسب( البطاقة</b>
+                                <br/>
+                                <b>: الصدور رقم وثيقة</b>
+                                <br/>
+                                <b>: تاريخ انتهاء وثيقة السفر</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: البناية /المجمع</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الشارع</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" colspan="2"
+                                align="right">
+                                <b>: العنوان في قطر المدينة</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: المحمول</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الهاتف</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: ص.ب.</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: طابق/شقة رقم</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الحي</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الشارع</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: العنوان في لبنانكاملا:المدينةأوالقرية</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الهاتف</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: طابق</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: بــــنـــــايــــــة ( ملك / أجار)</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="right">
+                                <b>: رقم إقــامة الأم</b>
+                                <br/>
+                                <b>: إسم الكفيل</b>
+                                <br/>
+                                <b>: تاريخ إنتهاء الإقامة</b>
+                                <br/>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="right">
+                                <b>: رقم إقــامة الأب</b>
+                                <br/>
+                                <b>: إسم الكفيل</b>
+                                <br/>
+                                <b>: تاريخ إنتهاء الإقامة</b>
+                                <br/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" colspan="3" align="right">
+                                <b>: نحن الموقعين ادنــاه لا مانع لدينا من اصدار جواز مرور لأبننا/ لابنتنا</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" colspan="3" align="right">
+                                <u>ولقد تبلغنا بوجوب اصدار وثيقة سفر خاصة بالمولود/ة خلال ثلاثة اشهر بعد
+                                    تسجيله/ها
+                                    في لبنان لدى دائرة
+                                    اللاجئين الفلسطنين واصدار بطاقة هوية للمولود/ة وتعديل بطاقة الاونروا .
+                                </u>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: التاريخ</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: اسم الأب والامضاء</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: اسم الأم والامضاء</b>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;padding-top: 4px;padding-bottom: 4px;">
+                        <tr>
+                            <td style="border: 1px solid black;">
+                                <b>اسم مستلم الطلب :</b>
+                            </td>
+                            <td style="border: 1px solid black;padding-top: 4px;padding-bottom: 4px;font-size: 12px;">
+                                <br>لمستندات المطلوبة: ( جميع الاوراق A4 صفحة كاملة ).</br>
+                                <br>1.شهادة الولادة الأصلية مصدقة من الخارجية القطرية (باللغة العربية)</br>
+                                <br>2.ثلاثة صور للمولود ( خلفية بيضاء 4x4 )</br>
+                                <br>3.صورة عن وثيقة سفر الأب وعن وثيقة سفر/جواز سفر الأم</br>
+                                <br>4.صورة عن الإقامة القطرية</br>
+                                <br>5.بطاقتا الهوية والإعاشة ( UNRWA) لكل من الأب والأم مع صورة عنهما</br>
+                                <br>6.صورة عن وثيقة اوعقد الزواج</br>
+                                <br>7.الدفع نقدا 205 ريال قطري لإصدار جواز المرور مع تصديق وثيقة الولادة</br>
+                                <br>لتصديق وثيقة الولادة فقط 55 ريال قطري.</br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: رقم جواز المرور</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: الرقم القنصلي</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: تاريخ الإصدار</b>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;" align="right">
+                                <b>: رقم اللإيصال</b>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

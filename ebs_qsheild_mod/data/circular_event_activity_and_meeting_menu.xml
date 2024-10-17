@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="website_announcements" model="website.menu">
+            <field name="name">Announcement</field>
+            <field name="url">/announcement</field>
+            <field name="parent_id" ref="website.main_menu"/>
+<!--            <field name="website_id" ref="website.default_website"/>-->
+            <field name="sequence" type="int">60</field>
+        </record>
+
+        <record id="events_and_meetings" model="website.menu">
+            <field name="name">Events &amp; Meetings</field>
+            <field name="url">/events_and_meetings</field>
+            <field name="parent_id" ref="website.main_menu"/>
+<!--            <field name="website_id" ref="website.default_website"/>-->
+            <field name="sequence" type="int">70</field>
+        </record>
+
+        <record id="feedback_ebs" model="website.menu">
+            <field name="name">Feedback</field>
+            <field name="url">/feedback</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <!--            <field name="website_id" ref="website.default_website"/>-->
+            <field name="sequence" type="int">80</field>
+        </record>
+
+
+<!--        <record id="website_embassy_events_and_activities" model="website.menu">
+            <field name="name">Embassy Events and Activities</field>
+            <field name="url">/embassy_events_and_activities</field>
+            <field name="parent_id" ref="website.main_menu"/>
+&lt;!&ndash;            <field name="website_id" ref="website.default_website"/>&ndash;&gt;
+            <field name="sequence" type="int">80</field>
+        </record>-->
+
+
+    </data>
+</odoo>

@@ -1,0 +1,2098 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <template id="portal_my_home_menu_contact_mou3amalt_konsoliya"
+                  name="Portal layout : ContactAuthorization menu entries"
+                  inherit_id="portal.portal_breadcrumbs" priority="50">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ( 'ifadat_insert','tasdikat_insert'
+                ,'ifadat','tasdikat','mou3amalt_konsoliya' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/mou3amalt_konsoliya">Consular Services</a>
+                </li>
+                <li t-if="page_name in ( 'ifadat_insert' ,'ifadat' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/ifadat">Dispatches</a>
+                </li>
+                <li t-if="page_name in ( 'tasdikat_insert','tasdikat' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/tasdkiat">Endorsements</a>
+                </li>
+                <li t-if="page_name == 'ifadat_insert'" class="breadcrumb-item active">
+
+                </li>
+                <li t-if="page_name == 'tasdikat_insert'" class="breadcrumb-item active">
+
+                </li>
+            </xpath>
+        </template>
+        <template id="create_tasdikat_service_request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Create new service order</t>
+                </t>
+                <div class="bg-white" style="padding:20px;">
+                    <script>
+                        function viewService(e)
+                        {
+                        $(location).attr('href','/my/tasdikat/insert_doc_form/'+e);
+                        }
+                        function submit_info()
+                        {
+                        var url='/my/authorization/insert_form';
+                        formValues = $('#tasdikat_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(location).attr('href','/my/tasdikat/insert_doc_form/'+data.data.id);
+                        });
+                        }
+                    </script>
+                    <form id="tasdikat_form" action="/my/tasdikat" method="post">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <h4>New Request</h4>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <select name="service" required="required" data-live-search="true"
+                                        t-attf-class="form-control selectpicker" id="service">
+                                    <t t-foreach="tasdikat_services" t-as="tasdikat">
+                                        <option t-value="tasdikat.id">
+                                            <t t-esc="tasdikat._get_name()"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-6'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <br/>
+                                <input type="button" id="submit-info-btn" class="btn btn-primary float-right mb32"
+                                       width="100%" value="Next"
+                                       onclick="submit_info()"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </template>
+        <template id="create_ifadat_service_request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Create new service order</t>
+                </t>
+                <div class="bg-white" style="padding:20px;">
+                    <script>
+                        function viewService(e)
+                        {
+                        $(location).attr('href','/my/ifadat/insert_doc_form/'+e);
+                        }
+                        function submit_info()
+                        {
+                        var url='/my/authorization/insert_form';
+                        formValues = $('#ifadat_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(location).attr('href','/my/ifadat/insert_doc_form/'+data.data.id);
+                        });
+                        }
+                    </script>
+                    <form id="ifadat_form" action="/my/ifadat" method="post">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <h4>New Request</h4>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <select name="service" required="required" data-live-search="true"
+                                        t-attf-class="form-control selectpicker" id="service">
+                                    <t t-foreach="ifadat_services" t-as="ifadat">
+                                        <option t-value="ifadat.id">
+                                            <t t-esc="ifadat._get_name()"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-6'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <br/>
+                                <input type="button" id="submit-info-btn" class="btn btn-primary float-right mb32"
+                                       width="100%" value="Next"
+                                       onclick="submit_info()"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </template>
+        <template id="portal_contact_tasdikat" name="contact tasdikat">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Tasdikat</t>
+                </t>
+                <t t-if="partner.status != 'confirm'">
+                    <div class="alert alert-warning" role="alert">
+                        Please complete your application from My Profile page to access this.
+                    </div>
+                </t>
+                <t t-if="partner.status == 'confirm'">
+                    <div t-if="tasdikat_services" t-call="portal.portal_table">
+                        <br/>
+                        <div class="row grid_service_types">
+                            <t t-foreach="tasdikat_services" t-as="tasdikat_service">
+                                <div class="col-md-2 subimage_section_class">
+                                    <div class="subimage_display_class">
+                                        <a class="image_click" href="#">
+                                            <img t-if="tasdikat_service.service_image"
+                                                 t-attf-src="data:image/png;base64,{{tasdikat_service.service_image}}"></img>
+                                            <img t-if="not tasdikat_service.service_image"
+                                                 src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                            <div class="image-type">
+                                                <t t-esc="tasdikat_service._get_name()"></t>
+                                            </div>
+                                        </a>
+                                        <input type="hidden" name="type_id" class="type_id"
+                                               t-att-value="tasdikat_service.name"/>
+                                        <input type="hidden" name="service_name" class="service_name" value="tasdikat"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <br/>
+                        <br/>
+                        <form class="form-horizontal" method="post" id="service_form">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <h4>Service Requests</h4>
+                            <thead style="display:block;">
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Service Description</th>
+                                    <th>Service Date</th>
+                                    <th>Service Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll; height:300px; display:block;">
+                                <tr class="table-row" t-foreach="service_request or []" t-as="service">
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-esc="service.service_type_id._get_name()"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.desc"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.date"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.status"/>
+                                    </td>
+                                    <td t-if="service.status in ('draft')">
+                                        <i class="fa fa-lg fa-trash" id="btn_delete_record"
+                                           t-attf-onclick="serviceDelete('#{service.id}');"></i>
+                                    </td>
+                                    <td t-if="service.status not in ('draft')"
+                                        t-attf-onclick="viewService('#{service.id}');">
+                                        <i></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </form>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+            <xpath expr="." position="inside">
+                <style>
+                    .table-row:hover{
+                    cursor:pointer;
+                    }
+                    thead th, tbody td {
+                    width:1110px;
+                    }
+                </style>
+                <script>
+                    function viewService(e)
+                    {
+                    $(location).attr('href','/my/tasdikat/insert_doc_form/'+e);
+                    }
+                    function submit_info()
+                    {
+                    var url='/my/authorization/insert_form';
+                    formValues = $('#tasdikat_form').serialize();
+                    $.post(url, formValues, function(data)
+                    {
+                    $(location).attr('href','/my/tasdikat/insert_doc_form/'+data.data.id);
+                    });
+                    }
+                    function serviceDelete(e)
+                    {
+                    var url='/my/services/delete/'+e;
+                    var formValues= $('#service_form').serialize();
+
+                    $.post(url, formValues, function(data)
+                    {
+                    location.reload();
+                    });
+                    }
+                </script>
+            </xpath>
+        </template>
+        <template id="portal_contact_2ifadat" name="contact 2ifadat">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Ifadat</t>
+                </t>
+                <t t-if="partner.status != 'confirm'">
+                    <div class="alert alert-warning" role="alert">
+                        Please complete your application from My Profile page to access this.
+                    </div>
+                </t>
+                <t t-if="partner.status == 'confirm'">
+                    <div t-if="ifadat_services" t-call="portal.portal_table">
+                        <br/>
+                        <div class="row grid_service_types">
+                            <t t-foreach="ifadat_services" t-as="ifadat_service">
+                                <div class="col-md-2 subimage_section_class">
+                                    <div class="subimage_display_class">
+                                        <a class="image_click" href="#">
+                                            <img t-if="ifadat_service.service_image"
+                                                 t-attf-src="data:image/png;base64,{{ifadat_service.service_image}}"></img>
+                                            <img t-if="not ifadat_service.service_image"
+                                                 src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                            <div class="image-type">
+                                                <t t-esc="ifadat_service._get_name()"></t>
+                                            </div>
+                                        </a>
+                                        <input type="hidden" name="type_id" class="type_id"
+                                               t-att-value="ifadat_service.name"/>
+                                        <input type="hidden" name="service_name" class="service_name" value="ifadat"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <br/>
+                        <br/>
+                        <form class="form-horizontal" method="post" id="service_form">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <h4>Service Requests</h4>
+                            <thead style="display:block;">
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Service Description</th>
+                                    <th>Service Date</th>
+                                    <th>Service Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll; height:300px; display:block;">
+                                <tr class="table-row" t-foreach="service_request or []" t-as="service">
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-esc="service.service_type_id._get_name()"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.desc"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.date"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.status"/>
+                                    </td>
+                                    <td width="10px" t-if="service.status in ('draft')">
+                                        <i class="fa fa-lg fa-trash" id="btn_delete_record"
+                                           t-attf-onclick="serviceDelete('#{service.id}');"></i>
+                                    </td>
+                                    <td width="10px" t-if="service.status not in ('draft')"
+                                        t-attf-onclick="viewService('#{service.id}');">
+                                        <i></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </form>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+            <xpath expr="." position="inside">
+                <style>
+                    .table-row:hover{
+                    cursor:pointer;
+                    }
+                    thead th, tbody td {
+                    width:1110px;
+                    }
+                </style>
+                <script>
+                    function viewService(e)
+                    {
+                    $(location).attr('href','/my/ifadat/insert_doc_form/'+e);
+                    }
+
+                    function serviceDelete(e)
+                    {
+                    var url='/my/services/delete/'+e;
+                    var formValues= $('#service_form').serialize();
+
+                    $.post(url, formValues, function(data)
+                    {
+                    location.reload();
+                    });
+                    }
+
+                    function submit_info()
+                    {
+                    var url='/my/authorization/insert_form';
+                    formValues = $('#ifadat_form').serialize();
+                    $.post(url, formValues, function(data)
+                    {
+                    $(location).attr('href','/my/ifadat/insert_doc_form/'+data.data.id);
+                    });
+                    }
+                </script>
+            </xpath>
+        </template>
+        <template id="portal_contact_tasdikat_form" name="contact authorization form">
+            <t t-call="portal.portal_layout">
+                <br/>
+                <div class="success_alert alert alert-success" role="alert">
+                    Your application has been submitted successfully. We will review it and get back to you shortly.
+                </div>
+                <div class="card col-lg-12 mt16">
+                    <div id="introduction"
+                         t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+                        <div class="row no-gutters">
+                            <div class="col-md">
+                                <h5 class="mb-1 mb-md-0">
+                                    <em t-esc="service_request.service_type_id._get_name()"/>
+                                </h5>
+                            </div>
+                            <div class="col-md" hidden="1">
+                                <h5 class="mb-1 mb-md-0">
+                                    Diplomatic Pouch
+                                    <em t-esc="service_request.bag_no"/>
+                                </h5>
+                            </div>
+                            <div class="col-md text-md-right">
+                                <small class="text-right">Status:</small>
+                                <span t-field="service_request.status" class=" badge badge-pill badge-info"
+                                      title="Current status of this service request"/>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="/my/tasdikat/submit_authorization" method="post"
+                          id="tasdikat_form">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" id="service_id" name="service_id" t-att-value="service_request.id"/>
+                        <input type="hidden" id="status" name="status" t-att-value="service_request.status"/>
+                        <div class="row">
+                            <div class="col-lg-12" id="success_message_div">
+                                <div t-if="len(service_request.service_type_id.terms_conditions)>11"
+                                     class="alert alert-success" role="status">
+                                    <div t-field="service_request.service_type_id.terms_conditions"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <input type="text" name="service" t-attf-class="form-control "
+                                       t-att-value="service_request.service_type_id._get_name()" disabled="disabled"/>
+                            </div>
+                            <div class='col-md-6'>
+                                <label class="col-form-label" for="description">Remarks</label>
+                                <input type="text" name="description" id="description" t-attf-class="form-control "
+                                       t-att-value="service_request.desc" onBlur="auto_save()"/>
+                            </div>
+                        </div>
+                        <div id="beneficiary-div">
+                            <br></br>
+                            <h4>Beneficiary</h4>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label" for="beneficiary">Service Beneficiary</label>
+                                    <select name="beneficiary" id="beneficiary" t-attf-class="form-control"
+                                            onchange="getDocuments();" data-init="1" onBlur="auto_save()">
+                                        <option t-att-value="service_request.partner_id.id"
+                                                t-att-selected="service_request.partner_id.id == service_request.service_beneficiary.id">
+                                            <t t-esc="service_request.partner_id.name"/>
+                                        </option>
+                                        <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="d">
+                                            <option t-att-value="d.id"
+                                                    t-att-selected="d.id == service_request.service_beneficiary.id">
+                                                <t t-esc="d.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-4'></div>
+                                <div class='col-md-4'></div>
+                            </div>
+                        </div>
+
+                        <br></br>
+                        <div class="form-group">
+                            <div class="container">
+                                <button type="button" class="btn btn-primary float-left mb32 " id="docBtn">Add
+                                    Document
+                                </button>
+                                <table class="table table-responsive table-hover" id="docTab">
+                                    <thead>
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>رقم المستند</th>
+                                            <th>Document Name</th>
+                                            <th>Issue Date</th>
+                                            <th>Expiry Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="service_request.status == 'draft'">
+                                            <tr t-foreach="documents or []" t-as="doc"
+                                                t-attf-onclick="openModal('#{doc.id}');">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-lg fa-pencil" id="btn_new_record"
+                                                       t-attf-onclick="openModal('#{doc.id}');"></i>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr t-foreach="documents or []" t-as="doc">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <t t-if="service_request.status == 'draft'">
+                                        <button type="button" id="submit_btn" onclick="submittasdikat();"
+                                                class="btn btn-info">Submit
+                                        </button>
+                                    </t>
+                                </div>
+                                <div class='col-md-4' t-if="service_request.status == 'draft'">
+                                    <button type="button" id="delete_btn" onclick="deleteTasdikat();"
+                                            class="btn btn-info">Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--   Document Modal  -->
+                    <xpath expr="//form" position='after'>
+                        <!-- Modal -->
+                        <div class="modal fade" id="docModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding:25px 60px;">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Documents
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="doc_form" role="form" action="/my/tasdikat/insert_documents"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id" value=""/>
+                                            <input type="hidden" name="is_required_issue_date"
+                                                   id="is_required_issue_date"/>
+                                            <input type="hidden" name="is_required_expiry_date"
+                                                   id="is_required_expiry_date"/>
+                                            <input type="hidden" name="is_required_doc_no" id="is_required_doc_no"/>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" required="required"
+                                                           for="document_type">Document Type
+                                                    </label>
+                                                    <select name="document_type" id="document_type"
+                                                            t-attf-class="form-control">
+                                                        <t t-foreach="documentTypes or []" t-as="types">
+                                                            <option t-att-value="types.id">
+                                                                <t t-esc="types._get_name()"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6' id="docNodiv">
+                                                    <label class="col-form-label" for="docNo">رقم المستند</label>
+                                                    <input type="text" id="docNo" name="docNo"
+                                                           t-attf-class="form-control "
+                                                           t-att-value="docNo"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner">Document Owner
+                                                    </label>
+                                                    <select name="document_owner" required="required"
+                                                            t-attf-class="form-control" id="document_owner">
+                                                        <option value="me">Applicant</option>
+                                                        <option value="family">Family Member</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="issueDatediv">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="issueDate">Issue Date</label>
+                                                    <input id="issueDate" name="issueDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           t-att-value="issueDate"/>
+                                                </div>
+                                                <div class='col-md-6' id="expiryDatediv">
+                                                    <label class="col-form-label" for="expiryDate">Expiry Date</label>
+                                                    <input id="expiryDate" name="expiryDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="expiryDate"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="file_attach">File</label>
+                                                    <input type="file" id="file_attach" name="files[]"
+                                                           class="o_sign_load btn btn-link" required="required"
+                                                           role="button"/>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+                                            <br></br>
+                                            <input type="submit" id="save-doc-btn" class="btn btn-default btn-block"
+                                                   value="Save"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ratingModaltasdikat" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Feedback
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="feedback_form" role="form" action="/my/service/submit_feedback"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id"
+                                                   t-att-value="service_request.id"/>
+                                            <h4>
+                                                <span class="glyphicon glyphicon-lock"></span>
+                                                Feedback
+                                            </h4>
+                                            <div class="row">
+                                                <label class="col-form-label" for="rating-value">Rating
+                                                </label>
+                                            </div>
+                                            <div class="row" style="width:100%;">
+                                                <div style="width:20%;place-self: flex-end;text-align: right;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+
+                                                </div>
+                                                <div style="width:80%;padding-left: 10px;">
+                                                    <input type="radio" id="one_star" name="rating" value="1"/>
+                                                    <br/>
+                                                    <input type="radio" id="two_star" name="rating" value="2"/>
+                                                    <br/>
+                                                    <input type="radio" id="three_star" name="rating"
+                                                           value="3"/>
+                                                    <br/>
+                                                    <input type="radio" id="four_star" name="rating"
+                                                           value="4"/>
+                                                    <br/>
+                                                    <input type="radio" id="five_star" name="rating"
+                                                           value="5"/>
+                                                </div>
+                                                <input type="hidden" name="type" id="type" value="tasdikat"/>
+                                            </div>
+                                            <!--
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <label class="col-form-label" for="rating-value">Rating</label>
+                                                                                      <div class="star-rating">
+                                                                                        <span class="fa fa-star-o" data-rating="1"></span>
+                                                                                        <span class="fa fa-star-o" data-rating="2"></span>
+                                                                                        <span class="fa fa-star-o" data-rating="3"></span>
+                                                                                        <span class="fa fa-star-o" data-rating="4"></span>
+                                                                                        <span class="fa fa-star-o" data-rating="5"></span>
+                                                                                        <input type="hidden" name="rating" class="rating-value" value="2.56"/>
+                                                                                          <input type="hidden" name="type" id="type" value="tasdikat"/>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                </div>
+                                            -->
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <label class="col-form-label" for="comments">Comments</label>
+                                                    <textarea id="comments" class="comments" name="comments"
+                                                              t-attf-class="form-control"/>
+
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <center>
+                                                <i class="loader_for_service_submit"/>
+                                            </center>
+                                            <input type="button" id="save-feedback-btn"
+                                                   class="btn btn-default btn-block" value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </xpath>
+                    <xpath expr="." position="inside">
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                        <script>
+                            $("#docBtn").click(function(){
+                            $("#docModal").modal();
+                            var service_id = $('#service_id').val();
+                            $(".modal-body #service_id").val(service_id);
+                            $(".modal-body #partner_doc_Id").val('');
+                            });
+                            $(function ()
+                            {
+                            var status = $('#status').val();
+                            if(status == "progress" || status == "complete")
+                            {
+                            $('button').hide();
+                            $('input[type="submit"]').hide();
+                            $("#description").attr('disabled','disabled');
+                            }
+
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+                            });
+
+                            $('#document_type').on('change',function()
+                            {
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+
+                            });
+
+                            function auto_save()
+                            {
+                            var url='/my/service/service_auto_save';
+                            var formValues= $('#tasdikat_form').serialize();
+                            $.post(url, formValues, function(data){
+                            });
+                            }
+
+                            async function getDocuments()
+                            {
+                            var url='/my/service/change_doc';
+                            var formValues= $('#tasdikat_form').serialize();
+                            await $.post(url, formValues, function(data){
+                            $('#print_data_report_form').hide();
+                            console.log("data.....",data)
+                            console.log("nationa;ity...a..",data.data.beneficiary_nationality)
+                            $('#poratl_report_form_archive_number').val(data.data.beneficiary_archive_no != false ?
+                            data.data.beneficiary_archive_no : '')
+                            $('#portal_report_form_person_name').val(data.data.beneficiary_name != false ?
+                            data.data.beneficiary_name : '')
+                            $('#portal_report_form_qid_no').val(data.data.beneficiary_qid != false ?
+                            data.data.beneficiary_qid : '');
+                            $('#portal_report_form_sponsor_name').val(data.data.beneficiary_sponsor != false ?
+                            data.data.beneficiary_sponsor : '');
+                            $('#portal_report_form_mobile').val(data.data.beneficiary_sponsor_mobile != false ?
+                            data.data.beneficiary_sponsor_mobile : '');
+                            $('#portal_report_form_streetlabanon').val(data.data.beneficiary_lebnon_street != false ?
+                            data.data.beneficiary_lebnon_street : '');
+                            $('#portal_report_form_floorno').val(data.data.beneficiary_lebnon_floor != false ?
+                            data.data.beneficiary_lebnon_floor : '');
+                            $('#portal_report_form_moblileno').val(data.data.beneficiary_lebnon_mobile != false ?
+                            data.data.beneficiary_lebnon_mobile : '');
+                            $('#portal_report_form_streetqatar').val(data.data.beneficiary_qatar_street != false ?
+                            data.data.beneficiary_qatar_street : '');
+                            $('#portal_report_form_buildingqatar').val(data.data.beneficiary_qatar_building != false ?
+                            data.data.beneficiary_qatar_building : '');
+                            $('#portal_report_form_floornoqatar').val(data.data.beneficiary_qatar_floor != false ?
+                            data.data.beneficiary_qatar_floor : '');
+                            $('#portal_report_form_mobilenoqatar').val(data.data.beneficiary_qatar_mobile != false ?
+                            data.data.beneficiary_qatar_mobile : '');
+                            $('#portal_service_request_id_new').val(data.data.beneficiary != false ?
+                            data.data.beneficiary : '');
+                            $('#portal_service_request_spouse_id').val(data.data.beneficiary_qid_obj != false ?
+                            data.data.beneficiary_qid_obj : '');
+                            $('#partner_data_report').val(data.data.beneficiary_spose_name)
+
+                            if(data.data.beneficiary_spose_name != false || data.data.beneficiary_nationality != false
+                            || data.data.beneficiary_nationality_spouse != false || data.data.beneficiary_lebnon_owned
+                            != false){
+                            $(`#nationality_form_report_id
+                            option[value=${data.data.beneficiary_nationality}]`).prop("selected", true);
+                            $(`#nationalityspouse_data_report
+                            option[value=${data.data.beneficiary_nationality_spouse}]`).prop("selected", true);
+                            $(`#owned_form_report_id
+                            option[value=${data.data.beneficiary_lebnon_owned}]`).prop("selected", true);
+                            }
+                            console.log(".data.data.beneficiary_nationality_spouse....",data.data.beneficiary_nationality_spouse)
+                            if(data.data.beneficiary_nationality_spouse == 'other'){
+                            console.log("...........if........")
+                            $('.other_nationality_second_div').show();
+                            $('.other_nationality_first_div').hide();
+                            }
+                            else{
+                            console.log("...........else........")
+                            $('.other_nationality_first_div').hide();
+                            $('.other_nationality_second_div').show();
+                            }
+
+                            });
+                            }
+
+                            function openModal(e)
+                            {
+                            var url='/my/authorization/document/open/'+e;
+                            formValues = $('#tasdikat_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #service_id").val( data.data.service_id );
+                            $(".modal-body #partner_doc_Id").val( data.data.documentId );
+                            $(".modal-body #document_type").val( data.data.doctype );
+                            $(".modal-body #document_type").prop('disabled', 'disabled');
+                            $(".modal-body #docNo").val( data.data.document_number );
+                            $(".modal-body #issueDate").val( data.data.issue_date );
+                            $(".modal-body #expiryDate").val( data.data.expiry_date );
+                            $(".modal-body #document_owner").val( data.data.document_owner );
+
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+                            $('#docModal').modal('toggle');
+                            });
+                            }
+                            $("#save-doc-btn").on("submit", function(event)
+                            {
+                            var url='/my/tasdikat/insert_documents';
+                            var formValues= $('#tasdikat_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            location.reload();
+                            });
+                            });
+
+                            function deleteTasdikat()
+                            {
+                            var url='/my/services/delete';
+                            var formValues= $('#tasdikat_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(location).attr('href','/my/tasdkiat');
+                            });
+                            }
+
+                            function submittasdikat()
+                            {
+                            $('#ratingModaltasdikat').modal('toggle');
+                            }
+                            function validate(isDate)
+                            {
+                            isValid = true;
+                            tmp = isDate.split("/");
+                            isLeap = tmp[2]%4;
+                            if (!/[1-9]{1}/.test(tmp[0]) || /[1-9]{2}/.test(tmp[0]) &amp;&amp;
+                            !/10|11|12/.test(tmp[0])){isValid = false}
+                            else if ((/4|6|9|11/.test(tmp[0])) &amp;&amp; tmp[1] > 30){isValid=false}
+                            else if ((/1|3|5|7|8|10|12/.test(tmp[0])) &amp;&amp; tmp[1] > 31){isValid=false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap == 0) &amp;&amp; tmp[1] > 29){isValid = false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap != 0) &amp;&amp; tmp[1] > 28){isValid = false}
+                            else if (tmp[2].length != 4 || (!/^19|20/.test(tmp[2]))){isValid = false}
+                            if (isNaN(Date.parse(isDate)) || !isValid){return true}
+                            else { return true }
+                            }
+
+                            function parseDMY(isDate)
+                            {
+                            tmp = isDate.value;
+                            if(tmp){
+                            tmp = tmp.split("-");
+                            refDate = tmp[1]+"/"+tmp[2]+"/"+tmp[0];
+                            if (!validate(refDate))
+                            {
+                            isDate.value = "";
+                            isDate.focus();
+                            }
+                            }
+                            }
+                        </script>
+                    </xpath>
+                </div>
+                <div class="card col-lg-12 mt16">
+                    <style>
+                        .form-group{
+                        color:#000;
+                        }
+                    </style>
+                    <input type="hidden" t-att-value="service_request.id" id="portal_service_request_id"/>
+                    <input type="hidden" t-att-value="service_request.id" id="portal_service_request_id_new"/>
+                    <div class="row mt-3">
+                        <div class="form-group col-lg-3">
+                            <label for="archivenumber" style="font-family:Times-new-roman !important;">رقم الملف في
+                                السفارة
+                            </label>
+                            <input name="archivenumber" type="text"
+                                   id="poratl_report_form_archive_number"
+                                   class="form-control o_website_form_input"
+                                   t-att-value="service_request.partner_id.archive_number"/>
+
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group col-lg-3">
+                            <t t-set="full_name" t-value="service_request.partner_id.display_name"/>
+                            <label for="personname">أنا الموقع/ة ادناه السيد/ة</label>&#160;<span style="color:red;">*
+                        </span>
+                            <input name="personname"
+                                   type="text"
+                                   id="portal_report_form_person_name"
+                                   class="form-control o_website_form_input"
+                                   t-att-value="full_name"/>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="nationality_id">الجنسية</label>
+                            <span style="color:red;">*</span>
+                            <select name="nationality" id="nationality_form_report_id" t-attf-class="form-control">
+                                <option value=""></option>
+                                <option value="leb"
+                                        t-att-selected="service_request.partner_id.first_Nationality == 'leb'">Lebanese
+                                </option>
+                                <option value="pal"
+                                        t-att-selected="service_request.partner_id.first_Nationality == 'pal'">
+                                    Palestinian
+                                </option>
+                                <option value="other"
+                                        t-att-selected="service_request.partner_id.first_Nationality == 'other'">other
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <t t-set="qid"
+                               t-value="request.env['ebs_mod.contact.ikama'].sudo().search([('partner_id','=',service_request.partner_id.id),('is_active','=',True),('family_member','=','spouse')],limit=1,order='id desc')"/>
+                            <label for="qidno">رقم الاقامة</label>
+                            <span style="color:red;">*</span>
+                            <input name="qidno"
+                                   type="text"
+                                   id="portal_report_form_qid_no"
+                                   class="form-control o_website_form_input"
+                                   t-att-value="qid.ikama_no"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group col-lg-3">
+                            <label for="spousename">اسم الزوج/ة</label>
+                            <t t-set="partner_ids" t-value="request.env['res.partner'].sudo().search([])"/>
+                            <input name="spousename"
+                                   type="text"
+                                   id="partner_data_report"
+                                   class="form-control o_website_form_input"
+                                   t-att-value="(qid.dependent.firstName if qid.dependent.firstName else '') +' ' + (qid.dependent.middleName if qid.dependent.middleName else '' )+' '+ (qid.dependent.lastName if qid.dependent.lastName else '')"
+                            />
+
+                        </div>
+                        <input type="hidden" t-att-value="qid.dependent.id" id="portal_service_request_spouse_id"/>
+
+                        <div class="form-group col-lg-3">
+                            <label for="nationalityspouse">الجنسية</label>
+                            <select name="nationalityspouse" id="nationalityspouse_data_report"
+                                    t-attf-class="form-control">
+                                <option value=""></option>
+                                <option value="leb" t-att-selected="qid.dependent.first_Nationality == 'leb'">Lebanese
+                                </option>
+                                <option value="pal" t-att-selected="qid.dependent.first_Nationality == 'pal'">
+                                    Palestinian
+                                </option>
+                                <option value="other" t-att-selected="qid.dependent.first_Nationality == 'other'">
+                                    other
+                                </option>
+
+                            </select>
+                        </div>
+                        <t t-if="qid.dependent.first_Nationality == 'other'">
+                            <div class="form-group col-lg-3 other_nationality_first_div">
+                                <label for="other_nationality">الجنسية الأخرى</label>
+                                <select name="other_nationality" t-attf-class="form-control other_nationality">
+                                    <t t-set="countries" t-value="request.env['res.country'].sudo().search([])"/>
+                                    <t t-foreach="countries" t-as="country">
+                                        <option t-att-value="country.id">
+                                            <t t-esc="country.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </t>
+                        <div class="form-group col-lg-3 other_nationality_second_div">
+                            <label for="other_nationality">الجنسية الأخرى</label>
+                            <select name="other_nationality" t-attf-class="form-control other_nationality">
+                                <t t-set="countries" t-value="request.env['res.country'].sudo().search([])"/>
+                                <t t-foreach="countries" t-as="country">
+                                    <option t-att-value="country.id">
+                                        <t t-esc="country.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group col-lg-3">
+                            <label for="sponsor">اسم الشركة/الكفيل</label>
+                            <span style="color:red;">*</span>
+                            <input name="sponsor"
+                                   type="text"
+                                   required="True"
+                                   id="portal_report_form_sponsor_name"
+                                   class="form-control o_website_form_input"
+                                   t-att-value="service_request.partner_id.company_id.name"
+                            />
+                        </div>
+
+                        <div class="form-group col-lg-3">
+                            <label for="mobile">الهاتف</label>
+                            <span style="color:red;">*</span>
+                            <input name="mobile"
+                                   type="text"
+                                   id="portal_report_form_mobile"
+                                   t-att-value="service_request.partner_id.company_id.phone"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="fax">فاكس</label>
+                            <input name="fax"
+                                   type="text"
+                                   id="portal_report_form_fax"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="pobox">ص.ب.</label>
+                            <input name="pobox"
+                                   type="text"
+                                   id="portal_report_form_pobox"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label for="education">اختصاص</label>
+                            <span style="color:red;">*</span>
+                            <input name="education"
+                                   type="text"
+                                   id="portal_report_form_education"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="schooluniversituname">مدرسة/ معهد /جامعة</label>
+                            <span style="color:red;">*</span>
+                            <input name="schooluniversituname"
+                                   type="text"
+                                   id="portal_report_form_schooluniversituname"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="certificateissuedate">بتاريخ</label>
+                            <span style="color:red;">*</span>
+                            <input name="certificateissuedate" id="certificateissue_date" placeholder="dd/mm/yyyy"
+                                   class="form-control datepicker" onBlur="parseDMY(this);"/>
+
+
+                        </div>
+                    </div>
+
+                    <div class="mt-3 mb-2">
+                        <b>
+                            <span style="color:#17a2b8;font-size: 20px;">لبنان</span>
+                        </b>
+                    </div>
+                    <div class="" style="border:1px solid #ced4da;padding:10px">
+                        <div class="row">
+
+                            <div class="form-group col-lg-3">
+                                <label for="streetlabanondescription">عنوان لبنان :</label>
+                                <span style="color:red;">*</span>
+                                <input name="streetlabanondescription"
+                                       type="text"
+                                       id="portal_report_form_streetlabanon_description"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <t t-set="lab_address_id"
+                                   t-value="request.env['ebs_mod.contact.address'].sudo().search([('partner_id','=',service_request.partner_id.id),('is_active','=',True),('type','=','Lebanon')],limit=1,order='id desc')"/>
+                                <label for="streetlabanon">الشارع</label>
+                                <span style="color:red;">*</span>
+                                <input name="streetlabanon"
+                                       type="text"
+                                       t-att-value="lab_address_id.street"
+                                       id="portal_report_form_streetlabanon"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="ownapartment">ملك/اجار</label>
+                                <span style="color:red;">*</span>
+
+                                <select name="owned" id="owned_form_report_id" t-attf-class="form-control">
+                                    <option value="" t-att-selected="not lab_address_id"></option>
+                                    <option value="ملك"
+                                            t-att-selected="lab_address_id and lab_address_id.owned == True">ملك
+                                    </option>
+                                    <option value="اجار"
+                                            t-att-selected="lab_address_id and lab_address_id.owned == False">اجار
+                                    </option>
+                                </select>
+
+
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="floorno">طابق</label>
+                                <span style="color:red;">*</span>
+                                <input name="floorno"
+                                       type="text"
+                                       t-att-value="lab_address_id.floor"
+                                       id="portal_report_form_floorno"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="moblileno">هاتف</label>
+                                <span style="color:red;">*</span>
+                                <input name="moblileno"
+                                       type="text"
+                                       t-att-value="lab_address_id.mobile"
+                                       id="portal_report_form_moblileno"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 mb-2">
+                        <b>
+                            <span style="color:#17a2b8;font-size: 20px;">دولة قطر</span>
+                        </b>
+                    </div>
+                    <div class="" style="border:1px solid #ced4da;padding:10px">
+                        <div class="row">
+                            <div class="form-group col-lg-3">
+                                <label for="streetqatardescription">عنوان قطر :</label>
+                                <span style="color:red;">*</span>
+                                <input name="streetqatardescription"
+                                       type="text"
+                                       id="portal_report_form_streetqatar_description"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+
+                            <t t-set="qtr_address_id"
+                               t-value="request.env['ebs_mod.contact.address'].sudo().search([('partner_id','=',service_request.partner_id.id),('is_active','=',True),('type','=','Qatar')],limit=1,order='id desc')"/>
+                            <div class="form-group col-lg-3">
+                                <label for="streetqatar">الشارع</label>
+                                <span style="color:red;">*</span>
+                                <input name="streetqatar"
+                                       type="text"
+                                       t-att-value="qtr_address_id.street"
+                                       id="portal_report_form_streetqatar"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="buildingqatar">بناية</label>
+                                <span style="color:red;">*</span>
+                                <input name="buildingqatar"
+                                       type="text"
+                                       t-att-value="qtr_address_id.building"
+                                       id="portal_report_form_buildingqatar"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="floornoqatar">طابق</label>
+                                <span style="color:red;">*</span>
+                                <input name="floornoqatar"
+                                       type="text"
+                                       t-att-value="qtr_address_id.floor"
+                                       id="portal_report_form_floornoqatar"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="mobilenoqatar">هاتف</label>
+                                <span style="color:red;">*</span>
+                                <input name="mobilenoqatar"
+                                       type="text"
+                                       t-att-value="qtr_address_id.mobile"
+                                       id="portal_report_form_mobilenoqatar"
+                                       class="form-control o_website_form_input"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group col-lg-3">
+                            <label for="emergencyname">اسم أقرب المقربين في قطر</label>
+                            <span style="color:red;">*</span>
+                            <input name="emergencynamecontact"
+                                   type="text"
+                                   id="portal_report_form_emergencyname"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="emergencycontact">رقم جوال أقرب المقربين في قطر</label>
+                            <span style="color:red;">*</span>
+                            <input name="emergencycontact"
+                                   type="text"
+                                   id="portal_report_form_emergencycontact"
+                                   class="form-control o_website_form_input"
+                            />
+                        </div>
+
+                    </div>
+                    <div class="row mt-3">
+                        <div class="form-group col-lg-3">
+                            <label for="dateofapploication">التاريخ</label>
+                            <span style="color:red;">*</span>
+
+                            <input name="dateofapploication" id="portal_report_form_dateofapploication"
+                                   placeholder="dd/mm/yyyy" class="form-control datepicker" onBlur="parseDMY(this);"/>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="pull-right p-4" style="margin-top:10px;">
+                                <a class="btn btn-primary btn-lg print_record_data" id="print_data_report_form">
+                                    Print
+                                </a>
+                            </div>
+                            <div class="pull-right p-4">
+                                <a class="btn btn-primary btn-lg save_record_data" id="save_data_report_form">
+                                    Save
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="o_portal_messages_container mt32">
+                    <h4>Message and communication history</h4>
+                    <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="service_request.access_token"/>
+                        <t t-set="object" t-value="service_request"/>
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+        <template id="portal_contact_ifadat_form" name="contact Ifadat form">
+            <t t-call="portal.portal_layout">
+                <br/>
+                <div class="success_alert alert alert-success" role="alert">
+                    Your application has been submitted successfully. We will review it and get back to you shortly.
+                </div>
+                <div class="card col-lg-12 mt16">
+                    <div id="introduction"
+                         t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+                        <div class="row no-gutters">
+                            <div class="col-md">
+                                <h5 class="mb-1 mb-md-0">
+                                    <em t-esc="service_request.service_type_id._get_name()"/>
+                                </h5>
+                            </div>
+                            <div class="col-md" hidden="1">
+                                <h5 class="mb-1 mb-md-0">
+                                    Diplomatic Pouch
+                                    <em t-esc="service_request.bag_no"/>
+                                </h5>
+                            </div>
+                            <div class="col-md text-md-right">
+                                <small class="text-right">Status:</small>
+                                <span t-field="service_request.status" class=" badge badge-pill badge-info"
+                                      title="Current status of this service request"/>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="/my/ifadat/submit_ifadat" method="post"
+                          id="ifadat_form">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" id="service_id" name="service_id" t-att-value="service_request.id"/>
+                        <input type="hidden" id="status" name="status" t-att-value="service_request.status"/>
+                        <div class="row">
+                            <div class="col-lg-12" id="success_message_div">
+                                <div t-if="len(service_request.service_type_id.terms_conditions)>11"
+                                     class="alert alert-success" role="status">
+                                    <div t-field="service_request.service_type_id.terms_conditions"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <input type="text" name="service" t-attf-class="form-control "
+                                       t-att-value="service_request.service_type_id._get_name()" disabled="disabled"/>
+                            </div>
+                            <div class='col-md-6'>
+                                <label class="col-form-label" for="description">Remarks</label>
+                                <input type="text" name="description" id="description" t-attf-class="form-control "
+                                       t-att-value="service_request.desc" onBlur="auto_save()"/>
+                            </div>
+                        </div>
+                        <div id="beneficiary-div">
+                            <br></br>
+                            <h4>Beneficiary</h4>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label" for="beneficiary">Service Beneficiary</label>
+                                    <select name="beneficiary" id="beneficiary" t-attf-class="form-control  "
+                                            onchange="getDocuments();" data-init="1" onBlur="auto_save()">
+                                        <option t-att-value="service_request.partner_id.id"
+                                                t-att-selected="service_request.partner_id.id == service_request.service_beneficiary.id">
+                                            <t t-esc="service_request.partner_id.name"/>
+                                        </option>
+                                        <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="d">
+                                            <option t-att-value="d.id"
+                                                    t-att-selected="d.id == service_request.service_beneficiary.id">
+                                                <t t-esc="d.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-4'></div>
+                                <div class='col-md-4'></div>
+                            </div>
+                        </div>
+
+                        <br></br>
+
+                        <div class="form-group">
+                            <div class="container">
+                                <button type="button" class="btn btn-primary float-left mb32 " id="docBtn">Add
+                                    Document
+                                </button>
+                                <table class="table table-responsive table-hover" id="docTab">
+                                    <thead>
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>رقم المستند</th>
+                                            <th>Document Name</th>
+                                            <th>Issue Date</th>
+                                            <th>Expiry Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="service_request.status == 'draft'">
+                                            <tr t-foreach="documents or []" t-as="doc"
+                                                t-attf-onclick="openModal('#{doc.id}');">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-lg fa-pencil" id="btn_new_record"
+                                                       t-attf-onclick="openModal('#{doc.id}');"></i>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr t-foreach="documents or []" t-as="doc">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <t t-if="service_request.status == 'draft'">
+                                        <button type="button" id="submit_btn" onclick="submitifadat();"
+                                                class="btn btn-info">Submit
+                                        </button>
+                                    </t>
+                                </div>
+                                <div class='col-md-4' t-if="service_request.status == 'draft'">
+                                    <button type="button" id="delete_btn" onclick="deleteIfadat();"
+                                            class="btn btn-info">Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--            Document Modal-->
+                    <xpath expr="//form" position='after'>
+                        <!-- Modal -->
+                        <div class="modal fade" id="docModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding:25px 60px;">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Documents
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="doc_form" role="form" action="/my/ifadat/insert_documents"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id" value=""/>
+                                            <input type="hidden" name="is_required_issue_date"
+                                                   id="is_required_issue_date"/>
+                                            <input type="hidden" name="is_required_expiry_date"
+                                                   id="is_required_expiry_date"/>
+                                            <input type="hidden" name="is_required_doc_no" id="is_required_doc_no"/>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" required="required"
+                                                           for="document_type">Document Type
+                                                    </label>
+                                                    <select name="document_type" id="document_type"
+                                                            t-attf-class="form-control">
+                                                        <t t-foreach="documentTypes or []" t-as="types">
+                                                            <option t-att-value="types.id">
+                                                                <t t-esc="types._get_name()"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6' id="docNodiv">
+                                                    <label class="col-form-label" for="docNo">رقم المستند</label>
+                                                    <input type="text" id="docNo" name="docNo"
+                                                           t-attf-class="form-control "
+                                                           t-att-value="docNo"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner">Document Owner
+                                                    </label>
+                                                    <select name="document_owner" required="required"
+                                                            t-attf-class="form-control" id="document_owner">
+                                                        <option value="me">Applicant</option>
+                                                        <option value="family">Family Member</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6' id="issueDatediv">
+                                                    <label class="col-form-label" for="issueDate">Issue Date</label>
+                                                    <input id="issueDate" name="issueDate" onBlur="parseDMY(this);"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="issueDate"/>
+                                                </div>
+                                                <div class='col-md-6' id="expiryDatediv">
+                                                    <label class="col-form-label" for="expiryDate">Expiry Date</label>
+                                                    <input id="expiryDate" name="expiryDate" onBlur="parseDMY(this);"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="expiryDate"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="file_attach">File</label>
+                                                    <input type="file" id="file_attach" name="files[]"
+                                                           class="o_sign_load btn btn-link" required="required"
+                                                           role="button"/>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+                                            <br></br>
+                                            <input type="submit" id="save-doc-btn" class="btn btn-default btn-block"
+                                                   value="Save"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ratingModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Feedback
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="feedback_form" role="form" action="/my/service/submit_feedback"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id"
+                                                   t-att-value="service_request.id"/>
+                                            <h4>
+                                                <span class="glyphicon glyphicon-lock"></span>
+                                                Feedback
+                                            </h4>
+                                            <div class="row">
+                                                <label class="col-form-label" for="rating-value">Rating
+                                                </label>
+                                            </div>
+                                            <div class="row" style="width:100%;">
+                                                <div style="width:20%;place-self: flex-end;text-align: right;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+
+                                                </div>
+                                                <div style="width:80%;padding-left: 10px;">
+                                                    <input type="radio" id="one_star" name="rating" value="1"/>
+                                                    <br/>
+                                                    <input type="radio" id="two_star" name="rating" value="2"/>
+                                                    <br/>
+                                                    <input type="radio" id="three_star" name="rating"
+                                                           value="3"/>
+                                                    <br/>
+                                                    <input type="radio" id="four_star" name="rating"
+                                                           value="4"/>
+                                                    <br/>
+                                                    <input type="radio" id="five_star" name="rating"
+                                                           value="5"/>
+                                                </div>
+                                                <input type="hidden" name="type" id="type" value="ifadat"/>
+
+                                            </div>
+                                            <!--
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-12">
+                                                                                                <label class="col-form-label" for="rating-value">Rating</label>
+                                                                                                <div class="star-rating">
+                                                                                                    <span class="fa fa-star-o" data-rating="1"></span>
+                                                                                                    <span class="fa fa-star-o" data-rating="2"></span>
+                                                                                                    <span class="fa fa-star-o" data-rating="3"></span>
+                                                                                                    <span class="fa fa-star-o" data-rating="4"></span>
+                                                                                                    <span class="fa fa-star-o" data-rating="5"></span>
+                                                                                                    <input type="hidden" name="rating" class="rating-value"
+                                                                                                           value="2.56"/>
+                                                                                                    <input type="hidden" name="type" id="type" value="ifadat"/>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                            -->
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <label class="col-form-label" for="comments">Comments</label>
+                                                    <textarea id="comments" class="comments" name="comments"
+                                                              t-attf-class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <center>
+                                                <i class="loader_for_service_submit"/>
+                                            </center>
+                                            <input type="button" id="save-feedback-btn"
+                                                   class="btn btn-default btn-block" value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </xpath>
+                    <xpath expr="." position="inside">
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                        <script>
+                            $("#docBtn").click(function(){
+                            $("#docModal").modal();
+                            var service_id = $('#service_id').val();
+                            $(".modal-body #service_id").val(service_id);
+                            $(".modal-body #partner_doc_Id").val('');
+                            });
+
+                            $(function ()
+                            {
+                            var status = $('#status').val();
+                            if(status == "progress" || status == "complete")
+                            {
+                            $('button').hide();
+                            $('input[type="submit"]').hide();
+                            $("#description").attr('disabled','disabled');
+                            }
+
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+                            });
+
+                            $('#document_type').on('change',function()
+                            {
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+
+                            });
+
+                            function auto_save()
+                            {
+                            var url='/my/service/service_auto_save';
+                            var formValues= $('#ifadat_form').serialize();
+                            $.post(url, formValues, function(data){
+                            });
+                            }
+
+                            function openModal(e)
+                            {
+                            var url='/my/authorization/document/open/'+e;
+                            formValues = $('#ifadat_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #service_id").val( data.data.service_id );
+                            $(".modal-body #partner_doc_Id").val( data.data.documentId );
+                            $(".modal-body #document_type").val( data.data.doctype );
+                            $(".modal-body #document_type").prop('disabled', 'disabled');
+                            $(".modal-body #document_owner").val( data.data.document_owner );
+
+                            if(data.data.document_number != 'false')
+                            $(".modal-body #docNo").val( data.data.document_number );
+                            $(".modal-body #issueDate").val( data.data.issue_date );
+                            $(".modal-body #expiryDate").val( data.data.expiry_date );
+
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+                            $('#docModal').modal('toggle');
+                            });
+                            }
+                            $("#save-doc-btn").on("submit", function(event)
+                            {
+                            var url='/my/ifadat/insert_documents';
+                            var formValues= $('#ifadat_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            location.reload();
+                            });
+                            });
+
+                            function getDocuments()
+                            {
+                            var url='/my/service/change_doc';
+                            var formValues= $('#ifadat_form').serialize();
+                            var partner_id = $('#beneficiary').children("option:selected").val()
+                            $.post(url, formValues,partner_id, function(data){
+                            console.log("......")
+                            });
+                            }
+
+
+                            function deleteIfadat()
+                            {
+                            var url='/my/services/delete';
+                            var formValues= $('#ifadat_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            $(location).attr('href','/my/ifadat');
+                            });
+                            }
+                            function submitifadat()
+                            {
+                            $('#ratingModal').modal('toggle');
+                            }
+
+                            function validate(isDate)
+                            {
+                            isValid = true;
+                            tmp = isDate.split("/");
+                            isLeap = tmp[2]%4;
+                            if (!/[1-9]{1}/.test(tmp[0]) || /[1-9]{2}/.test(tmp[0]) &amp;&amp;
+                            !/10|11|12/.test(tmp[0])){isValid = false}
+                            else if ((/4|6|9|11/.test(tmp[0])) &amp;&amp; tmp[1] > 30){isValid=false}
+                            else if ((/1|3|5|7|8|10|12/.test(tmp[0])) &amp;&amp; tmp[1] > 31){isValid=false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap == 0) &amp;&amp; tmp[1] > 29){isValid = false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap != 0) &amp;&amp; tmp[1] > 28){isValid = false}
+                            else if (tmp[2].length != 4 || (!/^19|20/.test(tmp[2]))){isValid = false}
+                            if (isNaN(Date.parse(isDate)) || !isValid){return true}
+                            else { return true }
+                            }
+
+                            function parseDMY(isDate)
+                            {
+                            tmp = isDate.value;
+                            if(tmp){
+                            tmp = tmp.split("-");
+                            refDate = tmp[1]+"/"+tmp[2]+"/"+tmp[0];
+                            if (!validate(refDate))
+                            {
+                            isDate.value = "";
+                            isDate.focus();
+                            }
+                            }
+                            }
+                        </script>
+                    </xpath>
+                </div>
+                <div class="o_portal_messages_container mt32">
+                    <h4>Message and communication history</h4>
+                    <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="service_request.access_token"/>
+                        <t t-set="object" t-value="service_request"/>
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+        <template id="portal_contact_mou3amalt_konsoliya" name="contact mou3amalt konsoliya">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Consular Services</t>
+                </t>
+                <!--<div t-if="mou3amalt_konsoliya" t-call="portal.portal_table">-->
+                <!--<thead>
+                   <tr>
+                       <th class="text-right">Service</th>
+                   </tr>
+               </thead>-->
+                <div class="row">
+                    <t t-foreach="mou3amalt_konsoliya_services" t-as="mou3amalt_konsoliya">
+                        <div class="col-md-4 image_section_class">
+                            <div class="image_display_class">
+                                <t t-if="mou3amalt_konsoliya.path" t-set="url"
+                                   t-value="'/my'+mou3amalt_konsoliya.path"/>
+                                <t t-if="not mou3amalt_konsoliya.path" t-set="url" t-value="'#'"/>
+                                <a t-att-href="url">
+                                    <img t-if="mou3amalt_konsoliya.service_image"
+                                         t-attf-src="data:image/png;base64,{{mou3amalt_konsoliya.service_image}}"></img>
+                                    <img t-if="not mou3amalt_konsoliya.service_image"
+                                         src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                    <div class="">
+                                        <t t-esc="mou3amalt_konsoliya._get_name()"></t>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <!--<t t-foreach="mou3amalt_konsoliya_services" t-as="mou3amalt_konsoliya">
+                   <tr>
+                       <td class="text-right">
+                            <t t-call="portal.portal_docs_entry">
+                               <t t-set="title" t-value="mou3amalt_konsoliya.name" />
+                               <t t-set="url" t-value="'/my'+mou3amalt_konsoliya.path"/>
+                           </t>
+                       </td>
+                   </tr>
+               </t>-->
+                <!--</div>
+                <br/>-->
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,130 @@
+<odoo>
+    <!--      Registration file for reports -->
+
+    <record id="paperformat_report_visa_application_english_pdf" model="report.paperformat">
+            <field name="name">Visa Application</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">18</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+        </record>
+
+
+      <record id="paperformat_report_lebanese_nationality_by_marriage_pdf" model="report.paperformat">
+        <field name="name">Lebanese Nationality By Marriage</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">18</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">25</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+    </record>
+
+    <record id="paperformat_report_lebanese_lebanese_passport_pdf" model="report.paperformat">
+        <field name="name">Lebanese Passport</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+    </record>
+
+    <record id="paperformat_report_visa_application_personal_detail_pdf" model="report.paperformat">
+            <field name="name">Visa Application Personal Detail</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+        </record>
+
+    <record id="paperformat_report_visa_application_pdf" model="report.paperformat">
+            <field name="name">Report Application</field>
+            <field name="default" eval="False" />
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">18</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+    </record>
+
+    <record id="paperformat_report_extraordinary_passport_renewal_pdf" model="report.paperformat">
+            <field name="name">Visa Application</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">18</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+        </record>
+
+    <report id="report_visa_application_pdf"
+            name="ebs_qsheild_mod.report_visa_application_pdf"
+            paperformat="ebs_qsheild_mod.paperformat_report_visa_application_pdf"
+            model="ebs_mod.service.request"
+            string="طلـب تأشــيرة"
+            file="ebs_qsheild_mod.طلـب تأشــيرة"
+            report_type="qweb-pdf"/>
+
+    <report id="report_visa_application_english_pdf"
+            name="ebs_qsheild_mod.report_visa_application_english_pdf"
+            paperformat="ebs_qsheild_mod.paperformat_report_visa_application_english_pdf"
+            model="ebs_mod.service.request"
+            string="Visa Application"
+            file="ebs_qsheild_mod.Visa Application"
+            report_type="qweb-pdf"/>
+
+    <report id="report_visa_application_personal_detail_pdf"
+            name="ebs_qsheild_mod.report_visa_application_personal_detail_pdf"
+            paperformat="ebs_qsheild_mod.paperformat_report_visa_application_personal_detail_pdf"
+            model="ebs_mod.service.request"
+            string="المعلومات الشخصية"
+            file="ebs_qsheild_mod.Personal Detail"
+            report_type="qweb-pdf"/>
+
+    <report id="report_extraordinary_passport_renewal_pdf"
+            name="ebs_qsheild_mod.report_extraordinary_passport_renewal_pdf"
+            paperformat="ebs_qsheild_mod.paperformat_report_extraordinary_passport_renewal_pdf"
+            model="ebs_mod.service.request"
+            string="Passport Renewal"
+            file="ebs_qsheild_mod.Passport Renewal"
+            report_type="qweb-pdf"/>
+
+    <report id="report_lebanese_nationality_by_marriage_pdf"
+            name="ebs_qsheild_mod.report_lebanese_nationality_by_marriage_pdf"
+            paperformat="ebs_qsheild_mod.paperformat_report_lebanese_nationality_by_marriage_pdf"
+            model="ebs_mod.service.request"
+            string="Lebanese nationality"
+            file="ebs_qsheild_mod.Lebanese nationality"
+            report_type="qweb-pdf"/>
+
+    <report id="report_visa_lebanese_passport_pdf"
+            name="ebs_qsheild_mod.report_visa_lebanese_passport_pdf"
+            paperformat="ebs_qsheild_mod.paperformat_report_lebanese_lebanese_passport_pdf"
+            model="ebs_mod.service.request"
+            string="Lebanese Passport"
+            file="ebs_qsheild_mod.Lebanese passport"
+            report_type="qweb-pdf"/>
+</odoo>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="portal_embassy_report_template">
+            <t t-call="web.html_container">
+<!--                <t t-call="web.external_layout">-->
+                <div class="oe_structure"/>
+
+                    <style>
+                        td, span {
+                            font-size:18px;
+                        }
+                    </style>
+<!--                <t t-call="ebs_qsheild_mod.custom_external_layout">-->
+                <t t-if="not o" t-set="o" t-value="doc"/>
+                <div class="header" style="direction:rtl;">
+                    <div class="row">
+                        <div class="col-3">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-width:400px;max-heights:100px;"
+                                 class="mb-3" alt="Logo"/>
+                        </div>
+                        <div class="col-8" style="margin-top:20px;">
+                            <span style="float:right;margin-right:200px;font-family:Times-new-roman !important;font-size:22px;"><b>تعهد بصحة شهادة</b></span>
+                            <br/>
+                            <br/>
+                            <t t-if="archive_no">
+                                <span style="float:right;margin-right:200px;font-family:Times-new-roman !important;font-size:18px;"><b>رقم الملف في السفارة : </b><span t-esc="archive_no" style="border-bottom:2px dotted black;"/></span>
+                            </t>
+                            <t t-else="">
+                                <span style="float:right;margin-right:200px;font-family:Times-new-roman!important;font-size:18px;"><b> رقم الملف في السفارة : </b>&#160; ...............</span>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+<!--                <div t-attf-class="article"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">-->
+
+
+                <br/>
+                <br/>
+                <div class="page">
+                    <div style="float:right;width:100%;margin-bottom:30px;direction:rtl !important;">
+                        <b style="font-family:Times-new-roman !important;"><span style="direction:rtl;">حضرة السادة السفارة اللبنانية في قطر . تحية طيبة وبعد،</span></b>
+                    </div>
+                    <br/>
+                    <div style="width:100%;float:right;direction:rtl !important;">
+
+<!--                        <tr>-->
+<!--                            <td>-->
+
+                                <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> انا الموقع/ة ادناه السيد/ة : </span></b>
+                                <span t-esc="person_name" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <b style="margin-right:10px;margin-bottom:5px;font-family: Times-new-roman !important;"><span>الجنسية : </span></b>-->
+                                <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> الجنسية : </span></b>
+                                <t t-if="Nationality == 'other'">
+                                    <t t-if="other_nationality" style="margin-bottom:5px;">
+        <!--                                <td>-->
+<!--                                       <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>جنسية أخرى : </span></b>-->
+                                        <span t-esc="other_nationality" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+
+        <!--                                </td>-->
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="Nationality">
+                                        <t t-if="Nationality == 'leb'">
+                                            <span style="border-bottom:2px dotted black;font-family:Times-new-roman !important;">Lebanese</span>
+                                        </t>
+                                        <t t-if="Nationality == 'pal'">
+                                            <span style="border-bottom:2px dotted black;font-family:Times-new-roman !important;">Palestinian</span>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <span>............................</span>
+                                    </t>
+                                </t>
+<!--                                <t t-if="Nationality == 'leb'">-->
+<!--                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;">Lebanese</span>-->
+<!--                                </t>-->
+<!--                                <t t-if="Nationality == 'pal'">-->
+<!--                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;">Palestinian</span>-->
+<!--                                </t>-->
+<!--                                <t t-if="Nationality == 'other'">-->
+<!--                                    <span style="border-bottom:2px dotted black;font-family: Times-new-roman !important;">Other</span>-->
+<!--                                </t>-->
+
+<!--                            </td>-->
+<!--                            <td>-->
+                               <b style="margin-right:10px;margin-bottom:5px;font-family:Times-new-roman !important;"><span> رقم الاقامة : </span></b>
+                                    <span t-esc="qid" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+
+<!--                            </td>-->
+<!--                        </tr>-->
+                        <br/>
+                        <br/>
+<!--                        <tr>-->
+<!--                            <td>-->
+                                <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>اسم الزوج (ة) : </span></b>
+                                <t t-if="spouse_name">
+                                        <span t-esc="spouse_name" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+                                </t>
+                                <t t-else="">
+                                    <span>.............................</span>
+                                </t>
+<!--                            </td>-->
+<!--                            <td>-->
+                                <b style="margin-right:10px;margin-bottom:5px;font-family:Times-new-roman !important;"><span>الجنسية : </span></b>
+<!--                                <t t-if="nationality_of_spouse">-->
+<!--                                    <span t-esc="dict(nationality_of_spouse._fields['first_Nationality'].selection).get(nationality_of_spouse.first_Nationality)" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>-->
+<!--                                </t>-->
+<!--                                <t t-else="">-->
+<!--                                    <span>.............</span>-->
+<!--                                </t>-->
+<!--                            </td>-->
+                                <t t-if="nationality_of_spouse == 'other'">
+                                    <t t-if="other_nationality" style="margin-bottom:5px;">
+        <!--                                <td>-->
+<!--                                       <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>جنسية أخرى : </span></b>-->
+                                        <span t-esc="other_nationality" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+
+        <!--                                </td>-->
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="nationality_of_spouse">
+                                        <t t-if="nationality_of_spouse == 'leb'">
+                                            <span style="border-bottom:2px dotted black;font-family:Times-new-roman !important;">Lebanese</span>
+                                        </t>
+                                        <t t-if="nationality_of_spouse == 'pal'">
+                                            <span style="border-bottom:2px dotted black;font-family:Times-new-roman !important;">Palestinian</span>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <span>............................</span>
+                                    </t>
+                                </t>
+<!--                        </tr>-->
+                        <br/>
+                        <br/>
+<!--                        <tr>-->
+<!--                            <td>-->
+                                <b style="margin-right:10px;font-family:Times-new-roman !important;"><span>اسم الشركة / الكفيل : </span></b>
+                                <span t-esc="sponsor_name" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                            <td>-->
+                                <b style="margin-right:10px;font-family:Times-new-roman !important;"><span>الهاتف : </span></b>
+                                <t t-if="sponsor_mobile">
+                                    <span t-esc="sponsor_mobile" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+                                </t>
+                                <t t-else="">
+                                    <span>.............................</span>
+                                </t>
+<!--                            </td>-->
+<!--                            <td>-->
+                               <b style="margin-right:10px;font-family:Times-new-roman !important;"><span>فاكس : </span></b>
+                                <t t-if="sponsor_fax">
+                                    <span t-esc="sponsor_fax" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+                                </t>
+                                <t t-else="">
+                                    <span>...............................</span>
+                                </t>
+<!--                            </td>-->
+<!--                            <td>-->
+                               <b style="margin-right:10px;margin-bottom:5px;font-family:Times-new-roman !important;"><span>ص.ب. : </span></b>
+                                <t t-if="pobox">
+                                    <span t-esc="pobox" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+                                </t>
+                                <t t-else="">
+                                    <span>...............................</span>
+                                </t>
+<!--                            </td>-->
+<!--                        </tr>-->
+                            <br/>
+                        <br/>
+<!--                        <tr>-->
+<!--                            <td>-->
+                                <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> أقرّ وعلى مسؤوليتي الشخصية أن الإفادة / الشهادة العائدة لي ، إختصاص : </span></b>
+                                <span t-esc="education" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                            <td>-->
+                                <b style="margin-right:10px;font-family:Times-new-roman !important;"><span>الصادرة عن مدرسة / معهد /  جامعة / : </span></b>
+
+                                <span t-esc="school_university" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                            <td>-->
+                               <b style="margin-right:10px;font-family:Times-new-roman !important;"><span>بتاريخ : </span></b>
+
+                                <span t-esc="certificateissue_date" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                        </tr>-->
+                            <br/>
+                            <br/>
+                         <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> عنوان لبنان : </span></b>
+<!--                            <span t-esc="education" style="border-bottom:2px dotted black;"/>-->
+                            <span t-esc="leb_description" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+
+<!--                            </td>-->
+<!--                            <td>-->
+                            <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> الشارع : </span></b>
+
+                            <span t-esc="labnon_street" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                           <b style="margin-right:10px;"><span>ملك / اجار : </span></b>-->
+                                <t t-if="labnon_owned == 'ملك'">
+                                    <b style="margin-right:10px;"><span>ملك : </span></b>
+                                    <span style="border-bottom:2px dotted black;font-family:Times-new-roman !important;">ملك</span>
+                                </t>
+                                <t t-if="labnon_owned == 'اجار'">
+                                    <b style="margin-right:10px;"><span>اجار : </span></b>
+                                    <span style="border-bottom:2px dotted black;font-family:Times-new-roman !important;">اجار</span>
+                                </t>
+
+                        <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>طابق : </span></b>
+                            <span t-esc="labnon_floor" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+
+
+
+                        <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>هاتف : </span></b>
+                            <span t-esc="labnon_mobile" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                        </tr>-->
+                        <br/>
+                        <br/>
+
+                         <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> عنوان قطر : </span></b>
+<!--                            <span t-esc="education" style="border-bottom:2px dotted black;"/>-->
+                                <span t-esc="qtr_description" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+
+<!--                            </td>-->
+<!--                            <td>-->
+                            <b style="margin-right:10px;font-family:Times-new-roman !important;"><span> الشارع : </span></b>
+
+                            <span t-esc="qatar_street" style="border-bottom:2px dotted black;font-family:Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                            <td>-->
+                           <b style="margin-right:10px;font-family:Times-new-roman !important;"><span>بنايه : </span></b>
+
+                            <span t-esc="qatar_buliding" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+
+                        <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>طابق : </span></b>
+
+                            <span t-esc="qatar_floor" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+
+                        <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>هاتف : </span></b>
+
+                            <span t-esc="qatar_mobile" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+<!--                            </td>-->
+<!--                        </tr>-->
+                        <br/>
+                        <br/>
+                        <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>اسم ورقم جوال اقرب المقربين في قطر : </span></b>
+                        <span t-esc="emergency_name + ' ' + emergency_contact" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+
+                         <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>التاريخ  : </span></b>
+                        <span t-esc="portal_report_date" style="border-bottom:2px dotted black;font-family: Times-new-roman !important;"/>
+                        <br/>
+                        <br/>
+                        <b style="font-family: Times-new-roman !important;"><span>
+                            أقرّ أنني تبلغت من السفارة اللبنانية في الدوحة أن الشهادة المصادق عليها ستحال إلى الجهات اللبنانية المختصة للتأكيد على صحتها، وأنني أتحمل كامل المسؤولية عن ذلك وفي في حال تبين أنها مزورة وغير صحيحة  سأخضع للإجراءات القانونية المعمول بها على الأراضي اللبنانية ،كما سيتم إبلاغ السلطات القطرية بعدم صحتها.
+                        </span></b>
+                        <br/>
+                        <br/>
+                        <span>
+                            <b style="margin-right:10px;font-family: Times-new-roman !important;"><span>الاسم الثلاثي لصاحب/ة العلاقة : </span></b>
+                            <span>.............................................................</span>
+                        </span>
+                        <span>
+                            <b style="margin-right:10px;font-family: Times-new-roman !important;"><span> إمضاء صاحب العلاقة : </span></b>
+                            <span>..........................................................</span>
+                        </span>
+                    </div>
+                </div>
+<!--                </div>-->
+<!--                </t>-->
+            </t>
+<!--            </t>-->
+        </template>
+
+        <record id="paperformat_portal_report_new" model="report.paperformat">
+            <field name="name">Payroll Portal Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">32</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">80</field>
+        </record>
+
+
+
+        <report
+            string="portal report"
+            id="portal_report_embassy"
+            model="ebs_mod.service.request"
+            name="ebs_qsheild_mod.portal_embassy_report_template"
+            file="ebs_qsheild_mod.portal_embassy_report_template"
+            report_type="qweb-pdf"
+            paperformat="ebs_qsheild_mod.paperformat_portal_report_new"
+            menu = "False"
+        />
+
+    <template id="embassy_report_header">
+
+    </template>
+
+<!--        <template id="custom_external_layout">-->
+<!--            <t t-if="not o" t-set="o" t-value="doc"/>-->
+
+<!--            <t t-if="not company">-->
+<!--                &lt;!&ndash; Multicompany &ndash;&gt;-->
+<!--                <t t-if="company_id">-->
+<!--                    <t t-set="company" t-value="company_id"/>-->
+<!--                </t>-->
+<!--                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">-->
+<!--                    <t t-set="company" t-value="o.company_id.sudo()"/>-->
+<!--                </t>-->
+<!--                <t t-else="else">-->
+<!--                    <t t-set="company" t-value="res_company"/>-->
+<!--                </t>-->
+<!--            </t>-->
+
+<!--            <t t-call="ebs_qsheild_mod.custom_external_layout_standard" style="direction:rtl;"><t t-raw="0"/></t>-->
+
+<!--    </template>-->
+
+<!--    <template id="custom_external_layout_standard">-->
+<!--        <div class="header" style="direction:rtl;">-->
+<!--            <div class="row">-->
+<!--                <div class="col-3">-->
+<!--                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"-->
+<!--                         style="max-width:400px;max-heights:100px;"-->
+<!--                         class="mb-3" alt="Logo"/>-->
+<!--                </div>-->
+<!--                <div class="col-6" style="margin-top:20px;">-->
+<!--                    <span style="margin-left:80px;font-family: Times-new-roman !important;font-size:20px;"><b>تعهد بصحة شهادة</b></span>-->
+<!--                    <br/>-->
+<!--                    <br/>-->
+<!--                    <t t-if="archive_no">-->
+<!--                        <span style="margin-left:80px;font-family: Times-new-roman !important;font-size:20px;"><b>رقم الملف في السفارة : </b><span t-esc="archive_no" style="border-bottom:2px dotted black;"/></span>-->
+<!--                    </t>-->
+<!--                    <t t-else="">-->
+<!--                        <span style="margin-left:80px;font-family: Times-new-roman !important;font-size:20px;"><b> رقم الملف في السفارة : </b>&#160; ...............</span>-->
+<!--                    </t>-->
+<!--                </div>-->
+<!--        </div>-->
+
+<!--        </div>-->
+
+<!--        <div t-attf-class="article"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">-->
+
+<!--            <t t-raw="0"/>-->
+<!--        </div>-->
+
+<!--&lt;!&ndash;        <div t-attf-class="footer o_standard_footer ">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </template>-->
+
+    </data>
+</odoo>

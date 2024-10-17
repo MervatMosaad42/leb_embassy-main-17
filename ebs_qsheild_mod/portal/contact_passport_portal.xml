@@ -1,0 +1,1803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="portal_my_home_menu_contact_passports" name="Portal layout : Contact Passports menu entries"
+                  inherit_id="portal.portal_breadcrumbs" priority="50">
+
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ( 'passports','passports_insert' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/passports">Passports</a>
+                </li>
+                <li t-if="page_name == 'passports_insert'" class="breadcrumb-item active">
+
+                </li>
+            </xpath>
+        </template>
+
+        <template id="description" name="Description">
+
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <div class="mt-5" style="font-family: HelveticaNeue-Medium !important;font-size:18px;">
+                    <span>عند فتح الملف يجب إتباع الخطوات التالية:</span>
+                    <br/>
+                    <br/>
+                    <span>
+                        <b>
+                            <u>المرحلة الأولى</u>
+                        </b>
+                        : تعبئة المعلومات المطلوية في الخانات الموجودة وبحسب اللغة المذكورة
+                    </span>
+                    <ul dir="RTL">
+                        <li>
+                            <span>كل ما هو مطلوب في اللغة العربية يدون في اللغة العربية ، وكل ما هو مطلوب في</span>
+                            <br/>
+                            <span>اللغة الأجنبية يدون في اللغة الأجنبية
+                                <span style="color:red;">(إلزامي)</span>
+                            </span>
+                        </li>
+                    </ul>
+
+                    <span>
+                        <b>
+                            <u>المرحلة الثانية</u>
+                        </b>
+                        : إرفاق المستندات المطلوبة من خلال النقر على كلمة أضف
+                    </span>
+                    <span style="color:red;">(إلزامي )</span>
+                    <br/>
+                    <br/>
+
+                    <span>
+                        <b>
+                            <u>المرحلة الثالثة</u>
+                        </b>
+                        : إضافة عنوان السكن في دولة قطر وفي الدولة اللبنانية مع أرقام الهاتف
+                    </span>
+                    <span style="color:red;">(إلزامي )</span>
+                    <br/>
+                    <br/>
+
+                    <span>
+                        <b>
+                            <u>المرحلة الرابعة</u>
+                        </b>
+                        : خانة أفراد العائلة مخصصة للعائلات، حيث يمكن أضافة جميع أفراد الأسرة ( زوج/ة
+                    </span>
+                    <br/>
+                    <span>وأولاد) ، وذلك من خلال النقر على خانة إضافة فرد عائلة وتعبئة البيانات المطلوبة مع إرفاق كل
+                    </span>
+                    <br/>
+                    <span>المستندات المطلوبة لكل فرد من أفراد الأسرة تمت إضافته، وذلك من أجل تسهيل عملية تقديمهم</span>
+                    <br/>
+                    <span>لطلباتهم ، فجميع المعلومات تحفظ في نفس الملف لكافة أفراد العائلة.</span>
+                    <br/>
+                    <br/>
+
+                    <span>
+                        <b>
+                            <u>المرحلة الخامسة</u>
+                        </b>
+                        : النقر على رمز المنزل الموجود في أعلى الصفحة من الجهة اليمنى وذلك من
+                    </span>
+                    <br/>
+                    <span>أجل الإنتقال إلى مرحلة تقديم الخدمات، أو من خلال النقر على الصفحة الرئيسية للعودة إلى</span>
+                    <br/>
+                    <span>الخدمات الإلكترونية الموجودة في الصفحة الأولى من الموقع الإلكتروني.</span>
+                    <br/>
+                    <br/>
+
+                    <span>
+                        <b>
+                            <u>المرحلة السادسة</u>
+                        </b>
+                        : إختيار الخدمة القنصلية المطلوبة وتعبئة ما يلزم وإرساله إلى فريق السفارة
+                    </span>
+                    <br/>
+                    <span>للتدقيق.</span>
+                    <br/>
+                    <br/>
+
+                    <span>
+                        <b>
+                            <u>ملاحظة</u>
+                        </b>
+                        : يمكنكم مراسلة الموظف المسؤول في السفارة داخل كل خدمة قنصلية من خلال إرسال
+                    </span>
+                    <br/>
+                    <span>رسالة في الخانة المخصصة لذلك في اسفل الصفحة.</span>
+                    <br/>
+                    <div style="text-align:left;">
+                        <a type="button" href="/my/account" class="btn btn-primary btn-lg mt-5">Continue
+                            <i class="fa fa-arrow-right description_arrow"/>
+                        </a>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_logout_contact_passports" name="contact Passports">
+            <t t-call="website.layout">
+                <div class="container mt-3">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <t t-set="count" t-value="0"></t>
+                        <t t-foreach="passports_services" t-as="passport_service">
+                            <t t-set="count" t-value="count+1"/>
+                            <t t-if="count == 1">
+                                <li class="nav-item">
+                                    <a class="nav-link active" t-att-id="'home_'+str(passport_service.id)+'-tab'"
+                                       data-toggle="tab" t-att-href="'#home_'+str(passport_service.id)" role="tab"
+                                       t-att-aria-controls="'home_'+str(passport_service.id)" aria-selected="true">
+                                        <t t-esc="passport_service._get_name()"></t>
+                                    </a>
+                                </li>
+                            </t>
+                            <t t-else="">
+                                <li class="nav-item">
+                                    <a class="nav-link" t-att-id="'home_'+str(passport_service.id)+'-tab'"
+                                       data-toggle="tab" t-att-href="'#home_'+str(passport_service.id)" role="tab"
+                                       t-att-aria-controls="'home_'+str(passport_service.id)" aria-selected="true">
+                                        <t t-esc="passport_service._get_name()"></t>
+                                    </a>
+                                </li>
+                            </t>
+                        </t>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <t t-set="count" t-value="0"></t>
+                        <t t-foreach="passports_services" t-as="passport_service">
+                            <t t-set="count" t-value="count+1"/>
+                            <t t-if="count == 1">
+                                <div class="tab-pane fade show active" t-att-id="'home_'+str(passport_service.id)"
+                                     role="tabpanel" t-att-aria-labelledby="'home_'+str(passport_service.id)+'-tab'">
+                                    <t t-raw="passport_service.logout_terms_conditions"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="tab-pane fade" t-att-id="'home_'+str(passport_service.id)" role="tabpanel"
+                                     t-att-aria-labelledby="'home_'+str(passport_service.id)+'-tab'">
+                                    <t t-raw="passport_service.logout_terms_conditions"/>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_contact_passports" name="contact Passports">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Passports</t>
+                </t>
+                <div t-if="passports" t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th class="text-right">Passport Management Services</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="passports_services" t-as="passports">
+                        <tr>
+                            <td class="text-right">
+                                <t t-call="portal.portal_docs_entry">
+                                    <t t-set="title" t-value="passports._get_name()"/>
+                                    <t t-set="url" t-value="'/my'+passports.path"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                </div>
+
+                <br/>
+            </t>
+        </template>
+
+        <template id="portal_contact_passports" name="contact personal">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Passports Documents</t>
+                </t>
+                <t t-if="partner.status != 'confirm'">
+                    <div class="alert alert-warning" role="alert">
+                        Please complete your application from My Profile page to access this.
+                    </div>
+                </t>
+                <t t-if="partner.status == 'confirm'">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div t-if="passports" t-call="portal.portal_table">
+                        <h4>Service Requests</h4>
+                        <br/>
+                        <div class="row grid_service_types">
+                            <t t-foreach="passports_services" t-as="passport_service">
+                                <div class="col-md-2 subimage_section_class">
+                                    <div class="subimage_display_class">
+                                        <a class="image_click" href="#">
+                                            <img t-if="passport_service.service_image"
+                                                 t-attf-src="data:image/png;base64,{{passport_service.service_image}}"></img>
+                                            <img t-if="not passport_service.service_image"
+                                                 src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                            <div class="image-type">
+                                                <t t-esc="passport_service._get_name()"></t>
+                                            </div>
+                                        </a>
+                                        <input type="hidden" name="type_id" class="type_id"
+                                               t-att-value="passport_service.name"/>
+                                        <input type="hidden" name="service_name" class="service_name"
+                                               value="passports"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <form class="form-horizontal" method="post" id="service_form">
+                            <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="container">
+                                <table class="table table-responsive table-hover" id="serviceTab">
+                                    <thead style="display:block;">
+                                        <tr>
+                                            <th>Service Type</th>
+                                            <th>Service Description</th>
+                                            <th>Service Date</th>
+                                            <th>Service Status</th>
+                                            <th width="10px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="overflow-y:scroll; height:300px; display:block;">
+                                        <tr lass="table-row" t-foreach="service_request or []" t-as="service">
+                                            <td t-attf-onclick="viewService('view','#{service.id}');">
+                                                <span t-esc="service.service_type_id._get_name()"/>
+                                            </td>
+                                            <td t-attf-onclick="viewService('view','#{service.id}');">
+                                                <span t-field="service.desc"/>
+                                            </td>
+                                            <td t-attf-onclick="viewService('view','#{service.id}');">
+                                                <span t-field="service.date"/>
+                                            </td>
+                                            <td t-attf-onclick="viewService('view','#{service.id}');">
+                                                <span t-field="service.status"/>
+                                            </td>
+                                            <td width="10px" t-if="service.status in ('draft')">
+                                                <i class="fa fa-lg fa-trash" id="btn_delete_record"
+                                                   t-attf-onclick="serviceDelete('#{service.id}');"></i>
+                                            </td>
+                                            <td width="10px" t-if="service.status not in ('draft')"
+                                                t-attf-onclick="viewService('view','#{service.id}');">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+            <xpath expr="." position="inside">
+                <style>
+                    .table-row:hover{
+                    cursor:pointer;
+                    }
+                    thead th, tbody td {
+                    width:1110px;
+                    }
+                </style>
+                <script>
+                    function viewService(type, e)
+                    {
+                    if(type == 'view')
+                    $(location).attr('href','/my/passports/insert_doc_form/'+e);
+                    }
+                    function serviceDelete(e)
+                    {
+                    var url='/my/services/delete/'+e;
+                    var formValues= $('#service_form').serialize();
+
+                    $.post(url, formValues, function(data)
+                    {
+                    location.reload();
+                    });
+                    }
+
+                    function submit_info()
+                    {
+                    var url='/my/authorization/insert_form';
+                    formValues = $('#passports_form').serialize();
+                    $.post(url, formValues, function(data)
+                    {
+                    $(location).attr('href','/my/passports/insert_doc_form/'+data.data.id);
+                    });
+                    }
+                </script>
+            </xpath>
+        </template>
+
+
+        <template id="portal_contact_passports_form" name="contact personal form">
+            <t t-call="portal.portal_layout">
+                <br/>
+                <div class="success_alert alert alert-success" role="alert">
+                    Your application has been submitted successfully. We will review it and get back to you shortly.
+                </div>
+                <form class="form-horizontal" action="/my/authorization/submit_authorization" method="post"
+                      id="passports_form">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" id="service_id" name="service_id" t-att-value="service_request.id"/>
+                    <input type="hidden" id="service_code" name="service_code"
+                           t-att-value="service_request.service_type_id.code"/>
+                    <input type="hidden" id="req_status" name="req_status" t-att-value="service_request.status"/>
+                    <div class="row">
+                        <div class="col-lg-12" id="success_message_div">
+                            <div t-if="len(service_request.service_type_id.terms_conditions)>11"
+                                 class="alert alert-success" role="status">
+                                <div t-field="service_request.service_type_id.terms_conditions"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="mb-1 mb-md-0" hidden="1">
+                                Diplomatic Pouch
+                                <em t-esc="service_request.bag_no"/>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-3'>
+                            <label class="col-form-label" for="service">Service</label>
+                            <input type="text" name="service" t-attf-class="form-control "
+                                   t-att-value="service_request.service_type_id._get_name()" disabled="disabled"/>
+                        </div>
+
+                        <div class='col-md-6'>
+                            <label class="col-form-label" for="description">Remarks</label>
+                            <input type="text" name="description" id="description" t-attf-class="form-control "
+                                   t-att-value="service_request.desc"/>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class="col-form-label" for="status">Status</label>
+                            <input type="hidden" name="status" id="status" t-attf-class="form-control "
+                                   t-att-value="service_request.status"/>
+                            <div role="status">
+                                <t t-if="service_request.status == 'progress'">In Progress</t>
+                                <t t-elif="service_request.status == 'complete'">Complete</t>
+                                <t t-elif="service_request.status == 'reject'">Rejected</t>
+                                <t t-else="">Draft</t>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="beneficiary-div">
+                        <br></br>
+                        <h4>Beneficiary</h4>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label" for="beneficiary">Service Beneficiary</label>
+                                <select name="beneficiary" id="beneficiary" t-attf-class="form-control  "
+                                        onchange="getDocuments();" data-init="1">
+                                    <option t-att-value="partner.id"
+                                            t-att-selected="partner.id == service_request.service_beneficiary.id">
+                                        <t t-esc="partner.name"/>
+                                    </option>
+                                    <t t-foreach="partner.employee_dependants or []" t-as="d">
+                                        <option t-att-value="d.id"
+                                                t-att-selected="d.id == service_request.service_beneficiary.id">
+                                            <t t-esc="d.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-4'></div>
+                            <div class='col-md-4'></div>
+                        </div>
+                    </div>
+                    <div id="personal-div">
+                        <br></br>
+                        <h4>Personal Info</h4>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">First Name (A):</label>
+                                <t t-esc="service_request.partner_id.firstName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Middle Name (A):</label>
+                                <t t-esc="service_request.partner_id.middleName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Last Name (A):</label>
+                                <t t-esc="service_request.partner_id.lastName"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">First Name (E) :</label>
+                                <t t-esc="service_request.partner_id.first_name_en"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Middle Name (E):</label>
+                                <t t-esc="service_request.partner_id.middle_name_en"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Last Name (E):</label>
+                                <t t-esc="service_request.partner_id.last_name_en"/>
+                            </div>
+                        </div>
+                        <div class="row" t-if="service_request.service_type_id.code not in ('01-06')">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Date Of Birth :</label>
+                                <t t-esc="service_request.partner_id.date and service_request.partner_id.date.strftime('%d/%m/%Y')"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Place Of Birth :</label>
+                                <t t-esc="service_request.partner_id.placeOfBirth"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Religion :</label>
+                                <t t-esc="service_request.partner_id.religion._get_name()"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Full Name (A):</label>
+                                <t t-esc="service_request.partner_id.father_fullname"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Full Name (A):</label>
+                                <t t-esc="service_request.partner_id.motherFullName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Full Name (E):</label>
+                                <t t-esc="service_request.partner_id.mother_full_name_en"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Gender :</label>
+                                <t t-esc="service_request.partner_id.gender"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Nationality :</label>
+                                <t t-esc="service_request.partner_id.country_id.name"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Second Nationality :</label>
+                                <t t-esc="service_request.partner_id.nationality.name"/>
+                            </div>
+                        </div>
+                        <div t-if="service_request.partner_id.first_Nationality == 'leb'" class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Sejel No :</label>
+                                <t t-esc="service_request.partner_id.sejelNo"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">ID No :</label>
+                                <t t-esc="service_request.partner_id.id_no"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Kaza :</label>
+                                <t t-esc="service_request.partner_id.kazaBirth._get_name()"/>
+                            </div>
+                        </div>
+                        <div t-if="service_request.partner_id.first_Nationality == 'pal'" class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">File No :</label>
+                                <t t-esc="service_request.partner_id.file_no"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Stati No :</label>
+                                <t t-esc="service_request.partner_id.stati_no"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Registered With :</label>
+                                <t t-esc="service_request.partner_id.registered_with"/>
+                            </div>
+                        </div>
+                        <div t-if="service_request.partner_id.first_Nationality == 'pal'" class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Birth Certificate Number :</label>
+                                <t t-esc="service_request.partner_id.birth_certificate_nb"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Birth Certificate Date :</label>
+                                <t t-esc="service_request.partner_id.birth_certificate_date"/>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Passport No :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'me' and passport.is_active">
+                                        <t t-esc="passport.passport_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Passport Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'me' and passport.is_active">
+                                        <t t-esc="passport.passport_start_date and passport.passport_start_date.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Passport End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if=" passport.family_member == 'me' and passport.is_active">
+                                        <t t-esc="passport.passport_exp_date and passport.passport_exp_date.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Passport Place :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if=" passport.family_member == 'me' and passport.is_active">
+                                        <t t-esc="passport.passport_place"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Occupation :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.occupation"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Qatar ID :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.ikama_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Qatar ID End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.ikama_enddate and i.ikama_enddate.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Sponsor :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'me' and i.is_active">
+                                        <t t-esc="i.guarantor"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Marital Status :</label>
+                                <t t-esc="service_request.partner_id.maritalStatus"/>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+
+                        <div t-if=" service_request.partner_id.maritalStatus == 'Married'
+                        and service_request.partner_id.gender == 'female'
+                        and  service_request.service_type_id.code not in ('01-06','04-05')" class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Full Name (A):</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants.name"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Full Name (E):</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants.first_name_en + ' ' +dependants.middle_name_en + ' '+dependants.last_name_en "/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Nationality :</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants.country_id.name"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div t-if="service_request.partner_id.maritalStatus == 'Married'
+                         and service_request.service_type_id.code in ('04-05')" class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Full Name (A):</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants._get_name()"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Full Name (E):</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants.first_name_en + ' ' +dependants.middle_name_en + ' '+dependants.last_name_en "/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Nationality :</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants.country_id.name"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div t-if="service_request.partner_id.maritalStatus == 'Married' and service_request.service_type_id.code in ('04-05')"
+                             class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Spouse Occupation:</label>
+                                <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="dependants">
+                                    <t t-if="dependants.dependent_type == 'spouse' ">
+                                        <t t-esc="dependants.function"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-if="service_request.service_type_id.code in ('01-06')" id="father-div">
+                        <br></br>
+                        <h4>Father Info</h4>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Full Name :</label>
+                                <t t-esc="service_request.partner_id.father_fullname"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Place of Birth :</label>
+                                <t t-esc="service_request.partner_id.father_place_of_birth"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Date of Birth :</label>
+                                <t t-esc="service_request.partner_id.father_date_of_birth and service_request.partner_id.father_date_of_birth.strftime('%d/%m/%Y')"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Religion :</label>
+                                <t t-esc="service_request.partner_id.father_religion._get_name()"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Occupation :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'father' and i.is_active">
+                                        <t t-esc="i.occupation"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father File No :</label>
+                                <t t-esc="service_request.partner_id.father_file_no"/>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Stati No :</label>
+                                <t t-esc="service_request.partner_id.father_stati_no"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Registered With :</label>
+                                <t t-esc="service_request.partner_id.father_registered_with"/>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Passport No :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'father' and passport.is_active">
+                                        <t t-esc="passport.passport_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Passport Place :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'father' and passport.is_active">
+                                        <t t-esc="passport.passport_place"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Passport Issue Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'father' and passport.is_active">
+                                        <t t-esc="passport.passport_start_date"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Passport End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'father' and passport.is_active">
+                                        <t t-esc="passport.passport_exp_date"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Qatar ID :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'father' and i.is_active">
+                                        <t t-esc="i.ikama_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Qatar ID End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'father' and i.is_active">
+                                        <t t-esc="i.ikama_enddate"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Father Sponsor :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'father' and i.is_active">
+                                        <t t-esc="i.guarantor"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div t-if="service_request.service_type_id.code in ('01-06')" id="mother-div">
+                        <br></br>
+                        <h4>Mother Info</h4>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Full Name :</label>
+                                <t t-esc="service_request.partner_id.motherFullName"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Place of Birth :</label>
+                                <t t-esc="service_request.partner_id.mother_place_of_birth"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Date of Birth :</label>
+                                <t t-esc="service_request.partner_id.mother_date_of_birth and service_request.partner_id.mother_date_of_birth.strftime('%d/%m/%Y')"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Religion :</label>
+                                <t t-esc="service_request.partner_id.mother_religion._get_name()"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Occupation :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'mother' and i.is_active">
+                                        <t t-esc="i.occupation"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother File No :</label>
+                                <t t-esc="service_request.partner_id.mother_file_no"/>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Stati No :</label>
+                                <t t-esc="service_request.partner_id.mother_stati_no"/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Registered With :</label>
+                                <t t-esc="service_request.partner_id.mother_registered_with"/>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Passport No :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'mother' and passport.is_active">
+                                        <t t-esc="passport.passport_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Passport Place :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'mother' and passport.is_active">
+                                        <t t-esc="passport.passport_place"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Passport Issue Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'mother' and passport.is_active">
+                                        <t t-esc="passport.passport_start_date"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Passport End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                    <t t-if="passport.family_member == 'mother' and passport.is_active">
+                                        <t t-esc="passport.passport_exp_date"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                            <div class='col-md-4'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Qatar ID :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'mother' and i.is_active">
+                                        <t t-esc="i.ikama_no"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Qatar ID End Date :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'mother' and i.is_active">
+                                        <t t-esc="i.ikama_enddate"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class='col-md-4'>
+                                <label class="col-form-label">Mother Sponsor :</label>
+                                <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                    <t t-if="i.family_member == 'mother' and i.is_active">
+                                        <t t-esc="i.guarantor"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-if="service_request.service_type_id.code in ('01-06')">
+                        <br></br>
+                        <h4>Service Info</h4>
+                        <div class="row">
+                            <div class='col-md-3' style="display:none">
+                                <label class="col-form-label" for="consular_number">Consular Number</label>
+                                <input type="text" id="consular_number" name="consular_number"
+                                       t-attf-class="form-control"
+                                       t-att-value="service_request.consular_number or consular_number"
+                                       onBlur="auto_save()"/>
+                            </div>
+
+                            <div class='col-md-3' style="display:none">
+                                <label class="col-form-label" for="receipt_number">Receipt Number</label>
+                                <input type="text" id="receipt_number" name="receipt_number" t-attf-class="form-control"
+                                       t-att-value="service_request.receipt_number or receipt_number"
+                                       onBlur="auto_save()"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="release_Date">Release Date</label>
+                                <input id="release_Date" name="release_Date" class="form-control datepicker"
+                                       placeholder="dd/mm/yyyy"
+                                       t-att-value="release_Date or service_request.release_Date and service_request.release_Date.strftime('%d/%m/%Y')"
+                                       onBlur="parseDMY(this);"/>
+                            </div>
+                            <div class='col-md-3'>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div t-if="service_request.service_type_id.code in ('04-05')">
+                        <br></br>
+                        <h4>Service Info</h4>
+                        <div class="row">
+                            <div class='col-md-3' style="display:none">
+                                <label class="col-form-label" for="renewal_nb">Passport Renewal Number</label>
+                                <input type="text" id="renewal_nb" name="renewal_nb" t-attf-class="form-control"
+                                       t-att-value="service_request.renewal_nb or renewal_nb" onBlur="auto_save()"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="renewal_date">Passport Renewal Date</label>
+                                <input id="renewal_date" name="renewal_date" class="form-control datepicker"
+                                       placeholder="dd/mm/yyyy"
+                                       t-att-value="renewal_date or service_request.renewal_date and service_request.renewal_date.strftime('%d/%m/%Y')"
+                                       onBlur="parseDMY(this);"/>
+                            </div>
+
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="renewal_passport_period">Renewal Passport Period
+                                </label>
+                                <select name="renewal_passport_period" id="renewal_passport_period" onBlur="auto_save()"
+                                        t-attf-class="form-control ">
+                                    <option value="one" t-att-selected="service_request.passport_period == 'one'">One
+                                        Year
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3' style="display:none">
+                                <label class="col-form-label" for="renewal_receipt_number">Renewal Receipt Number
+                                </label>
+                                <input type="text" id="renewal_receipt_number" name="renewal_receipt_number"
+                                       t-attf-class="form-control"
+                                       t-att-value="service_request.receipt_number or renewal_receipt_number"
+                                       onBlur="auto_save()"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div t-if="service_request.service_type_id.code not in ('01-06','04-05' )">
+                        <br></br>
+                        <h4>Service Info</h4>
+                        <div t-if="service_request.service_type_id.code in ('01-01')" class="row">
+
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="current_passport_type">Current Passport Type</label>
+                                <select name="current_passport_type" id="current_passport_type" onBlur="auto_save()"
+                                        t-attf-class="form-control ">
+                                    <option value="E" t-att-selected="service_request.current_passport_type == 'E'">
+                                        Electronic
+                                    </option>
+                                    <option value="B" t-att-selected="service_request.current_passport_type == 'B'">
+                                        Biometric
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="passport_period">Passport Period</label>
+                                <select name="passport_period" id="passport_period" onBlur="auto_save()"
+                                        t-attf-class="form-control ">
+                                    <option value="">select...</option>
+                                    <option id="passport_period_one" value="one"
+                                            t-att-selected="service_request.passport_period == 'one'">One Year
+                                    </option>
+                                    <option id="passport_period_three" value="three"
+                                            t-att-selected="service_request.passport_period == 'three'">Three Years
+                                    </option>
+                                    <option id="passport_period_five" value="five"
+                                            t-att-selected="service_request.passport_period == 'five'">Five Years
+                                    </option>
+                                    <option id="passport_period_ten" value="ten"
+                                            t-att-selected="service_request.passport_period == 'ten'">Ten Years
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="dhl25">DHL</label>
+                                <br></br>
+                                <input name="dhl25" t-att-checked="service_request.dhl25" onBlur="auto_save()"
+                                       type="checkbox" id="dhl25"/>
+                            </div>
+                            <div class='col-md-3'>
+                            </div>
+                        </div>
+                        <div t-if="service_request.service_type_id.code in ('01-02')" class="row">
+                            <div class='col-md-3' style="display:None">
+                                <label class="col-form-label" for="pal_doc_period">Palestinian Documents Period</label>
+                                <select name="pal_doc_period" id="pal_doc_period" onBlur="auto_save()"
+                                        t-attf-class="form-control ">
+                                    <option value="">select...</option>
+                                    <option value="one" t-att-selected="service_request.pal_doc_period == 'one'">One
+                                        Year
+                                    </option>
+                                    <option value="three" t-att-selected="service_request.pal_doc_period == 'three'">
+                                        Three Years
+                                    </option>
+                                    <option value="five" t-att-selected="service_request.pal_doc_period == 'five'">Five
+                                        Years
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="current_passport_type_pal">Current Passport Type
+                                </label>
+                                <select name="current_passport_type_pal" onBlur="auto_save()"
+                                        id="current_passport_type_pal" t-attf-class="form-control ">
+                                    <option value="E" t-att-selected="service_request.current_passport_type == 'E'">
+                                        Electronic
+                                    </option>
+                                    <option value="B" t-att-selected="service_request.current_passport_type == 'B'">
+                                        Biometric
+                                    </option>
+                                </select>
+                            </div>
+                            <div class='col-md-3' style="display:None">
+                                <label class="col-form-label" for="received_by">Received By</label>
+                                <input type="text" id="received_by" onBlur="auto_save()" name="received_by"
+                                       t-attf-class="form-control"
+                                       t-att-value="service_request.received_by or received_by"/>
+                            </div>
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="dhl30">DHL</label>
+                                <br></br>
+                                <input name="dhl30" t-att-checked="service_request.dhl30" onBlur="auto_save()"
+                                       type="checkbox" id="dhl30"/>
+                            </div>
+                            <div class='col-md-3'>
+                            </div>
+                        </div>
+
+                        <div t-if="service_request.service_type_id.code in ('01-01','01-02')" class="row">
+                            <div class='col-md-3' style="display:none">
+                                <label class="col-form-label" for="documentNo">Document No in Embassy</label>
+                                <input type="text" id="documentNo" name="documentNo" t-attf-class="form-control"
+                                       t-att-value="service_request.documentNo or documentNo" onBlur="auto_save()"/>
+                            </div>
+                            <t t-if="service_request.partner_id.maritalStatus == 'Married' and service_request.partner_id.gender == 'female'">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="with_husband_name">Do you want to add the
+                                        husband's name to the passport?
+                                    </label>
+                                    <br></br>
+                                    <input type="checkbox" id="with_husband_name" name="with_husband_name"
+                                           onBlur="auto_save()" t-att-checked="service_request.with_husband_name"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class='col-md-3'>
+                                </div>
+                            </t>
+                            <div class='col-md-3'>
+                            </div>
+                            <div class='col-md-3'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div t-if="service_request.service_type_id.code not in ('01-06')">
+                        <br></br>
+                        <h4>Lebanon Address</h4>
+                        <div class="container">
+                            <table class="table table-responsive table-hover" id="lebanonTab">
+                                <thead>
+                                    <tr>
+                                        <th>Region</th>
+                                        <th>Kaza</th>
+                                        <th>Town</th>
+                                        <th>City</th>
+                                        <th>Street</th>
+                                        <th>District</th>
+                                        <th>Building</th>
+                                        <th>Floor</th>
+                                        <th>Flat</th>
+                                        <th>Mobile</th>
+                                        <th>Phone</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="partner.address_ids or []" t-as="address">
+                                        <t t-if="address.type == 'Lebanon' and address.is_active">
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="address.region._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="address.kaza._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.town"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.city"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.street"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.district"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.building"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.floor"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.flat"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.mobile"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.phoneNumber"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <br></br>
+                    <h4>Qatar Address</h4>
+                    <div>
+                        <div class="container">
+                            <table class="table table-responsive table-hover" id="qatarTab">
+                                <thead>
+                                    <tr>
+                                        <th>City</th>
+                                        <th>Street</th>
+                                        <th>Region</th>
+                                        <th>Building</th>
+                                        <th>Floor</th>
+                                        <th>Mojama3</th>
+                                        <th>Flat</th>
+                                        <th>Phone</th>
+                                        <th>Mobile</th>
+                                        <th>Po Box</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="partner.address_ids or []" t-as="address">
+                                        <t t-if="address.type == 'Qatar' and address.is_active">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="address.city"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.street"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.qatar_region"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.building"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.floor"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.mojama3"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.flat"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.phoneNumber"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.mobile"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="address.pobox"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div t-if="service_request.service_type_id.code not in ('01-06')">
+                        <br></br>
+                        <h4>Emergency</h4>
+                        <table class="table table-responsive table-hover" id="emergencyTab">
+                            <thead>
+                                <tr>
+                                    <th>Emergency Full Name</th>
+                                    <th>Emergency Phone Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="service_request.partner_id.contact_emergency or []" t-as="em">
+                                    <t t-if="em.is_active">
+                                        <td>
+                                            <span t-field="em.emergency_full_name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="em.emergency_phone_number"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br></br>
+                    <h4>Attach Documents</h4>
+                    <div class="form-group">
+                        <div class="container">
+                            <button type="button" class="btn btn-primary float-left mb32 " id="docBtn">Add Document
+                            </button>
+                            <table class="table table-responsive table-hover" id="docTab">
+                                <thead>
+                                    <tr>
+                                        <th>Document Type</th>
+                                        <th>رقم المستند</th>
+                                        <th>Document Name</th>
+                                        <th>Issue Date</th>
+                                        <th>Expiry Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-if="service_request.status == 'draft'">
+                                        <tr t-foreach="documents or []" t-as="doc"
+                                            t-attf-onclick="openModal('#{doc.id}');">
+                                            <td>
+                                                <span t-esc="doc.document_type_id._get_name()"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.document_number"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.document_owner"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.issue_date"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.expiry_date"/>
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-lg fa-pencil" id="btn_new_record"
+                                                   t-attf-onclick="openModal('#{doc.id}');"></i>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-else="">
+                                        <tr t-foreach="documents or []" t-as="doc">
+                                            <td>
+                                                <span t-esc="doc.document_type_id._get_name()"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.document_number"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.document_owner"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.issue_date"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="doc.expiry_date"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <button type="button" id="submit_btn" onclick="submitpassports();" class="btn btn-info">
+                                    Submit
+                                </button>
+                            </div>
+                            <div class='col-md-4' t-if="service_request.status == 'draft'">
+                                <button type="button" id="delete_btn" onclick="deletepassports();" class="btn btn-info">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!--   Document Modal  -->
+                <xpath expr="//form" position='after'>
+                    <!-- Modal -->
+                    <div class="modal fade" id="docModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding:25px 60px;">
+                                    <h4>
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                        Documents
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span>x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="padding:40px 50px;">
+                                    <form id="doc_form" role="form" action="/my/passports/insert_documents"
+                                          method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                        <input type="hidden" name="service_id" id="service_id" value=""/>
+                                        <input type="hidden" name="is_required_issue_date" id="is_required_issue_date"/>
+                                        <input type="hidden" name="is_required_expiry_date"
+                                               id="is_required_expiry_date"/>
+                                        <input type="hidden" name="is_required_doc_no" id="is_required_doc_no"/>
+                                        <input type="hidden" name="doctype" id="doctype"/>
+
+                                        <div class="row">
+                                            <div class='col-md-6'>
+                                                <label class="col-form-label" required="required" for="document_type">
+                                                    Document Type
+                                                </label>
+                                                <select name="document_type" id="document_type"
+                                                        t-attf-class="form-control">
+                                                    <t t-foreach="documentTypes or []" t-as="types">
+                                                        <option t-att-value="types.id">
+                                                            <t t-esc="types._get_name()"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+
+                                            <div class='col-md-6' id="docNodiv">
+                                                <label class="col-form-label" for="docNo">رقم المستند</label>
+                                                <input type="text" id="docNo" name="docNo" t-attf-class="form-control "
+                                                       t-att-value="docNo"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class='col-md-6'>
+                                                <label class="col-form-label" for="document_owner">Document Owner
+                                                </label>
+                                                <select name="document_owner" required="required"
+                                                        t-attf-class="form-control" id="document_owner">
+                                                    <option value="me">Applicant</option>
+                                                    <option value="family">Family Member</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class='col-md-6'>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class='col-md-6' id="issueDatediv">
+                                                <label class="col-form-label" for="issueDate">Issue Date</label>
+                                                <input id="issueDate" name="issueDate" onBlur="parseDMY(this);"
+                                                       t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                                       t-att-value="issueDate"/>
+                                            </div>
+                                            <div class='col-md-6' id="expiryDatediv">
+                                                <label class="col-form-label" for="expiryDate">Expiry Date</label>
+                                                <input id="expiryDate" name="expiryDate" onBlur="parseDMY(this);"
+                                                       t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                                       t-att-value="expiryDate"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class='col-md-6'>
+                                                <label class="col-form-label" for="file_attach">File</label>
+                                                <input type="file" id="file_attach" name="files[]"
+                                                       class="o_sign_load btn btn-link" required="required"
+                                                       role="button"/>
+                                            </div>
+                                            <div class='col-md-6'>
+
+                                            </div>
+                                        </div>
+
+                                        <br></br>
+                                        <input type="submit" id="save-doc-btn" class="btn btn-default btn-block"
+                                               value="Save"/>
+
+                                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal fade" id="ratingModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                        Feedback
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span>x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="padding:40px 50px;">
+                                    <form id="feedback_form" role="form" action="/my/service/submit_feedback"
+                                          method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                        <input type="hidden" name="service_id" id="service_id"
+                                               t-att-value="service_request.id"/>
+                                        <div class="row">
+                                            <label class="col-form-label" for="rating-value">Rating</label>
+                                        </div>
+                                        <div class="row" style="width:100%;">
+                                            <div style="width:20%;place-self: flex-end;text-align: right;">
+                                                <span class="fa fa-star checked"/>
+                                                <br/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <br/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <br/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <br/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                                <span class="fa fa-star checked"/>
+                                            </div>
+                                            <div style="width:80%;padding-left: 10px;">
+                                                <input type="radio" id="one_star" name="rating" value="1"/>
+                                                <br/>
+                                                <input type="radio" id="two_star" name="rating" value="2"/>
+                                                <br/>
+                                                <input type="radio" id="three_star" name="rating" value="3"/>
+                                                <br/>
+                                                <input type="radio" id="four_star" name="rating" value="4"/>
+                                                <br/>
+                                                <input type="radio" id="five_star" name="rating" value="5"/>
+                                            </div>
+                                            <input type="hidden" name="type" id="type" value="passport"/>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-form-label" for="comments">Comments</label>
+                                            <textarea id="comments" class="comments" name="comments"
+                                                      t-attf-class="form-control"/>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <center>
+                                            <i class="loader_for_service_submit"/>
+                                        </center>
+                                        <input type="button" id="save-feedback-btn" class="btn btn-default btn-block"
+                                               value="Save"/>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="." position="inside">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                    <script>
+
+
+                        $("#docBtn").click(function(){
+                        $("#docModal").modal();
+                        var service_id = $('#service_id').val();
+                        $(".modal-body #service_id").val(service_id);
+                        $(".modal-body #partner_doc_Id").val('');
+                        });
+
+
+                        $('#current_passport_type').on('change',function()
+                        {
+                        if( $(this).val()=="E")
+                        {
+                        $("#passport_period_one").show()
+                        $(passport_period_five).show()
+                        $("#passport_period_three").hide()
+                        $("#passport_period_ten").hide()
+                        }
+                        else if( $(this).val()=="B")
+                        {
+                        $("#passport_period_one").show()
+                        $("#passport_period_three").show()
+                        $(passport_period_five).show()
+                        $("#passport_period_ten").show()
+                        }
+                        });
+                        function validate(isDate)
+                        {
+                        isValid = true;
+                        tmp = isDate.split("/");
+                        isLeap = tmp[2]%4;
+                        if (!/[1-9]{1}/.test(tmp[0]) || /[1-9]{2}/.test(tmp[0]) &amp;&amp;
+                        !/10|11|12/.test(tmp[0])){isValid = false}
+                        else if ((/4|6|9|11/.test(tmp[0])) &amp;&amp; tmp[1] > 30){isValid=false}
+                        else if ((/1|3|5|7|8|10|12/.test(tmp[0])) &amp;&amp; tmp[1] > 31){isValid=false}
+                        else if ((tmp[0] == 2 &amp;&amp; isLeap == 0) &amp;&amp; tmp[1] > 29){isValid = false}
+                        else if ((tmp[0] == 2 &amp;&amp; isLeap != 0) &amp;&amp; tmp[1] > 28){isValid = false}
+                        else if (tmp[2].length != 4 || (!/^19|20/.test(tmp[2]))){isValid = false}
+                        if (isNaN(Date.parse(isDate)) || !isValid){return true}
+                        else { return true }
+                        }
+
+                        function parseDMY(isDate)
+                        {
+                        auto_save();
+                        tmp = isDate.value;
+                        if(tmp){
+                        tmp = tmp.split("-");
+                        refDate = tmp[1]+"/"+tmp[2]+"/"+tmp[0];
+                        if (!validate(refDate))
+                        {
+                        isDate.value = "";
+                        isDate.focus();
+                        }
+                        }
+                        }
+                        $(function ()
+                        {
+                        var status = $('#req_status').val();
+                        if(status == "progress" || status == "complete")
+                        {
+                        $('button').hide();
+                        $('input[type="submit"]').hide();
+                        $("#description").attr('disabled','disabled');
+                        $('select').attr('disabled','disabled');
+                        $('input[type="text"]').attr('disabled','disabled');
+                        $('input[type="date"]').attr('disabled','disabled');
+                        $('input[type="checkbox"]').attr('disabled','disabled');
+                        }
+                        if( $(current_passport_type).val()=="E")
+                        {
+                        $("#passport_period_one").show()
+                        $(passport_period_five).show()
+                        $("#passport_period_three").hide()
+                        $("#passport_period_ten").hide()
+                        }
+                        var service_code = $('#service_code').val();
+
+                        var url='/my/account/document_type';
+                        formValues = $('#doc_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date );
+                        $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date );
+                        $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                        if(data.data.is_required_issue_date==true){
+                        $(".modal-body #issueDatediv").show();
+                        $("#issueDate").attr("required", "required");
+
+                        }
+                        else
+                        {
+                        $(".modal-body #issueDatediv").hide();
+                        $("#issueDate").removeAttr('required');
+
+                        }
+
+                        if(data.data.is_required_expiry_date==true){
+                        $(".modal-body #expiryDatediv").show();
+                        $("#expiryDate").attr("required", "required");
+
+                        }
+                        else{
+                        $(".modal-body #expiryDatediv").hide();
+                        $("#expiryDate").removeAttr('required');
+
+
+                        }
+
+                        if(data.data.is_required_doc_no==true){
+                        $(".modal-body #docNodiv").show();
+                        $("#docNo").attr("required", "required");
+
+                        }
+                        else{
+                        $(".modal-body #docNodiv").hide();
+                        $("#docNo").removeAttr('required');
+
+
+                        }
+
+                        });
+                        });
+
+                        $('#document_type').on('change',function()
+                        {
+                        var url='/my/account/document_type';
+                        formValues = $('#doc_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date );
+                        $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date );
+                        $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                        if(data.data.is_required_issue_date==true){
+                        $(".modal-body #issueDatediv").show();
+                        $("#issueDate").attr("required", "required");
+
+                        }
+                        else
+                        {
+                        $(".modal-body #issueDatediv").hide();
+                        $("#issueDate").removeAttr('required');
+
+
+                        }
+
+                        if(data.data.is_required_expiry_date==true){
+                        $(".modal-body #expiryDatediv").show();
+                        $("#expiryDate").attr("required", "required");
+
+                        }
+                        else{
+                        $(".modal-body #expiryDatediv").hide();
+                        $("#expiryDate").removeAttr('required');
+
+
+                        }
+
+                        if(data.data.is_required_doc_no==true){
+                        $(".modal-body #docNodiv").show();
+                        $("#docNo").attr("required", "required");
+
+                        }
+                        else{
+                        $(".modal-body #docNodiv").hide();
+                        $("#docNo").removeAttr('required');
+
+
+                        }
+
+                        });
+
+                        });
+
+                        function auto_save()
+                        {
+                        var url='/my/service/service_auto_save';
+                        var formValues= $('#passports_form').serialize();
+                        $.post(url, formValues, function(data){
+                        });
+                        }
+
+                        function openModal(e)
+                        {
+                        var url='/my/authorization/document/open/'+e;
+                        formValues = $('#passports_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(".modal-body #service_id").val( data.data.service_id );
+                        $(".modal-body #partner_doc_Id").val( data.data.documentId );
+                        $(".modal-body #document_type").val( data.data.doctype );
+                        $(".modal-body #document_type").prop('disabled', 'disabled');
+                        $(".modal-body #docNo").val( data.data.document_number );
+                        $(".modal-body #issueDate").val( data.data.issue_date );
+                        $(".modal-body #expiryDate").val( data.data.expiry_date );
+                        $(".modal-body #document_owner").val( data.data.document_owner );
+
+                        $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date );
+                        $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date );
+                        $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                        if(data.data.is_required_issue_date==true){
+                        $(".modal-body #issueDatediv").show();
+                        $("#issueDate").attr("required", "required");
+
+                        }
+                        else
+                        {
+                        $(".modal-body #issueDatediv").hide();
+                        $("#issueDate").removeAttr('required');
+
+
+                        }
+
+                        if(data.data.is_required_expiry_date==true){
+                        $(".modal-body #expiryDatediv").show();
+                        $("#expiryDate").attr("required", "required");
+
+                        }
+                        else{
+                        $(".modal-body #expiryDatediv").hide();
+                        $("#expiryDate").removeAttr('required');
+
+
+                        }
+
+                        if(data.data.is_required_doc_no==true){
+                        $(".modal-body #docNodiv").show();
+                        $("#docNo").attr("required", "required");
+
+                        }
+                        else{
+                        $(".modal-body #docNodiv").hide();
+                        $("#docNo").removeAttr('required');
+
+
+                        }
+                        $('#docModal').modal('toggle');
+                        });
+                        }
+
+
+                        $("#save-doc-btn").on("submit", function(event)
+                        {
+                        var url='/my/passports/insert_documents';
+                        var formValues= $('#passports_form').serialize();
+
+                        $.post(url, formValues, function(data)
+                        {
+                        location.reload();
+                        });
+
+                        });
+
+                        function getDocuments()
+                        {
+                        var url='/my/service/change_doc';
+                        var formValues= $('#passports_form').serialize();
+                        $.post(url, formValues, function(data){
+                        location.reload();
+                        });
+                        }
+
+                        function deletepassports()
+                        {
+                        var url='/my/services/delete';
+                        var formValues= $('#passports_form').serialize();
+
+                        $.post(url, formValues, function(data)
+                        {
+                        $(location).attr('href','/my/passports');
+                        });
+                        }
+
+                        function submitpassports()
+                        {
+                        $('#ratingModal').modal('toggle');
+                        }
+
+
+                    </script>
+                </xpath>
+                <div class="o_portal_messages_container mt32">
+                    <h4>Message and communication history</h4>
+                    <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="service_request.access_token"/>
+                        <t t-set="object" t-value="service_request"/>
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

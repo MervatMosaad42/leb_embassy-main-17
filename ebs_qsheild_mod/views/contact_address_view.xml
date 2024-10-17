@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="contact_address_tree" model="ir.ui.view">
+            <field name="name">Contact Address Tree</field>
+            <field name="model">ebs_mod.contact.address</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="type"/>
+                    <field name="address_start" />
+                    <field name="street" placeholder="Street..." />
+                    <field name="street2" placeholder="Street 2..." class="o_address_street" invisible="1" />
+                    <field name="city" placeholder="City" class="o_address_city"/>
+                    <field name="zip" placeholder="ZIP" class="o_address_zip" invisible="1"/>
+                    <field name="phoneNumber" placeholder="PhoneNumber"/>
+                    <field name="mobile" placeholder="Mobile"/>
+                    <field name="qatar_region" placeholder="Region"
+                           invisible="type != 'Qatar'"/>
+                    <field name="company_name" placeholder="company_name"
+                           invisible="type != 'Company'"/>
+                    <field name="job_position" placeholder="job_position"
+                           invisible="type != 'Company'"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="contact_address_form" model="ir.ui.view">
+            <field name="name">Contact Address Form</field>
+            <field name="model">ebs_mod.contact.address</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="type" string="Address Type"/>
+                                <field name="street" placeholder="Street..." />
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" invisible="1"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" invisible="1"/>
+                                <field name="region" placeholder="Region"
+                                       invisible="type != 'Lebanon'"/>
+                                <field name="qatar_region" placeholder="Region"
+                                       invisible="type != 'Qatar'"/>
+                                <field name="kaza" placeholder="Kaza"
+                                       invisible="type != 'Lebanon'"/>
+                                <field name="town" placeholder="Town"
+                                       invisible="type != 'Lebanon'"/>
+
+                            </group>
+                            <group name="group_right">
+                                <field name="district" placeholder="District"
+                                       invisible="type != 'Lebanon'"/>
+                                <field name="building" placeholder="Building"
+                                       invisible="type == 'Company'"/>
+                                <field name="owned"  string="Owned Apartment:  " widget="boolean"
+                                       invisible="type != 'Lebanon'"/>
+                                <field name="mojama3" placeholder="Compound"
+                                       invisible="type != 'Qatar'"/>
+                                <field name="pobox" placeholder="PO. BOX"
+                                       invisible="type == 'Lebanon'"/>
+                                <field name="floor" placeholder="Floor"
+                                       invisible="type == 'Company'"/>
+                                <field name="flat" placeholder="Flat"
+                                       invisible="type == 'Company'"/>
+
+                                <field name="company_name" placeholder="company_name"
+                                       invisible="type != 'Company'"/>
+                                <field name="job_position" placeholder="job_position"
+                                       invisible="type != 'Company'"/>
+
+                                <field name="email" placeholder="email"
+                                       invisible="type != 'Qatar'"/>
+                                <field name="phoneNumber" placeholder="PhoneNumber"/>
+                                <field name="mobile" placeholder="Mobile"/>
+                                <field name="is_active"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

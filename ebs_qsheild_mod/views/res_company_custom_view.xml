@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <record id="company_custom_view" model="ir.ui.view">
+            <field name="name">custom.company.view</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="website" position="after">
+                    <field name="shift_description"/>
+                    <field name="map_location"/>
+                </field>
+                <xpath expr="//notebook//page" position="after">
+                    <page string="Current Ambassador">
+                        <field name="image" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="ambassador_name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="ambassador_name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </page>
+                    </xpath>
+            </field>
+
+
+
+        </record>
+
+    </data>
+</odoo>

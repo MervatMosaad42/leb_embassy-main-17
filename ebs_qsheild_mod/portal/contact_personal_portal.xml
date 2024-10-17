@@ -1,0 +1,2106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="portal_my_home_menu_contact_personal" name="Portal layout : Contact Personal menu entries"
+                  inherit_id="portal.portal_breadcrumbs" priority="50">
+
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ( 'personal','personal_insert' )"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                    <a t-attf-href="/my/personal">Civil Status</a>
+
+                </li>
+                <li t-if="page_name in ( 'personal_insert' )	"
+                    t-attf-class="breadcrumb-item #{'active  ' }">
+                </li>
+            </xpath>
+        </template>
+
+        <template id="portal_contact_personal" name="contact personal">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Civil Status Documents</t>
+                </t>
+                <t t-if="partner.status != 'confirm'">
+                    <div class="alert alert-warning" role="alert">
+                        Please complete your application from My Profile page to access this.
+                    </div>
+                </t>
+                <t t-if="partner.status == 'confirm'">
+                    <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <br/>
+                    <div class="row grid_service_types">
+                        <t t-foreach="personal_services" t-as="personal_service">
+                            <div class="col-md-2 subimage_section_class">
+                                <div class="subimage_display_class">
+                                    <a class="image_click" href="#">
+                                        <img t-if="personal_service.service_image"
+                                             t-attf-src="data:image/png;base64,{{personal_service.service_image}}"></img>
+                                        <img t-if="not personal_service.service_image"
+                                             src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                        <div class="image-type">
+                                            <t t-esc="personal_service._get_name()"></t>
+                                        </div>
+                                    </a>
+                                    <input type="hidden" name="type_id" class="type_id"
+                                           t-att-value="personal_service.name"/>
+                                    <input type="hidden" name="service_name" class="service_name" value="personal"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <br/>
+                    <br/>
+                    <form class="form-horizontal" method="post" id="service_form">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div t-if="personal" t-call="portal.portal_table">
+                            <h4>Service Requests</h4>
+                            <thead style="display:block;">
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Service Description</th>
+                                    <th>Service Date</th>
+                                    <th>Service Status</th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll; height:300px; display:block;">
+                                <tr class="table-row" t-foreach="service_request or []" t-as="service">
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-esc="service.service_type_id._get_name()"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.desc"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.date"/>
+                                    </td>
+                                    <td t-attf-onclick="viewService('#{service.id}');">
+                                        <span t-field="service.status"/>
+                                    </td>
+                                    <td width="10px" t-if="service.status in ('draft')">
+                                        <i class="fa fa-lg fa-trash" id="btn_delete_record"
+                                           t-attf-onclick="serviceDelete('#{service.id}');"></i>
+                                    </td>
+                                    <td width="10px" t-if="service.status not in ('draft')"
+                                        t-attf-onclick="viewService('#{service.id}');">
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <br/>
+                        </div>
+                    </form>
+                </t>
+            </t>
+            <xpath expr="." position="inside">
+                <style>
+                    .table-row:hover{
+                    cursor:pointer;
+                    }
+                    thead th, tbody td {
+                    width:1110px;
+                    }
+                </style>
+                <script>
+                    function viewService(e)
+                    {
+                    $(location).attr('href','/my/personal/insert_doc_form/'+e);
+                    }
+
+                    function serviceDelete(e)
+                    {
+                    var url='/my/services/delete/'+e;
+                    var formValues= $('#service_form').serialize();
+
+                    $.post(url, formValues, function(data)
+                    {
+                    location.reload();
+                    });
+                    }
+
+                    function submit_info()
+                    {
+                    var url='/my/authorization/insert_form';
+                    formValues = $('#personal_form').serialize();
+                    $.post(url, formValues, function(data)
+                    {
+                    $(location).attr('href','/my/personal/insert_doc_form/'+data.data.id);
+                    });
+                    }
+                </script>
+            </xpath>
+        </template>
+
+        <template id="create_personal_service_request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Create new service order</t>
+                </t>
+                <div class="bg-white" style="padding:20px;">
+                    <script>
+                        function viewService(e)
+                        {
+                        $(location).attr('href','/my/personal/insert_doc_form/'+e);
+                        }
+
+                        function submit_info()
+                        {
+                        var url='/my/authorization/insert_form';
+                        formValues = $('#personal_form').serialize();
+                        $.post(url, formValues, function(data)
+                        {
+                        $(location).attr('href','/my/personal/insert_doc_form/'+data.data.id);
+                        });
+                        }
+                    </script>
+                    <form id="personal_form" action="/my/personal" method="post">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <h4>New Request</h4>
+
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <select name="service" required="required" data-live-search="true"
+                                        t-attf-class="form-control selectpicker" id="service">
+                                    <t t-foreach="personal_services" t-as="personal">
+                                        <option t-value="personal.id">
+                                            <t t-esc="personal._get_name()"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class='col-md-6'>
+
+                            </div>
+
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <br/>
+                                <input type="button" id="submit-info-btn" class="btn btn-primary float-right mb32"
+                                       width="100%" value="Next"
+                                       onclick="submit_info()"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="portal_contact_personal_form" name="contact personal form">
+            <t t-call="portal.portal_layout">
+                <br/>
+                <div class="success_alert alert alert-success" role="alert">
+                    Your application has been submitted successfully. We will review it and get back to you shortly.
+                </div>
+                <div class="card col-lg-12 mt16">
+                    <div id="introduction"
+                         t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+                        <div class="row no-gutters">
+                            <div class="col-md">
+                                <h5 class="mb-1 mb-md-0">
+                                    <em t-esc="service_request.service_type_id._get_name()"/>
+                                </h5>
+                            </div>
+                            <div class="col-md" hidden="1">
+                                <h5 class="mb-1 mb-md-0">
+                                    Diplomatic Pouch
+                                    <em t-esc="service_request.bag_no"/>
+                                </h5>
+                            </div>
+                            <div class="col-md text-md-right">
+                                <small class="text-right">Status:</small>
+                                <span t-field="service_request.status" class=" badge badge-pill badge-info"
+                                      title="Current status of this service request"/>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="/my/authorization/submit_authorization" method="post"
+                          id="personal_form">
+                        <input type="hidden" id="csrf_token" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" id="service_id" name="service_id" t-att-value="service_request.id"/>
+                        <input type="hidden" id="service_code" name="service_code"
+                               t-att-value="service_request.service_type_id.code"/>
+                        <input type="hidden" id="status" name="status" t-att-value="service_request.status"/>
+                        <div class="row">
+                            <div class="col-lg-12" id="success_message_div">
+                                <div t-if="len(service_request.service_type_id.terms_conditions)>11"
+                                     class="alert alert-success" role="status">
+                                    <div t-field="service_request.service_type_id.terms_conditions"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-3'>
+                                <label class="col-form-label" for="service">Service</label>
+                                <input type="text" name="service" t-attf-class="form-control "
+                                       t-att-value="service_request.service_type_id._get_name()" disabled="disabled"/>
+                            </div>
+
+                            <div class='col-md-6'>
+                                <label class="col-form-label" for="description">Remarks</label>
+                                <input type="text" name="description" id="description" t-attf-class="form-control "
+                                       t-att-value="service_request.desc" onBlur="auto_save()"/>
+                            </div>
+                        </div>
+                        <div id="beneficiary-div">
+                            <br></br>
+                            <h4>Beneficiary</h4>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label" for="beneficiary">Service Beneficiary</label>
+                                    <select name="beneficiary" id="beneficiary" t-attf-class="form-control  "
+                                            onchange="getDocuments();" data-init="1">
+                                        <option t-att-value="service_request.partner_id.id"
+                                                t-att-selected="service_request.partner_id.id == service_request.service_beneficiary.id">
+                                            <t t-esc="service_request.partner_id.name"/>
+                                        </option>
+                                        <t t-foreach="service_request.partner_id.employee_dependants or []" t-as="d">
+                                            <option t-att-value="d.id"
+                                                    t-att-selected="d.id == service_request.service_beneficiary.id">
+                                                <t t-esc="d.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-4'></div>
+                                <div class='col-md-4'></div>
+                            </div>
+                        </div>
+
+                        <br></br>
+                        <div id="personal-div">
+                            <h4>Personal Info</h4>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">First Name :</label>
+                                    <t t-esc="service_request.partner_id.firstName"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Middle Name :</label>
+                                    <t t-esc="service_request.partner_id.middleName"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Last Name :</label>
+                                    <t t-esc="service_request.partner_id.lastName"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Father Full Name :</label>
+                                    <t t-esc="service_request.partner_id.father_fullname"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Mother Full Name :</label>
+                                    <t t-esc="service_request.partner_id.motherFullName"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Date Of Birth :</label>
+                                    <t t-esc="service_request.partner_id.date and service_request.partner_id.date.strftime('%d/%m/%Y')"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Place Of Birth :</label>
+                                    <t t-esc="service_request.partner_id.placeOfBirth"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Nationality :</label>
+                                    <t t-esc="service_request.partner_id.country_id.name"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Second Nationality :</label>
+                                    <t t-esc="service_request.partner_id.nationality.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Religion :</label>
+                                    <t t-esc="service_request.partner_id.religion._get_name()"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Sejel No :</label>
+                                    <t t-esc="service_request.partner_id.sejelNo"/>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Kaza :</label>
+                                    <t t-esc="service_request.partner_id.kazaBirth._get_name()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Passport No :</label>
+                                    <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                        <t t-if="passport.family_member == 'me' and passport.is_active">
+                                            <t t-esc="passport.passport_no"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Passport Date :</label>
+                                    <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                        <t t-if="passport.family_member == 'me' and passport.is_active">
+                                            <t t-esc="passport.passport_start_date and passport.passport_start_date.strftime('%d/%m/%Y')"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Passport Place :</label>
+                                    <t t-foreach="service_request.partner_id.contact_passports or []" t-as="passport">
+                                        <t t-if=" passport.family_member == 'me' and passport.is_active">
+                                            <t t-esc="passport.passport_place"/>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Occupation :</label>
+                                    <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                        <t t-if="i.family_member == 'me' and i.is_active">
+                                            <t t-esc="i.occupation"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Qatar ID :</label>
+                                    <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                        <t t-if="i.family_member == 'me' and i.is_active">
+                                            <t t-esc="i.ikama_no"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Qatar ID End Date :</label>
+                                    <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                        <t t-if="i.family_member == 'me' and i.is_active">
+                                            <t t-esc="i.ikama_enddate and i.ikama_enddate.strftime('%d/%m/%Y')"/>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Sponsor :</label>
+                                    <t t-foreach="service_request.partner_id.contact_ikama or []" t-as="i">
+                                        <t t-if="i.family_member == 'me' and i.is_active">
+                                            <t t-esc="i.guarantor"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label class="col-form-label">Marital Status :</label>
+                                    <t t-esc="service_request.partner_id.maritalStatus"/>
+                                </div>
+                                <div class='col-md-4'>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div id="divorce-div">
+                            <h4>
+                                <t t-if="service_request.service_type_id.code not in ( '02-04')">Spouse Info</t>
+                                <t t-if="service_request.service_type_id.code  in ( '02-04')">Mother Info</t>
+                            </h4>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label t-if="service_request.service_type_id.code not in ( '02-04')"
+                                           class="col-form-label" for="spouse">Spouse
+                                    </label>
+                                    <label t-if="service_request.service_type_id.code  in ( '02-04')"
+                                           class="col-form-label" for="spouse">Mother
+                                    </label>
+                                    <select name="spouse" id="spouse" t-attf-class="form-control  " data-init="1">
+                                        <t t-foreach="partner.employee_dependants or []" t-as="d">
+                                            <t t-if="d.dependent_type == 'spouse'">
+                                                <option t-att-value="d.id"
+                                                        t-att-selected="d.id == service_request.spouse.id">
+                                                    <t t-esc="d.name"/>
+                                                </option>
+                                            </t>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div t-if="service_request.spouse_passport" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_passport">Spouse Passport</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse_passport.passport_no"/>
+                                </div>
+                                <div t-if="service_request.spouse_ikama" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_ikama">Spouse Qatar Id</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse_ikama.ikama_no"/>
+                                </div>
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_passport">Spouse Nationality</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse.country_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div t-if="service_request.spouse_ikama" class='col-md-3'>
+                                    <label class="col-form-label" for="ikama_enddate">Spouse Qatar Id End Date</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse_ikama.ikama_enddate and service_request.spouse_ikama.ikama_enddate.strftime('%d/%m/%Y')"/>
+                                </div>
+                                <div t-if="service_request.spouse_ikama" class='col-md-3'>
+                                    <label class="col-form-label" for="guarantor">Spouse Sponsor</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse_ikama.guarantor"/>
+                                </div>
+                                <div class='col-md-3'>
+                                </div>
+                                <div class='col-md-3'>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_passport">Spouse Father Name</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse.father_fullname"/>
+                                </div>
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_passport">Spouse Mother Name</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse.motherFullName"/>
+                                </div>
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_ikama">Spouse Date of Birth</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse.date and service_request.spouse.date.strftime('%d/%m/%Y')"/>
+                                </div>
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_ikama">Spouse Place Of Birth</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse.placeOfBirth"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                    <label class="col-form-label" for="spouse_passport">Spouse Religion</label>
+                                    <br/>
+                                    <t t-esc="service_request.spouse.religion._get_name()"/>
+                                </div>
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                </div>
+                                <div t-if="service_request.spouse" class='col-md-3'>
+                                </div>
+                                <div class='col-md-3'></div>
+                            </div>
+                        </div>
+                        <div id="death-div">
+                            <h4>Deceased Info</h4>
+                        </div>
+                        <br/>
+                        <div id="born-div">
+                            <h4>Child Info</h4>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childfirstName">Child First Name (Arabic)</label>
+                                    <input type="text" id="childfirstName" name="childfirstName"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child.firstName or childfirstName"
+                                           required="required"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childmiddleName">Child Middle Name (Arabic)
+                                    </label>
+                                    <input type="text" id="childmiddleName" name="childmiddleName"
+                                           t-attf-class="form-control "
+                                           t-att-value="service_request.child.middleName or childmiddleName"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childlastName">Child Last Name (Arabic)</label>
+                                    <input type="text" id="childlastName" name="childlastName"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child.lastName or childlastName"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childfirstName_EN">Child First Name (English)
+                                    </label>
+                                    <input type="text" id="childfirstName_EN" name="childfirstName_EN"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child.first_name_en or childfirstName_EN"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childmiddleName_EN">Child Middle Name (English)
+                                    </label>
+                                    <input type="text" id="childmiddleName_EN" name="childmiddleName_EN"
+                                           t-attf-class="form-control "
+                                           t-att-value="service_request.child.middle_name_en or childmiddleName_EN"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childlastName_EN">Child Last Name (English)
+                                    </label>
+                                    <input type="text" id="childlastName_EN" name="childlastName_EN"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child.last_name_en or childlastName_EN"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childdate">Child Date of Birth</label>
+                                    <input id="childdate" placeholder="dd/mm/yyyy" name="childdate"
+                                           class="form-control datepicker"
+                                           t-att-value="childdate or service_request.child.date and service_request.child.date.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="childplaceOfBirth">Child Place Of Birth</label>
+                                    <input type="text" id="childplaceOfBirth" name="childplaceOfBirth"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child.placeOfBirth or childplaceOfBirth"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="child_gender">Child Gender</label>
+                                    <select name="child_gender" id="child_gender" t-attf-class="form-control "
+                                            onBlur="auto_save()">
+                                        <option value="">select...</option>
+                                        <option value="male" t-att-selected="service_request.child.gender == 'male'">
+                                            Male
+                                        </option>
+                                        <option value="female"
+                                                t-att-selected="service_request.child.gender == 'female'">Female
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class='col-md-3'>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="child_birth_certificate">Child Birth
+                                        certificate
+                                    </label>
+                                    <input type="text" id="child_birth_certificate" name="child_birth_certificate"
+                                           class="form-control"
+                                           t-att-value="service_request.child_birth_certificate or child_birth_certificate"
+                                           onBlur="auto_save()"/>
+
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="child_birth_certificate_date">Child Birth
+                                        certificate Date
+                                    </label>
+                                    <input id="child_birth_certificate_date" name="child_birth_certificate_date"
+                                           placeholder="dd/mm/yyyy" class="form-control datepicker"
+                                           t-att-value="child_birth_certificate_date or service_request.child_birth_certificate_date and service_request.child_birth_certificate_date.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+
+                                </div>
+                                <div class='col-md-3'>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row" style="display:none">
+
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="child_birth_registration">Child Birth
+                                        Registration
+                                    </label>
+                                    <input type="text" id="child_birth_registration" name="child_birth_registration"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child_birth_registration or child_birth_registration"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="child_birth_registration_date">Child Birth
+                                        Registration Date
+                                    </label>
+                                    <input id="child_birth_registration_date" name="child_birth_registration_date"
+                                           class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                           t-att-value="child_birth_registration_date or service_request.child_birth_registration_date and service_request.child_birth_registration_date.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="birth_registry_number">Child Birth Registry
+                                        Number
+                                    </label>
+                                    <input type="text" id="birth_registry_number" name="birth_registry_number"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.birth_registry_number or birth_registry_number"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="birth_record_page">Child Birth Record Page
+                                    </label>
+                                    <input type="text" id="birth_record_page" name="birth_record_page"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.birth_record_page or birth_record_page"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+
+                            <div class="row" style="display:none">
+
+                                <div class='col-md-3' style="display:none">
+                                    <label class="col-form-label" for="record_personal_status">Record Personal Status
+                                    </label>
+                                    <input type="text" id="record_personal_status" name="record_personal_status"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.record_personal_status or record_personal_status"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3' style="display:none">
+                                    <label class="col-form-label" for="record_transaction_number">Record Transaction
+                                        Number
+                                    </label>
+                                    <input type="text" id="record_transaction_number" name="record_transaction_number"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.record_transaction_number or record_transaction_number"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="starting_date">Starting Date</label>
+                                    <input id="starting_date" name="starting_date" class="form-control datepicker"
+                                           placeholder="dd/mm/yyyy"
+                                           t-att-value="starting_date or service_request.starting_date and service_request.starting_date.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="child_passport_number">Child Passport Number
+                                    </label>
+                                    <input type="text" id="child_passport_number" name="child_passport_number"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.child_passport_number or child_passport_number"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <div id="natio-div">
+                            <h4>Marriage Info</h4>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depfirstName">Marriage Date</label>
+                                    <input id="depmarriage_date" name="depmarriage_date" required="required"
+                                           class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                           onBlur="parseDMY(this);"
+                                           t-att-value="depmarriage_date or service_request.spouse.marriage_date and service_request.spouse.marriage_date.strftime('%d/%m/%Y')"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depmiddleName">Marriage Place</label>
+                                    <input type="text" id="depmarriage_place" name="depmarriage_place"
+                                           required="required" t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.marriage_place or  depmarriage_place"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                </div>
+                                <div class='col-md-3'>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="marriage-div">
+                            <h4>Spouse Info</h4>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depfirstName">Spouse First Name (Arabic)</label>
+                                    <input type="text" id="depfirstName" name="depfirstName" t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.firstName or depfirstName"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depmiddleName">Spouse Middle Name (Arabic)
+                                    </label>
+                                    <input type="text" id="depmiddleName" name="depmiddleName"
+                                           t-attf-class="form-control "
+                                           t-att-value="service_request.spouse.middleName or depmiddleName"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="deplastName">Spouse Last Name (Arabic)</label>
+                                    <input type="text" id="deplastName" name="deplastName" t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.lastName or deplastName"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depmotherFullName">Mother Full Name</label>
+                                    <input type="text" id="depmotherFullName" name="depmotherFullName"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.motherFullName or depmotherFullName"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depfirstName_EN">Spouse First Name (English)
+                                    </label>
+                                    <input type="text" id="depfirstName_EN" name="depfirstName_EN"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.first_name_en or depfirstName_EN"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depmiddleName_EN">Spouse Middle Name (English)
+                                    </label>
+                                    <input type="text" id="depmiddleName_EN" name="depmiddleName_EN"
+                                           t-attf-class="form-control "
+                                           t-att-value="service_request.spouse.middle_name_en or depmiddleName_EN"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="deplastName_EN">Spouse Last Name (English)
+                                    </label>
+                                    <input type="text" id="deplastName_EN" name="deplastName_EN"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.last_name_en or deplastName_EN"
+                                           required="required" onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depfather_fullname">Father Full Name</label>
+                                    <input type="text" id="depfather_fullname" name="depfather_fullname"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.father_fullname or depfather_fullname"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depdate">Spouse Date of Birth</label>
+                                    <input id="depdate" name="depdate" class="form-control datepicker"
+                                           placeholder="dd/mm/yyyy"
+                                           t-att-value="depdate or service_request.spouse.date and service_request.spouse.date.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depplaceOfBirth">Spouse Place Of Birth</label>
+                                    <input type="text" id="depplaceOfBirth" name="depplaceOfBirth"
+                                           t-attf-class="form-control"
+                                           t-att-value="service_request.spouse.placeOfBirth or depplaceOfBirth"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depkazaBirth">Spouse Kaza Birth</label>
+                                    <select name="depkazaBirth" id="depkazaBirth" t-attf-class="form-control  "
+                                            data-init="1" onBlur="auto_save()">
+                                        <t t-foreach="kadaa or []" t-as="kaza">
+                                            <option t-att-value="kaza.id"
+                                                    t-att-selected="kaza.id == service_request.spouse.kazaBirth.id">
+                                                <t t-esc="kaza._get_name()"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depsejelNo">Spouse Sejel No</label>
+                                    <input type="text" name="depsejelNo" id="depsejelNo" t-attf-class="form-control "
+                                           t-att-value="service_request.spouse.sejelNo or depsejelNo"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depnationality">Spouse Nationality</label>
+                                    <select name="depnationality" id="depnationality" t-attf-class="form-control  "
+                                            data-init="1" onBlur="auto_save()">
+                                        <option value="">Country...</option>
+                                        <t t-foreach="countries or []" t-as="country">
+                                            <option t-att-value="country.id"
+                                                    t-att-selected="country.id == service_request.spouse.country_id.id">
+                                                <t t-esc="country.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depsec_natio">Spouse Second Nationality</label>
+                                    <select name="depsec_natio" id="depsec_natio" t-attf-class="form-control  "
+                                            data-init="1" onBlur="auto_save()">
+                                        <option value="">Country...</option>
+                                        <t t-foreach="countries or []" t-as="country">
+                                            <option t-att-value="country.id"
+                                                    t-att-selected="country.id == service_request.spouse.nationality.id">
+                                                <t t-esc="country.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="depreligion">Spouse Religion</label>
+                                    <select name="depreligion" id="depreligion" t-attf-class="form-control  "
+                                            data-init="1" required="required" onBlur="auto_save()">
+                                        <option value="">Religion...</option>
+                                        <t t-foreach="religion or []" t-as="k">
+                                            <option t-att-value="k.id"
+                                                    t-att-selected="k.id == service_request.spouse.religion.id">
+                                                <t t-esc="k._get_name()"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" required="required" for="passport_no">Spouse Passport
+                                        No
+                                    </label>
+                                    <input type="text" id="passport_no" name="passport_no" t-attf-class="form-control "
+                                           t-att-value="service_request.spouse_passport.passport_no or passport_no"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="passport_place">Spouse Passport Place</label>
+                                    <input type="text" id="passport_place" name="passport_place"
+                                           t-attf-class="form-control "
+                                           t-att-value="service_request.spouse_passport.passport_place or 'Beirut'"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="passport_start_date">Spouse Passport Start Date
+                                    </label>
+                                    <input id="passport_start_date" name="passport_start_date"
+                                           t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                           onBlur="parseDMY(this);"
+                                           t-att-value="passport_start_date or service_request.spouse_passport.passport_start_date and service_request.spouse_passport.passport_start_date.strftime('%d/%m/%Y')"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="passport_exp_date">Spouse Passport Expiry Date
+                                    </label>
+                                    <input id="passport_exp_date" name="passport_exp_date"
+                                           t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                           t-att-value="passport_exp_date or service_request.spouse_passport.passport_exp_date and service_request.spouse_passport.passport_exp_date.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="occupation">Spouse occupation</label>
+                                    <input type="text" id="occupation" name="occupation" t-attf-class="form-control"
+                                           t-att-value="service_request.spouse_ikama.occupation or occupation"
+                                           onBlur="auto_save()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="ikama_no">Spouse Qatar ID</label>
+                                    <input type="text" id="ikama_no" name="ikama_no" t-attf-class="form-control"
+                                           t-att-value="service_request.spouse_ikama.ikama_no or ikama_no"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="ikama_enddate">Spouse Qatar ID End Date</label>
+                                    <input id="ikama_enddate" name="ikama_enddate"
+                                           t-attf-class="form-control datepicker" placeholder="dd/mm/yyyy"
+                                           t-att-value="ikama_enddate or service_request.spouse_ikama.ikama_enddate and service_request.spouse_ikama.ikama_enddate.strftime('%d/%m/%Y')"
+                                           onBlur="parseDMY(this);"/>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label class="col-form-label" for="guarantor">Spouse Sponsor</label>
+                                    <input type="text" id="guarantor" name="guarantor" t-attf-class="form-control"
+                                           t-att-value="service_request.spouse_ikama.guarantor or guarantor"
+                                           onBlur="auto_save()"/>
+                                </div>
+                                <div class='col-md-3'>
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <h4>Lebanon Address</h4>
+                        <div>
+                            <div class="container">
+                                <table class="table table-responsive table-hover" id="lebanonTab">
+                                    <thead>
+                                        <tr>
+                                            <th>Region</th>
+                                            <th>Kaza</th>
+                                            <th>Town</th>
+                                            <th>City</th>
+                                            <th>Street</th>
+                                            <th>District</th>
+                                            <th>Building</th>
+                                            <th>Floor</th>
+                                            <th>Flat</th>
+                                            <th>Mobile</th>
+                                            <th>Phone</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="partner.address_ids or []" t-as="address">
+                                            <t t-if="address.type == 'Lebanon' and address.is_active">
+                                                <tr>
+                                                    <td>
+                                                        <span t-esc="address.region._get_name()"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-esc="address.kaza._get_name()"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.town"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.city"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.street"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.district"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.building"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.floor"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.flat"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.mobile"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.phoneNumber"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br></br>
+                        <h4>Qatar Address</h4>
+                        <div>
+                            <div class="container">
+                                <table class="table table-responsive table-hover" id="qatarTab">
+                                    <thead>
+                                        <tr>
+                                            <th>City</th>
+                                            <th>Street</th>
+                                            <th>Region</th>
+                                            <th>Building</th>
+                                            <th>Floor</th>
+                                            <th>Mojama3</th>
+                                            <th>Flat</th>
+                                            <th>Phone</th>
+                                            <th>Mobile</th>
+                                            <th>Po Box</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="partner.address_ids or []" t-as="address">
+                                            <t t-if="address.type == 'Qatar' and address.is_active">
+                                                <tr>
+                                                    <td>
+                                                        <span t-field="address.city"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.street"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.qatar_region"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.building"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.floor"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.mojama3"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.flat"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.phoneNumber"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.mobile"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="address.pobox"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br></br>
+                        <h4>Emergency</h4>
+                        <div class="container">
+                            <table class="table table-responsive table-hover" id="emergencyTab">
+                                <thead>
+                                    <tr>
+                                        <th>Emergency Full Name</th>
+                                        <th>Emergency Phone Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="service_request.partner_id.contact_emergency or []" t-as="em">
+                                        <t t-if="em.is_active">
+                                            <td>
+                                                <span t-field="em.emergency_full_name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="em.emergency_phone_number"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <br></br>
+
+                        <h4>Attach Documents</h4>
+                        <div class="form-group">
+                            <div class="container">
+                                <button type="button" class="btn btn-primary float-left mb32 " id="docBtn">Add
+                                    Document
+                                </button>
+                                <table class="table table-responsive table-hover" id="docTab">
+                                    <thead>
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>رقم المستند</th>
+                                            <th>Document Name</th>
+                                            <th>Issue Date</th>
+                                            <th>Expiry Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="service_request.status == 'draft'">
+                                            <tr t-foreach="documents or []" t-as="doc"
+                                                t-attf-onclick="openModal('#{doc.id}');">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-lg fa-pencil" id="btn_new_record"
+                                                       t-attf-onclick="openModal('#{doc.id}');"></i>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr t-foreach="documents or []" t-as="doc">
+                                                <td>
+                                                    <span t-esc="doc.document_type_id._get_name()"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_owner"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.document_number"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.issue_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="doc.expiry_date"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <t t-if="service_request.status == 'draft'">
+                                        <button type="button" id="submit_btn" onclick="submitpersonal();"
+                                                class="btn btn-info">Submit
+                                        </button>
+                                    </t>
+                                </div>
+                                <div class='col-md-4' t-if="service_request.status == 'draft'">
+                                    <button type="button" id="delete_btn" onclick="deletePersonal();"
+                                            class="btn btn-info">Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--   Document Modal  -->
+                    <xpath expr="//form" position='after'>
+                        <!-- Modal -->
+                        <div class="modal fade" id="docModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding:25px 60px;">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Documents
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="doc_form" role="form" action="/my/personal/insert_documents"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id" value=""/>
+                                            <input type="hidden" name="is_required_issue_date"
+                                                   id="is_required_issue_date"/>
+                                            <input type="hidden" name="is_required_expiry_date"
+                                                   id="is_required_expiry_date"/>
+                                            <input type="hidden" name="is_required_doc_no" id="is_required_doc_no"/>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" required="required"
+                                                           for="document_type">Document Type
+                                                    </label>
+                                                    <select name="document_type" id="document_type"
+                                                            t-attf-class="form-control">
+                                                        <t t-foreach="documentTypes or []" t-as="types">
+                                                            <option t-att-value="types.id">
+                                                                <t t-esc="types._get_name()"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6' id="docNodiv">
+                                                    <label class="col-form-label" for="docNo">رقم المستند</label>
+                                                    <input type="text" id="docNo" name="docNo"
+                                                           t-attf-class="form-control "
+                                                           t-att-value="docNo"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="document_owner">Document Owner
+                                                    </label>
+                                                    <select name="document_owner" required="required"
+                                                            t-attf-class="form-control" id="document_owner">
+                                                        <option value="me">Applicant</option>
+                                                        <option value="family">Family Member</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class='col-md-6'>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="issueDatediv">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="issueDate">Issue Date</label>
+                                                    <input id="issueDate" onBlur="parseDMY(this);" name="issueDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="issueDate"/>
+                                                </div>
+                                                <div class='col-md-6' id="expiryDatediv">
+                                                    <label class="col-form-label" for="expiryDate">Expiry Date</label>
+                                                    <input id="expiryDate" onBlur="parseDMY(this);" name="expiryDate"
+                                                           t-attf-class="form-control datepicker"
+                                                           placeholder="dd/mm/yyyy"
+                                                           t-att-value="expiryDate"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-md-6'>
+                                                    <label class="col-form-label" for="file_attach">File</label>
+                                                    <input type="file" id="file_attach" name="files[]"
+                                                           class="o_sign_load btn btn-link" required="required"
+                                                           role="button"/>
+                                                </div>
+                                                <div class='col-md-6'>
+
+                                                </div>
+                                            </div>
+
+                                            <br></br>
+                                            <input type="submit" id="save-doc-btn" class="btn btn-default btn-block"
+                                                   value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ratingModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                            Feedback
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form id="feedback_form" role="form" action="/my/service/submit_feedback"
+                                              method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="partner_doc_Id" id="partner_doc_Id" value=""/>
+                                            <input type="hidden" name="service_id" id="service_id"
+                                                   t-att-value="service_request.id"/>
+                                            <h4>
+                                                <span class="glyphicon glyphicon-lock"></span>
+                                                Feedback
+                                            </h4>
+                                            <div class="row">
+                                                <label class="col-form-label" for="rating-value">Rating
+                                                </label>
+                                            </div>
+                                            <div class="row" style="width:100%;">
+                                                <div style="width:20%;place-self: flex-end;text-align: right;">
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <br/>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+
+                                                </div>
+                                                <div style="width:80%;padding-left: 10px;">
+                                                    <input type="radio" id="one_star" name="rating" value="1"/>
+                                                    <br/>
+                                                    <input type="radio" id="two_star" name="rating" value="2"/>
+                                                    <br/>
+                                                    <input type="radio" id="three_star" name="rating"
+                                                           value="3"/>
+                                                    <br/>
+                                                    <input type="radio" id="four_star" name="rating"
+                                                           value="4"/>
+                                                    <br/>
+                                                    <input type="radio" id="five_star" name="rating"
+                                                           value="5"/>
+                                                </div>
+                                                <input type="hidden" name="type" id="type" value="personal"/>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <label class="col-form-label" for="comments">Comments</label>
+                                                    <textarea id="comments" class="comments" name="comments"
+                                                              t-attf-class="form-control"/>
+
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <center>
+                                                <i class="loader_for_service_submit"/>
+                                            </center>
+                                            <input type="button" id="save-feedback-btn"
+                                                   class="btn btn-default btn-block" value="Save"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </xpath>
+                    <xpath expr="." position="inside">
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                        <script>
+                            $("#docBtn").click(function(){
+                            $("#docModal").modal();
+                            var service_id = $('#service_id').val();
+                            $(".modal-body #service_id").val(service_id);
+                            $(".modal-body #partner_doc_Id").val('');
+                            });
+
+
+                            function validate(isDate)
+                            {
+                            isValid = true;
+                            tmp = isDate.split("/");
+                            isLeap = tmp[2]%4;
+                            if (!/[1-9]{1}/.test(tmp[0]) || /[1-9]{2}/.test(tmp[0]) &amp;&amp;
+                            !/10|11|12/.test(tmp[0])){isValid = false}
+                            else if ((/4|6|9|11/.test(tmp[0])) &amp;&amp; tmp[1] > 30){isValid=false}
+                            else if ((/1|3|5|7|8|10|12/.test(tmp[0])) &amp;&amp; tmp[1] > 31){isValid=false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap == 0) &amp;&amp; tmp[1] > 29){isValid = false}
+                            else if ((tmp[0] == 2 &amp;&amp; isLeap != 0) &amp;&amp; tmp[1] > 28){isValid = false}
+                            else if (tmp[2].length != 4 || (!/^19|20/.test(tmp[2]))){isValid = false}
+                            if (isNaN(Date.parse(isDate)) || !isValid){return true}
+                            else { return true }
+                            }
+
+                            function parseDMY(isDate)
+                            {
+                            auto_save();
+                            tmp = isDate.value;
+                            if(tmp){
+                            tmp = tmp.split("-");
+                            refDate = tmp[1]+"/"+tmp[2]+"/"+tmp[0];
+                            if (!validate(refDate))
+                            {
+                            isDate.value = "";
+                            isDate.focus();
+                            }
+                            }
+                            }
+                            $(function ()
+                            {
+                            var service_code = $('#service_code').val();
+
+                            if( service_code == '02-01')
+                            {
+                            $("#marriage-div").show();
+                            $("#personal-div").show();
+                            $("#death-div").hide();
+                            $("#born-div").hide();
+                            $("#natio-div").hide();
+                            $("#divorce-div").hide();
+
+                            }
+                            if( service_code == '02-02')
+                            {
+                            $("#marriage-div").hide();
+                            $("#personal-div").show();
+                            $("#death-div").hide();
+                            $("#born-div").hide();
+                            $("#natio-div").hide();
+                            $("#divorce-div").show();
+                            }
+
+                            if( service_code == '02-03')
+                            {
+                            $("#marriage-div").show();
+                            $("#personal-div").show();
+                            $("#death-div").hide();
+                            $("#born-div").hide();
+                            $("#natio-div").show();
+                            $("#divorce-div").hide();
+                            }
+                            if( service_code == '02-04' || service_code =='01-06')
+                            {
+                            $("#marriage-div").hide();
+                            $("#personal-div").show();
+                            $("#death-div").hide();
+                            $("#born-div").show();
+                            $("#natio-div").hide();
+                            $("#divorce-div").show();
+                            }
+                            if( service_code == '02-05')
+                            {
+                            $("#marriage-div").hide();
+                            $("#personal-div").show();
+                            $("#death-div").show();
+                            $("#born-div").hide();
+                            $("#natio-div").hide();
+                            $("#divorce-div").hide();
+                            }
+
+                            var status = $('#status').val();
+                            if(status == "progress" || status == "complete")
+                            {
+                            $('button').hide();
+                            $('input[type="submit"]').hide();
+                            $("#description").attr('disabled','disabled');
+                            $('select').attr('disabled','disabled');
+                            $('input[type="text"]').attr('disabled','disabled');
+                            $('input[type="date"]').attr('disabled','disabled');
+                            }
+
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+                            });
+
+
+                            $('#document_type').on('change',function()
+                            {
+                            var url='/my/account/document_type';
+                            formValues = $('#doc_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+
+                            });
+
+                            });
+                            function getDocuments()
+                            {
+                            var url='/my/service/change_doc';
+                            var formValues= $('#personal_form').serialize();
+                            $.post(url, formValues, function(data){
+                            location.reload();
+                            });
+                            }
+
+                            function openModal(e)
+                            {
+                            var url='/my/authorization/document/open/'+e;
+                            formValues = $('#personal_form').serialize();
+                            $.post(url, formValues, function(data)
+                            {
+                            $(".modal-body #document_owner").val( data.data.document_owner );
+
+                            $(".modal-body #service_id").val( data.data.service_id );
+                            $(".modal-body #partner_doc_Id").val( data.data.documentId );
+                            $(".modal-body #document_type").val( data.data.doctype );
+                            $(".modal-body #document_type").prop('disabled', 'disabled');
+                            $(".modal-body #docNo").val( data.data.document_number );
+                            $(".modal-body #issueDate").val( data.data.issue_date );
+                            $(".modal-body #expiryDate").val( data.data.expiry_date );
+                            $(".modal-body #is_required_issue_date").prop( "checked", data.data.is_required_issue_date
+                            );
+                            $(".modal-body #is_required_expiry_date").prop( "checked", data.data.is_required_expiry_date
+                            );
+                            $(".modal-body #is_required_doc_no").prop( "checked", data.data.is_required_doc_no );
+                            if(data.data.is_required_issue_date==true){
+                            $(".modal-body #issueDatediv").show();
+                            $("#issueDate").attr("required", "required");
+
+                            }
+                            else
+                            {
+                            $(".modal-body #issueDatediv").hide();
+                            $("#issueDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_expiry_date==true){
+                            $(".modal-body #expiryDatediv").show();
+                            $("#expiryDate").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #expiryDatediv").hide();
+                            $("#expiryDate").removeAttr('required');
+
+
+                            }
+
+                            if(data.data.is_required_doc_no==true){
+                            $(".modal-body #docNodiv").show();
+                            $("#docNo").attr("required", "required");
+
+                            }
+                            else{
+                            $(".modal-body #docNodiv").hide();
+                            $("#docNo").removeAttr('required');
+
+
+                            }
+                            $('#docModal').modal('toggle');
+                            });
+                            }
+
+                            $("#save-doc-btn").on("submit", function(event)
+                            {
+                            var url='/my/personal/insert_documents';
+                            var formValues= $('#personal_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            location.reload();
+                            });
+
+                            });
+
+                            function auto_save()
+                            {
+                            var url='/my/service/service_auto_save';
+                            var formValues= $('#personal_form').serialize();
+                            $.post(url, formValues, function(data){
+                            });
+                            }
+
+
+                            function deletePersonal()
+                            {
+                            var url='/my/services/delete';
+                            var formValues= $('#personal_form').serialize();
+
+                            $.post(url, formValues, function(data)
+                            {
+                            $(location).attr('href','/my/personal');
+                            });
+                            }
+
+
+                            function submitpersonal()
+                            {
+                            $('#ratingModal').modal('toggle');
+
+                            }
+
+                            function validateForm()
+                            {
+                            var valid = true;
+                            var service_code = $('#service_code').val();
+
+                            if( service_code == '02-04')
+                            {
+
+                            var childfirstName = $("#childfirstName").val();
+                            if (childfirstName == "")
+                            {
+                            $("#childfirstName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childfirstName").removeAttr( 'style' );
+                            }
+                            var childmiddleName = $("#childmiddleName").val();
+                            if (childmiddleName == "")
+                            {
+                            $("#childmiddleName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childmiddleName").removeAttr( 'style' );
+                            }
+                            var childlastName = $("#childlastName").val();
+                            if (childlastName == "")
+                            {
+                            $("#childlastName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childlastName").removeAttr( 'style' );
+                            }
+                            var childfirstName_EN = $("#childfirstName_EN").val();
+                            if (childfirstName_EN == "")
+                            {
+                            $("#childfirstName_EN").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childfirstName_EN").removeAttr( 'style' );
+                            }
+                            var childmiddleName_EN = $("#childmiddleName_EN").val();
+                            if (childmiddleName_EN == "")
+                            {
+                            $("#childmiddleName_EN").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childmiddleName_EN").removeAttr( 'style' );
+                            }
+                            var childlastName_EN = $("#childlastName_EN").val();
+                            if (childlastName_EN == "")
+                            {
+                            $("#childlastName_EN").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childlastName_EN").removeAttr( 'style' );
+                            }
+                            var child_birth_certificate = $("#child_birth_certificate").val();
+                            if (child_birth_certificate == "")
+                            {
+                            $("#child_birth_certificate").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#child_birth_certificate").removeAttr( 'style' );
+                            }
+                            var childdate = $("#childdate").val();
+                            if (childdate == "")
+                            {
+                            $("#childdate").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childdate").removeAttr( 'style' );
+                            }
+                            var childplaceOfBirth = $("#childplaceOfBirth").val();
+                            if (childplaceOfBirth == "")
+                            {
+                            $("#childplaceOfBirth").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#childplaceOfBirth").removeAttr( 'style' );
+                            }
+                            var child_gender = $("#child_gender").val();
+                            if (child_gender == "")
+                            {
+                            $("#child_gender").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#child_gender").removeAttr( 'style' );
+                            }
+                            var child_birth_certificate_date = $("#child_birth_certificate_date").val();
+                            if (child_birth_certificate_date == "")
+                            {
+                            $("#child_birth_certificate_date").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#child_birth_certificate_date").removeAttr( 'style' );
+                            }
+
+                            var child_birth_registration = $("#child_birth_registration").val();
+                            if (child_birth_registration == "")
+                            {
+                            $("#child_birth_registration").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#child_birth_registration").removeAttr( 'style' );
+                            }
+                            var child_birth_registration_date = $("#child_birth_registration_date").val();
+                            if (child_birth_registration_date == "")
+                            {
+                            $("#child_birth_registration_date").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#child_birth_registration_date").removeAttr( 'style' );
+                            }
+                            var birth_registry_number = $("#birth_registry_number").val();
+                            if (birth_registry_number == "")
+                            {
+                            $("#birth_registry_number").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#birth_registry_number").removeAttr( 'style' );
+                            }
+                            var birth_record_page = $("#birth_record_page").val();
+                            if (birth_record_page == "")
+                            {
+                            $("#birth_record_page").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#birth_record_page").removeAttr( 'style' );
+                            }
+
+                            var starting_date = $("#starting_date").val();
+                            if (starting_date == "")
+                            {
+                            $("#starting_date").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#starting_date").removeAttr( 'style' );
+                            }
+                            var child_passport_number = $("#child_passport_number").val();
+
+                            if (child_passport_number == "")
+                            {
+                            $("#child_passport_number").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#child_passport_number").removeAttr( 'style' );
+                            }
+
+                            }
+
+                            if( service_code == '02-01' || service_code == '02-03')
+                            {
+                            var depfirstName = $("#depfirstName").val();
+                            if (depfirstName == "")
+                            {
+                            $("#depfirstName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depfirstName").removeAttr( 'style' );
+                            }
+                            var depmiddleName = $("#depmiddleName").val();
+                            if (depmiddleName == "")
+                            {
+                            $("#depmiddleName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depmiddleName").removeAttr( 'style' );
+                            }
+                            var deplastName = $("#deplastName").val();
+                            if (deplastName == "")
+                            {
+                            $("#deplastName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#deplastName").removeAttr( 'style' );
+                            }
+                            var depmotherFullName = $("#depmotherFullName").val();
+                            if (depmotherFullName == "")
+                            {
+                            $("#depmotherFullName").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depmotherFullName").removeAttr( 'style' );
+                            }
+                            var depfirstName_EN = $("#depfirstName_EN").val();
+                            if (depfirstName_EN == "")
+                            {
+                            $("#depfirstName_EN").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depfirstName_EN").removeAttr( 'style' );
+                            }
+                            var depmiddleName_EN = $("#depmiddleName_EN").val();
+                            if (depmiddleName_EN == "")
+                            {
+                            $("#depmiddleName_EN").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depmiddleName_EN").removeAttr( 'style' );
+                            }
+                            var deplastName_EN = $("#deplastName_EN").val();
+                            if (deplastName_EN == "")
+                            {
+                            $("#deplastName_EN").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#deplastName_EN").removeAttr( 'style' );
+                            }
+                            var depfather_fullname = $("#depfather_fullname").val();
+                            if (depfather_fullname == "")
+                            {
+                            $("#depfather_fullname").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depfather_fullname").removeAttr( 'style' );
+                            }
+                            var depdate = $("#depdate").val();
+                            if (depdate == "")
+                            {
+                            $("#depdate").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depdate").removeAttr( 'style' );
+                            }
+                            var depplaceOfBirth = $("#depplaceOfBirth").val();
+                            if (depplaceOfBirth == "")
+                            {
+                            $("#depplaceOfBirth").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depplaceOfBirth").removeAttr( 'style' );
+                            }
+                            var depkazaBirth = $("#depkazaBirth").val();
+                            if (depkazaBirth == "")
+                            {
+                            $("#depkazaBirth").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depkazaBirth").removeAttr( 'style' );
+                            }
+                            var depsejelNo = $("#depsejelNo").val();
+                            if (depsejelNo == "")
+                            {
+                            $("#depsejelNo").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depsejelNo").removeAttr( 'style' );
+                            }
+                            var depnationality = $("#depnationality").val();
+                            if (depnationality == "")
+                            {
+                            $("#depnationality").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depnationality").removeAttr( 'style' );
+                            }
+                            var depreligion = $("#depreligion").val();
+                            if (depreligion == "")
+                            {
+                            $("#depreligion").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#depreligion").removeAttr( 'style' );
+                            }
+
+                            var passport_no = $("#passport_no").val();
+                            if (passport_no == "")
+                            {
+                            $("#passport_no").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#passport_no").removeAttr( 'style' );
+                            }
+
+                            var passport_place = $("#passport_place").val();
+                            if (passport_place == "")
+                            {
+                            $("#passport_place").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#passport_place").removeAttr( 'style' );
+                            }
+
+                            var passport_start_date = $("#passport_start_date").val();
+                            if (passport_start_date == "")
+                            {
+                            $("#passport_start_date").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#passport_start_date").removeAttr( 'style' );
+                            }
+                            var passport_exp_date = $("#passport_exp_date").val();
+                            if (passport_exp_date == "")
+                            {
+                            $("#passport_exp_date").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#passport_exp_date").removeAttr( 'style' );
+                            }
+                            var occupation = $("#occupation").val();
+                            if (occupation == "")
+                            {
+                            $("#occupation").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#occupation").removeAttr( 'style' );
+                            }
+                            var ikama_no = $("#ikama_no").val();
+                            if (ikama_no == "")
+                            {
+                            $("#ikama_no").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#ikama_no").removeAttr( 'style' );
+                            }
+                            var ikama_enddate = $("#ikama_enddate").val();
+                            if (ikama_enddate == "")
+                            {
+                            $("#ikama_enddate").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#ikama_enddate").removeAttr( 'style' );
+                            }
+                            var guarantor = $("#guarantor").val();
+                            if (guarantor == "")
+                            {
+                            $("#guarantor").css("border", "1px solid red");
+                            valid = false;
+                            }
+                            else
+                            {
+                            $("#guarantor").removeAttr( 'style' );
+                            }
+
+                            }
+                            return valid;
+                            }
+
+
+                        </script>
+                    </xpath>
+
+                </div>
+                <div class="o_portal_messages_container mt32">
+                    <h4>Message and communication history</h4>
+                    <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="service_request.access_token"/>
+                        <t t-set="object" t-value="service_request"/>
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

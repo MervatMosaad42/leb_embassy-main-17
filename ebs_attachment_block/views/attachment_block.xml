@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="attachment_block_tree" model="ir.ui.view">
+            <field name="name">attachment_block_tree</field>
+            <field name="model">ebs.attachment.block.types</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml" >
+                <tree string="Blocked Attachments File Extensions" editable="top">
+                    <field name='name'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="attachment_block_window" model="ir.actions.act_window">
+            <field name="name">Blocked Attachments File Extensions</field>
+            <field name="res_model">ebs.attachment.block.types</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="attachment_block_tree"/>
+        </record>
+
+        <menuitem id="attachment_block_menu"
+                  name="Blocked Attachments File Extensions"
+                  parent="base.menu_custom"
+                  action="attachment_block_window"/>
+    </data>
+</odoo>

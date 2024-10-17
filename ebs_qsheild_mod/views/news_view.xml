@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="news_tree" model="ir.ui.view">
+            <field name="name">News Tree</field>
+            <field name="model">ebs_mod.news</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view -->
+        <record id="news_form" model="ir.ui.view">
+            <field name="name">News Tree</field>
+            <field name="model">ebs_mod.news</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                             class="oe_stat_button" icon="fa-archive" string="Active">
+                                    <field name="active" widget="boolean_button"
+                                        options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group cols="4">
+                            <field name="name" required="1"/>
+                            <field name="date" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="news_window" model="ir.actions.act_window">
+            <field name="name">News</field>
+            <field name="res_model">ebs_mod.news</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- menu -->
+        <menuitem
+            id="news_view_menu"
+            name="News"
+            action="news_window"
+            parent="website.menu_website_global_configuration"
+            sequence="170"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_visa_application_personal_detail_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0"
+                           style="padding-top: 5px;padding-bottom:5px;font-size: 14px;">
+                        <tr>
+                            <td align="center">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="80%"/>
+                                <br/>
+                                <img src="/ebs_qsheild_mod/static/src/image/report_icon.png" width="40%"/>
+                            </td>
+                            <td width="50%" style="font-weight: bold;">
+                                <h4 class="text-center ">
+                                    <span>طلـب تأشــيرة</span>
+                                </h4>
+                                <h6 class="text-center ">
+                                    <span>: سبب موافقة رئيس البعثة/القنصل السفارة</span>
+                                    <br/>
+                                    <span>ملاحظة: 1.يجب تقديم الطلب قبل * 15 يوم* )) خمسة عشر يوماً (( من الموعد المحدد
+                                        للسفر
+                                    </span>
+                                    <br/>
+                                    <span>: 2. تعبئة الطلب بشكل واضح وكامل تحت طائلة الرفض.</span>
+                                    <br/>
+                                </h6>
+                            </td>
+                            <td>
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;">
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="center"
+                                colspan="2">
+                                <b>المعلومات الشخصية</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: المهنـة / الوظيفة الوضع</b>
+                                <br/>
+                                <b>: عـنوان العمل / الشركة في العائلي:أعزب/متأهل/أرمل/مطلق</b>
+                                <br/>
+                                <b>: عـنوان العمل / الشركة في قـطر</b>
+                                <br/>
+                                <b>: أرقام الهاتف</b>
+                                <br/>
+                                <b>: هاتف محمول Mobile</b>
+                                <br/>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: الإسـم</b>
+                                <br/>
+                                <b>: إسم الأب</b>
+                                <br/>
+                                <b>: الشهرة</b>
+                                <br/>
+                                <b>: إسـم الأم</b>
+                                <br/>
+                                <b>: مكان وتاريخ الولآدة</b>
+                                <br/>
+                                <b>: الجنسية الحالية</b>
+                                <br/>
+                                <b>: الجنسية الأصلية</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="center"
+                                colspan="2">
+                                <b>معلومات حول جواز أو وثيقة السفر .</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <input type="checkbox" id="oe_import_tracking"/>...<input type="checkbox"
+                                                                                          id="oe_import_tracking"/>...
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>: رقم الإقامة في قطر</b>
+                                <br/>
+                                <b>: تـاريخ الانتهاء</b>
+                                <br/>
+                                <b>: إســم الـكــفيــل</b>
+                                <br/>
+                                <b>: و عنــوانـــــه</b>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: نوع المستند</b>
+                                <b>جواز سفر</b>
+                                <b>جواز مرور</b>
+                                <b>غير ذلك</b>
+                                <br/>
+                                <b>: الرقم</b>
+                                <br/>
+                                <b>: مكان وتاريخ الإصدار</b>
+                                <br/>
+                                <b>: تاريــخ الانتهاء</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" colspan="2"
+                                align="center">
+                                <b>معلومات حول التأشيرة المطلوبة:</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <b>: عنوان مفصل ومكان الإقامة في لبنان ( إلزامي )</b>
+                                <div style="border: none !important;" align="center">
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                </div>
+                                <div style="border: none !important;" align="center">
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                </div>
+                                <div style="border: none !important;" align="center">
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                    <input type="checkbox" id="oe_import_tracking" style="margin-right: 40px;"/>
+                                </div>
+                                <div style="border: none !important;" align="right">
+                                    <b>: هاتف في لبنان</b>
+                                </div>
+                            </td>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <b>المطار المرفأ البر.</b>
+                                <b>: مركز الدخول الحدودي</b>
+                                <b>: سبب الزيــارة :عائلية / سياحة / اعمال / مختلف.</b>
+                                <br/>
+                                <b>  15يوم / شهر / شهرين / ثلاثة أشهر /  ستة أشهر</b>
+                                <br/>
+                                <b>: عدد الزيارات / زيارة واحدة/  زيارتين /  عدة</b>
+                                <br/>
+                                <div style="border: none !important;margin-right;" align="center">
+                                    <span>QR185</span>
+                                    <span>QR255</span>
+                                    <span>QR130</span>
+                                    <span>.(الدفع نقدا).</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: المستندات المطلوبــة</b>
+                                <br/>
+                                <b>1( جواز السفر مع صورة ملونة عنه والصفحات الاساسية</b>
+                                <br/>
+                                <b>وصورة عن الإقامة صلاحيتهما لا تقل عن 6 اشهر .</b>
+                                <br/>
+                                <b>2( صورة شمسية لصاحب العلاقة (خلفية بيضاء).</b>
+                                <br/>
+                                <b>3( كتاب عدم ممانعة من الكفيـل يوضح هدف الزيارة.</b>
+                                <br/>
+                                <b>4( صورة عن قيد المنشأة (إذا كان الكفيل شركة).</b>
+                                <br/>
+                                <b>5( صورة عن بطاقة الكفيـل.</b>
+                                <br/>
+                                <b>6( صورة عن بطاقة الكفيـل.</b>
+                                <br/>
+                                <b>5( صورة عن حجز الفندق، أو كتاب من صاحب الدعـوة في
+                                    لبنان مع كافة التفاصيل (العنوان ورقم الهاتف)+ صورة عن الهوية.
+                                    وصورة عن جواز السفر
+                                </b>
+                                <br/>
+                                <b>7( حجز مبدئي لتذكرة الطيران تحدد التاريخ المرتقب للرحلة .</b>
+                                <br/>
+                                <b>8( كشف بيان حساب مصرفي ل ثلاثة اشهر.</b>
+                                <br/>
+                                <b>9( يحق للسفارة طلب أي مستند آخر عند الضرورة.</b>
+                                <br/>
+                                <b>10( الدفع نقد</b>
+                                <br/>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: تاريخ الدخول المرتقب إلى لبنان</b>
+                                <br/>
+                                <b>: تاريخ مغادرة لبنان</b>
+                                <br/>
+                                <b>على المستقدم تعبئة وتوقيع تعهد
+                                    لإصطحاب خادم/ة الى لبنان .
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;" align="center" colspan="2">
+                                <b>Poa@lebaneseembassyqatar.com لمزيد من التفاصيل يمكن التواصل مع السفارة عبر البريد
+                                    الإلكتروني التالي
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>حقل مخصص لملاحظة رئيس البعثة أو القنصل:</b>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 14px;" align="right">
+                                <b>: الرقم القنصلي</b>
+                                <br/>
+                                <b>: رقم الايصال</b>
+                                <br/>
+                                <b>: تاريخ التسجيل</b>
+                                <br/>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

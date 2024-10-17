@@ -1,0 +1,579 @@
+<odoo>
+    <template id="portal.portal_my_home" name="My Portal">
+        <t t-call="portal.portal_layout">
+            <t t-set="my_details" t-value="True"/>
+            <div class="o_portal_my_home">
+                <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                <h3>Services</h3>
+                <div class="o_portal_docs list-group">
+                </div>
+
+                <div class="o_portal_docs row g-2" invisible="1">
+                    <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
+                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3" id="portal_alert_category"/>
+                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3" id="portal_client_category"/>
+                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3" id="portal_service_category"/>
+                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3" id="portal_vendor_category"/>
+                    <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
+                        <t t-call="portal.portal_docs_entry">
+                            <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                            <t t-set="title">Addresses</t>
+                            <t t-set="text">Add, remove or modify your addresses</t>
+                            <t t-set="url" t-value="'/my/account'"/>
+                            <t t-set="config_card" t-value="True"/>
+                        </t>
+                        <t t-call="portal.portal_docs_entry">
+                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                            <t t-set="title">Connection &amp; Security</t>
+                            <t t-set="text">Configure your connection parameters</t>
+                            <t t-set="url" t-value="'/my/security'"/>
+                            <t t-set="config_card" t-value="True"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure" id="oe_structure_portal_my_home_2"/>
+        </t>
+
+    </template>
+
+
+
+<!-- commented by mervat -->
+
+<!--    <template id="portal.my_account_link" name="Link to frontend portal" inherit_id="portal.frontend_layout">-->
+<!--        <xpath expr="//a[@id='o_logout']" position="before">-->
+<!--            <a href="/my/account" role="menuitem" class="dropdown-item">My Profile</a>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+
+
+<!-- commented by mervat -->
+<!--    <template id="portal.portal_show_sign_in" inherit_id="portal.frontend_layout" name="Show Sign In">-->
+<!--        <xpath expr="//ul[@id='top_menu']" position="inside">-->
+<!--            <li class="nav-item divider" groups="base.group_public"/>-->
+<!--            <li groups="base.group_public" class="nav-item">-->
+<!--                <a t-attf-href="/web/login" class="nav-link">-->
+<!--                    <b>Sign in</b>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="web.brand_promotion" name="Brand Promotion">
+        <div class="o_brand_promotion d-none">
+            <t t-call="web.brand_promotion_message">
+                <t t-set="_message"></t>
+                <t t-set="_utm_medium">portal</t>
+            </t>
+        </div>
+    </template>
+
+    <template id="portal.portal_layout" name="Portal Layout">
+        <t t-call="portal.frontend_layout">
+            <t t-set="is_portal" t-value="True"/>
+
+            <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar"
+                 class="o_portal container mt-3">
+                <div class="row align-items-center bg-white no-gutters border rounded">
+                    <div class="col">
+                        <t t-call="portal.portal_breadcrumbs"></t>
+                    </div>
+                    <div t-if="prev_record or next_record" class="col flex-grow-0">
+                        <t t-call='portal.record_pager'/>
+                    </div>
+                </div>
+            </div>
+            <div id="wrap" class='o_portal_wrap'>
+                <div class="container mb64">
+                    <t t-if="my_details">
+                        <div class="row justify-content-between mt-4">
+                            <div t-attf-class="col-12 col-md col-lg-6">
+                                <t t-raw="0"/>
+                            </div>
+                            <div id="o_my_sidebar" class="d-none col-12 col-md col-lg-4 col-xl-3 o_my_sidebar">
+                                <div class="o_my_contact" t-if="sales_user">
+                                    <t t-call="portal.portal_contact"/>
+                                </div>
+                                <div class="o_portal_my_details">
+                                    <h4>Details
+                                        <a role="button" href="/my/account" class="btn btn-sm btn-link">
+                                            <i class="fa fa-pencil"/>
+                                            Edit
+                                        </a>
+                                    </h4>
+                                    <hr class="mt-1 mb-0"/>
+                                    <div t-field="user_id.partner_id"
+                                         t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>
+                                </div>
+                                <div class="o_my_archives" t-if="archive_groups">
+                                    <t t-call="portal.portal_archive_groups"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <t t-raw="0"/>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal.portal_searchbar" name="Portal Search Bar">
+        <nav t-attf-class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar {{classes if classes else ''}} {{'mt-3 rounded' if breadcrumbs_searchbar else 'border-top-0' }}">
+            <!--  Navbar breadcrumb or title  -->
+            <t t-if="breadcrumbs_searchbar">
+                <t t-call="portal.portal_breadcrumbs"/>
+            </t>
+            <span t-else="" class="navbar-brand mb-0 h1 mr-auto" t-esc="title or 'No title'"/>
+
+            <!--  Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#o_portal_navbar_content"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle filters">
+                <span class="navbar-toggler-icon small"/>
+            </button>
+
+            <!--  Collapsable content  -->
+            <div class="collapse navbar-collapse" id="o_portal_navbar_content">
+                <div class="nav flex-column flex-lg-row ml-auto p-0 mb-3 mb-lg-0 mt-1 mt-lg-0">
+                    <div t-if="searchbar_sortings" class="form-inline">
+                        <span class="small mr-1 navbar-text">Sort By:</span>
+                        <div class="btn-group">
+                            <button id="portal_searchbar_sortby" data-toggle="dropdown"
+                                    class="btn btn-primary btn-sm dropdown-toggle">
+                                <t t-esc="searchbar_sortings[sortby].get('label', 'Newest')"/>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="portal_searchbar_sortby">
+                                <t t-foreach="searchbar_sortings" t-as="option">
+                                    <a t-att-href="request.httprequest.path + '?' + keep_query('*', sortby=option)"
+                                       t-attf-class="dropdown-item#{sortby == option and ' active' or ''}">
+                                        <span t-esc="searchbar_sortings[option].get('label')"/>
+                                    </a>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-if="searchbar_filters" class="form-inline ml-lg-2">
+                        <span class="small mr-1 navbar-text">Filter By:</span>
+                        <div class="btn-group">
+                            <button id="portal_searchbar_filters" data-toggle="dropdown"
+                                    class="btn btn-primary btn-sm dropdown-toggle">
+                                <t t-esc="searchbar_filters[filterby].get('label', 'All')"/>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="portal_searchbar_filters">
+                                <t t-foreach="searchbar_filters" t-as="option">
+                                    <a t-att-href="default_url + '?' + keep_query('*', filterby=option)"
+                                       t-attf-class="dropdown-item#{filterby == option and ' active' or ''}">
+                                        <span t-esc="searchbar_filters[option].get('label')"/>
+                                    </a>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-if="searchbar_groupby" class="form-inline ml-lg-2">
+                        <span class="small mr-1 navbar-text">Group By:</span>
+                        <div class="btn-group">
+                            <button id="portal_searchbar_groupby" data-toggle="dropdown"
+                                    class="btn btn-primary btn-sm dropdown-toggle">
+                                <t t-esc="searchbar_groupby[groupby].get('label', 'None')"/>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="portal_searchbar_groupby">
+                                <t t-foreach="searchbar_groupby" t-as="option">
+                                    <a t-att-href="default_url + '?' + keep_query('*', groupby=option)"
+                                       t-attf-class="dropdown-item#{groupby == option and ' active' or ''}">
+                                        <span t-esc="searchbar_groupby[option].get('label')"/>
+                                    </a>
+                                </t>
+                            </div>
+
+                        </div>
+                    </div>
+                    <t t-raw="0"/>
+                </div>
+                <form t-if="searchbar_inputs" class="form-inline o_portal_search_panel ml-lg-4">
+                    <div class="input-group input-group-sm w-100">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"/>
+                            <div class="dropdown-menu" role="menu">
+                                <t t-foreach='searchbar_inputs' t-as='input'>
+                                    <a t-att-href="'#' + searchbar_inputs[input]['input']"
+                                       t-attf-class="dropdown-item#{search_in == searchbar_inputs[input]['input'] and ' active' or ''}">
+                                        <span t-raw="searchbar_inputs[input]['label']"/>
+                                    </a>
+                                </t>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" placeholder="Search"
+                               t-att-value='search' name="search"/>
+                        <span class="input-group-append">
+                            <button class="btn btn-primary search-submit" type="button">
+                                <span class="fa fa-search"/>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </template>
+
+    <template id="auth_signup_login_inherit" inherit_id="web.login">
+        <xpath expr="//form[hasclass('oe_login_form')]" position="after">
+            <div class="col-md-6 col-sm-12" style="right:30px;font-weight:700;">
+                <a style="color:#fff;" href="/ebs_qsheild_mod/static/src/video/leb-emb-video-project1 - v2.mp4"
+                   target="new">فيديو توضيحى لعملية التسجيل و والخدمات الالكترونية
+                </a>
+            </div>
+            <div class="col-md-6 col-sm-12" style="right:30px;font-weight:700;">
+                <a style="color:#fff;"
+                   href="/ebs_qsheild_mod/static/src/video/WhatsApp%20Video%202021-12-13%20at%209.58.24%20AM.mp4"
+                   target="new">فيديو توضيحى لعملية تسجيل الشركات والباحثين عن وظائف
+                </a>
+            </div>
+        </xpath>
+
+    </template>
+
+    <template id="auth_signup_signup_inherit" inherit_id="auth_signup.signup" name="Sign up login">
+        <xpath expr="//div[hasclass('oe_login_buttons')]" position="before">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="radio" value="electronic_service" id="electronic_radio_button" name="sign_up_access"
+                           checked="">
+                        <span style="color:#fff;">Electronic Service</span>
+                    </input>
+                </div>
+                <div class="col-md-6">
+                    <input type="radio" value="recruitment" id="recruitments_radio_button" name="sign_up_access">
+                        <span style="color:#fff;">Recruitment</span>
+                    </input>
+                </div>
+            </div>
+            <div class="row recruitment_access_button">
+                <div class="col-md-6" style="display:inline;">
+                    <input type="radio" value="company" id="company_radio_button" name="user_access">
+                        <span style="color:#fff;">Company</span>
+                    </input>
+                </div>
+                <div class="col-md-6" style="display:inline;">
+                    <input type="radio" value="seekers" id="seekers_radio_button" name="user_access" checked="">
+                        <span style="color:#fff;">Job Seekers</span>
+                    </input>
+                </div>
+            </div>
+
+        </xpath>
+    </template>
+
+
+<!--    commented by mervat -->
+<!--    <template id="portal_enroll_menu" inherit_id="portal.frontend_layout">-->
+<!--        <xpath expr="//header//ul[@id='top_menu']/li[hasclass('divider')]" position="before">-->
+<!--            <li class="nav-item">-->
+<!--                <div class="nav-link" id="open_public_enroll">-->
+<!--                    <b>Enroll</b>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="enroll_webpage" name="Enroll">
+        <t t-call="website.layout">
+            <t t-call="ebs_qsheild_mod.enroll_address_template"/>
+            <t t-call="ebs_qsheild_mod.enroll_social_media_template"/>
+            <div class="container">
+                <div style="overflow: auto;">
+                    <div class="modal-header" style="padding:25px 60px;">
+                        <h4>Enroll Request</h4>
+                    </div>
+                    <div style="padding: 40px 50px 0px 50px;" class="d-flex">
+                        <div id="add_address_btn">
+                            <div>
+                                <button class="btn btn-primary add_address">Add Address</button>
+                            </div>
+                        </div>
+                        <div id="add_social_media_btn" class="ml-2">
+                            <div>
+                                <button class="btn btn-primary add_social_media">Add Social Media</button>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="enroll_page_form" enctype="multipart/form-data"
+                          action="/my/account/insert_enroll?create=true"
+                          method="post">
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="enroll_id" id="enroll_id"/>
+                            <input type="hidden" name="update_enroll_id" id="update_enroll_id"/>
+                            <div class="row">
+                                <div class="col-md-6 d-flex" style="justify-content: space-between !important;">
+                                    <label for="contact_type_check_box">
+                                        Contact Type
+                                    </label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="contact_type_check_box"
+                                               value="company" id="contact_type_company" checked="checked"/>
+                                        <label class="form-check-label" for="contact_type_company">
+                                            Company
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="contact_type_check_box"
+                                               value="person" id="contact_type_individual"/>
+                                        <label class="form-check-label" for="contact_type_individual">
+                                            Individual
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <label class="col-form-label required" for="enroll_name">Name</label>
+                                    <input type="text" id="enroll_name" name="enroll_name"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                                <div class='col-md-6 company_fields'>
+                                    <label class="col-form-label required" for="enroll_cr_number">Commercial Reg
+                                        Number
+                                    </label>
+                                    <input type="text" id="enroll_cr_number" name="enroll_cr_number"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                                <div class='col-md-6 company_fields'>
+                                    <label class="col-form-label" for="enroll_industry">Industry</label>
+                                    <select name="enroll_industry" id="enroll_industry"
+                                            t-attf-class="form-control" data-init="1">
+                                        <option value="">Select Industry...</option>
+                                        <t t-foreach="industries or []" t-as="industry">
+                                            <option t-att-value="industry.id">
+                                                <t t-esc="industry.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="enroll_phone">Phone</label>
+                                    <input type="text" id="enroll_phone" name="enroll_phone"
+                                           t-attf-class="form-control"/>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="enroll_email">Email</label>
+                                    <input type="text" id="enroll_email" name="enroll_email"
+                                           t-attf-class="form-control"/>
+                                </div>
+                                <div class='col-md-6 company_fields'>
+                                    <label class="col-form-label" for="enroll_website">Website</label>
+                                    <input type="text" id="enroll_website" name="enroll_website"
+                                           t-attf-class="form-control"/>
+                                </div>
+                                <div class='col-md-6 company_fields'>
+                                    <label for="authorization_letter">Authorization Letter</label>
+                                    <input type="file" t-attf-class="form-control required"
+                                           id="authorization_letter"
+                                           name="authorization_letter" required="required"/>
+                                </div>
+                                <div class='col-md-6 company_fields'>
+                                    <label for="copy_of_crp">Copy Of CRP</label>
+                                    <input type="file" t-attf-class="form-control required" id="copy_of_crp"
+                                           name="copy_of_crp" required="required"/>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label for="identification">Identification</label>
+                                    <input type="file" t-attf-class="form-control required" id="identification"
+                                           name="identification" required="required"/>
+                                </div>
+                                <div class='col-md-6 individual_fields d-none'>
+                                    <label class="col-form-label required"
+                                           for="profile_job">
+                                        <span>Job Position</span>
+                                    </label>
+                                    <select name="profile_job" id="profile_job"
+                                            t-attf-class="form-control required profile_job" data-init="1">
+                                        <option value="">Select Job...</option>
+                                        <t t-foreach="job_ids or []" t-as="job">
+                                            <option t-att-value="job.id"
+                                                    t-att-data-attachment="job.enroll_attachment_required">
+                                                <t t-esc="job.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-6 d-none' id="permission_letter_container">
+                                    <label for="permission_letter">Permission Required</label>
+                                    <input type="file" t-attf-class="form-control"
+                                           id="permission_letter" name="permission_letter"/>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a class="nav-link active" data-toggle="tab" href="#addresses">
+                                            Addresses
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" data-toggle="tab" href="#social_media">
+                                            Social Media
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="addresses" class="tab-pane fade show active">
+                                        <input type="hidden" name="enroll_addresses" id="enroll_addresses"
+                                               value=""/>
+                                        <table class="table table-border" style="margin-top:10px;"
+                                               id="enroll_address_table">
+                                            <thead>
+                                                <th>Type</th>
+                                                <th>Street</th>
+                                                <th>City</th>
+                                                <th>PO Box</th>
+                                                <th>Phone Number</th>
+                                                <th>Mobile</th>
+                                                <th></th>
+                                            </thead>
+                                            <tbody>
+                                                <tr></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="social_media" class="tab-pane fade">
+                                        <input type="hidden" name="enroll_social_media_list"
+                                               id="enroll_social_media_list"
+                                               value=""/>
+                                        <table class="table table-border" style="margin-top:10px;"
+                                               id="enroll_social_media_table">
+                                            <thead>
+                                                <th>Type</th>
+                                                <th>Link</th>
+                                                <th></th>
+                                            </thead>
+                                            <tbody>
+                                                <tr></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="enroll_address_template" name="Enroll Address Template">
+        <div class="modal fade" id="addressModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:25px 60px;">
+                        <h4>
+                            Add Address
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form id="add_address_form" enctype="multipart/form-data">
+                            <input type="hidden" name="address_enroll_id" id="address_enroll_id"/>
+                            <input type="hidden" name="enroll_page" id="enroll_page"/>
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="address_type">Type</label>
+                                    <select name="address_type" id="address_type"
+                                            t-attf-class="form-control" data-init="1">
+                                        <option value="Lebanon">Lebanon</option>
+                                        <option value="Qatar">Qatar</option>
+                                        <option value="Company">Company</option>
+                                    </select>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="address_street">Street</label>
+                                    <input type="text" id="address_street" name="address_street"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="address_city">City</label>
+                                    <input type="text" id="address_city" name="address_city"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="address_pin">PO Box</label>
+                                    <input type="text" id="address_pin" name="address_pin"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="address_phone">Phone</label>
+                                    <input type="text" id="address_phone" name="address_phone"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="address_mobile">Mobile</label>
+                                    <input type="text" id="address_mobile" name="address_mobile"
+                                           t-attf-class="form-control"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary add_enroll_address" data-dismiss="modal">Submit
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="enroll_social_media_template" name="Enroll Social Media Template">
+        <div class="modal fade" id="socialmediaModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:25px 60px;">
+                        <h4>
+                            Add Social Media
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form id="add_social_media_form" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="social_media_type">Type</label>
+                                    <select name="social_media_type" id="social_media_type" required="required"
+                                            t-attf-class="form-control" data-init="1">
+                                        <option value="">Select Type...</option>
+                                        <t t-foreach="social_media_types" t-as="type">
+                                            <option t-att-value="type.id">
+                                                <t t-esc="type.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label class="col-form-label" for="social_media_name">Link</label>
+                                    <input type="text" id="social_media_name" name="social_media_name"
+                                           t-attf-class="form-control" required="required"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary add_enroll_social_media" data-dismiss="modal">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </template>
+
+</odoo>

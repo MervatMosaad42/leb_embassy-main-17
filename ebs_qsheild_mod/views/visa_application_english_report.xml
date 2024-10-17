@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_visa_application_english_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <!--                    <table class="table table-bordered" style="table-layout:fixed;margin-bottom:0 !important;">-->
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="padding-bottom: 5px;">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="50%"/>
+                                <br/>
+                                <b>Lebanese Embassy</b>
+                            </td>
+                            <td width="50%" style="font-weight: bold;padding-bottom: 5px;">
+                                <h4 class="text-center ">
+                                    <span>Visa Application</span>
+                                </h4>
+                                <h6 class="text-center ">
+                                    <span>N.B: 1) - KINDLY APPLY FOR THE VISA APP. ) BEFORE 15 DAYS)</span>
+                                    <span>2) - FILL THE APPLICATION CLEARLY. (130 QR / 185 QR / 255 QR CASH PAYMENT)
+                                    </span>
+                                </h6>
+                            </td>
+                            <td style="padding-bottom: 5px;">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="50%"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="center"
+                                colspan="2">
+                                <b>PERSONAL INFORMATIONS</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;">
+                                <b>Name:</b>
+                                <br/>
+                                <b>Middle Name:</b>
+                                <br/>
+                                <b>Surname:</b>
+                                <br/>
+                                <b>Mothers Name:</b>
+                                <br/>
+                                <b>Place of Birth:</b>
+                                <br/>
+                                <b>Date of Birth:</b>
+                                <br/>
+                                <b>Nationality:</b>
+                                <br/>
+                                <b>Nationality of Origin:</b>
+                                <br/>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;">
+                                <b>Occupation:</b>
+                                <br/>
+                                <b>Marital Status:</b>
+                                <br/>
+                                <b>Full Address in Qatar:</b>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <b>Mobile No.:</b>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="center"
+                                colspan="2">
+                                <b>TRAVEL DOCUMENTATION INFORMATION</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Type of travel document:</b>
+                                <br/>
+                                <h10>(Passport,Laisser-passer,Others)</h10>
+                                <br/>
+                                <b>No. of Document:</b>
+                                <br/>
+                                <b>Place Of Issue:</b>
+                                <br/>
+                                <b>Date Of Issue:</b>
+                                <br/>
+                                <b>Date Of Expiration:</b>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Q.I.D:</b>
+                                <br/>
+                                <b>Date Of Issue:</b>
+                                <br/>
+                                <b>Date Of Expiration:</b>
+                                <br/>
+                                <b>Sponsor name:</b>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="center"
+                                colspan="2">
+                                <b>VISA INFORMATION</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Purpose of the trip:</b>
+                                <br/>
+                                <h10>(Family, Tourism, Business, Work, Transit, Other)</h10>
+                                <br/>
+                                <b>Visa Duration:</b>
+                                <b>15Days</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>1 month</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>2 months</b>
+                                <br/>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>3 months</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <b>6 months</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <br/>
+                                <b>Number of Entries:</b>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>One</u>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>Double</u>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <u>Multiple</u>
+                                <br/>
+                                <b>( CASH PAYMENT )</b>
+                                <u>130 QR</u>
+                                <u>185 QR</u>
+                                <u>255 QR</u>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Point of Entry:</b>
+                                <b>(<input type="checkbox" id="oe_import_tracking"/>Port,
+                                    <input type="checkbox" id="oe_import_tracking"/>Airport,
+                                    <input type="checkbox" id="oe_import_tracking"/>,Others)
+                                </b>
+                                <br/>
+                                <b>Full Address in Lebanon:</b>
+                                <br/>
+                                <br/>
+                                <b>Mobile / Phone No. in Lebanon:</b>
+                                <br/>
+                                <b>00961</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Expected Arrival day:</b>
+                                <br/>
+                                <b>Expected Departure day:</b>
+                                <div style="border: 1px solid;padding: 5px;">
+                                    <b>I hereby declare that all the information given above is true to the best of my
+                                        knowledge and belief.
+                                    </b>
+                                    <br/>
+                                    <b>Surname:</b>
+                                    <br/>
+                                    <b>Name:</b>
+                                    <br/>
+                                    <b>Signature:</b>
+                                    <br/>
+                                    <b>Date:</b>
+                                </div>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Documents Required:</b>
+                                <b>
+                                    <h6>1. Original Passport valid for 6 months &amp; colored photocopy + colored copy
+                                        of
+                                        residency page valid for 6 months).
+                                    </h6>
+                                </b>
+                                <br/>
+                                <b>
+                                    <h6>2. One Passport size photo 4x4 size (White background.)</h6>
+                                </b>
+                                <br/>
+                                <b>3. Letter from the sponsor explaning the purpose of visit. Copy of sponsor’s passport
+                                    and ID.
+                                </b>
+                                <br/>
+                                <b>4. Sponsor Identification Card (ID) Copy.(Comp.lic.)</b>
+                                <br/>
+                                <b>5. Ticket, Hotel booking, Bank statement for last 3 months.</b>
+                                <br/>
+                                <b>6. Any other additional requirements might be requested upon applying. (Invitation
+                                    letter, etc……)( CASH PAYMENT )
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;padding-top: 5px;padding-bottom: 5px;" align="center"
+                                colspan="2">
+                                <b>For Further information , kindly send us an EMAIL to
+                                    <u>Poa@lebaneseembassy.com</u>
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>VISA NO:</b>
+                                <br/>
+                                <b>DATE:</b>
+                                <br/>
+                                <b>Receipt No:</b>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="left">
+                                <b>Note:</b>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

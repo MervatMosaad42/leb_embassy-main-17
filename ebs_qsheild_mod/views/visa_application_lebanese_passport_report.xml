@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <data>
+        <template id="report_visa_lebanese_passport_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="padding-bottom: 5px;font-size: 14px;">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="50%"/>
+                                <br/>
+                                <img src="/ebs_qsheild_mod/static/src/image/report_icon.png" width="50%"/>
+                                <br/>
+                                <b>DHL 69 $ ON LINE</b>
+                            </td>
+                            <td width="50%" style="font-weight: bold;padding-bottom: 5px;">
+                                <h3 class="text-center ">
+                                    <span>
+                                        <u>جواز سفر لبناني</u>
+                                    </span>
+                                </h3>
+                                <h6 class="text-right">
+                                    <span>: رقم الملف في السفارة</span>
+                                </h6>
+                                <h6 class="text-center">
+                                    <input type="checkbox" id="oe_import_tracking"/>
+                                    <span>الحالي بيومتري</span>
+                                    <input type="checkbox" id="oe_import_tracking"/>
+                                    <span>الحالي الكتروني</span>
+                                </h6>
+                            </td>
+                            <td style="padding-bottom: 5px;">
+                                <img src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png" height="50%"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: 1px solid black;font-size: 12px;" align="right">
+                                <span>: الإســــــم</span>
+                                <br/>
+                                <span>: الشــهرة</span>
+                                <br/>
+                                <span>: إسم الأب</span>
+                                <br/>
+                                <span>: إســم الأم وشهرتـها (قبل الزواج)</span>
+                                <br/>
+                                <span>: مكان وتاريخ الولادة</span>
+                            </td>
+                            <td style="border: 1px solid black;font-size: 12px;" align="right">
+                                <span>: First Name</span>
+                                <br/>
+                                <span>: Last Name</span>
+                                <br/>
+                                <span>: Middle Name</span>
+                                <br/>
+                                <span>: Mother's Maiden Name</span>
+                                <br/>
+                                <span>: Place &amp; Date of Birth</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: رقم السجل</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: قضاء</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: رقم السجل</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>أرملة</b>
+                                </span>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>مطلقة</b>
+                                </span>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>متأهلة</b>
+                                </span>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>عزباء</b>
+                                </span>
+                                <input type="checkbox" id="oe_import_tracking"/>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>الوضع العائلي للإناث فقط</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <span>كلا لا أرغب.</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <input type="checkbox" id="oe_import_tracking"/>
+                                    <span>نعم أرغب</span>
+                                </span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right" colspan="3">
+                                <span>: هل ترغبين بإضافة إسم الزوج على الجواز</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>: جنسية الزوج</b>
+                                </span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>: إسم الزوج الثلاثي</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>Spouse Nationality :</b>
+                                </span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>
+                                    <b>Spouse Full Name :</b>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: البناية/المجمع</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: الشارع</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: العنوان في قطر كاملاً : المدينة/ المنطقة</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: هاتف ارضي :.MOBILE</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: رقم : ص.ب.</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: شقة / طابق</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered"
+                           style="table-layout:fixed;margin-bottom:0 !important;border: 1px solid black;border border-right-0 border-left-0 border-info;height:70%">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: الحي</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: الشارع</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right" colspan="2">
+                                <span>: العنوان في لبنان كاملاً : المدينة أو القرية</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: هاتف ارضي. +961</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: طابق</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: ملك خاص/ اجار</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>: ــــنـــــايــــــة</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right" colspan="2">
+                                <span>: MOBILE +961.</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right" colspan="2">
+                                <span>: EMAIL</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-lg m-0 table-borderless border-right-0 border-left-0">
+                        <tr>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <span>عشر سنوات</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <span>خمس سنوات</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <input type="checkbox" id="oe_import_tracking"/>
+                                <span>سنة واحدة</span>
+                            </td>
+                            <td style="border: none !important;font-size: 12px;padding-top: 5px;padding-bottom: 5px;" align="right">
+                                <span>يجب تعبئة كامل المعلومات في اللغتين العربية والاجنبية</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 15px;padding-top: 5px;padding-bottom: 5px;" align="right" colspan="4">
+                                <span>: الإسم الثلأثي ورقم هاتف شخص قريب في قطر لحالة الطوارئ</span>
+                            </td>
+                        </tr>
+                        <br/>
+                        <br/>
+                        <tr>
+                            <td style="border: none !important;font-size: 15px;padding-top: 5px;padding-bottom: 5px;"
+                                align="center" colspan="4">
+                                <span>
+                                    <u>: المستندات المطلوبة لإصدار جواز سفر لبناني</u>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>إحضار جواز السفر الأصلي وصورة عن الصفحات الأساسية .</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>وصورة عن الإقامة I.D. القطرية .</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>صورتان شمسيتان حديثتان 4.3 x 3.5 cm(خلفية بيضاء) غير مسحوبتان عن أي صور قديمة.
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>. صورة عن بيان قيد إفرادي أو صورة عن بطاقة الهوية اللبنانية .</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>. ملاحظة: .</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>على السيدة المتزوجة إبراز أي مستند ( إخراج/ بيان قيد إفرادي أو هوية فقط ) يبرز
+                                        وضعها العا ئلي الحالي. .A
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>حضور أصحاب العلاقة شخصياً الى السفارة لتقديم طلب إصدار جواز السفر .B</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>حضور الأم والأب عن الأولاد القصار دون ال 18 سنة.C</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>على المطلق/ة المنفصل/ة إبراز حكم المحكمة الأصلي الذي يجيز له/لها الحق بإصدار
+                                        إصدار جوازات سفر للأولاد دون 18 سنة او إبراز وكالة منظمة وفق الأصول القانونية من
+                                        الطرف الآخر D
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>الدفع نقداً ( 150 ر.ق. لسنة واحدة ) و ( 730 ر.ق. إصدار لخمس سنوات ). E</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>لحامل لجواز السفر البيومتري يمكن إصدار جواز جديد بيومتري لمدة 10 سنوات (1215
+                                        ر.ق). F
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>يرسل الطلب إلى لبنان في الحقيبة الدبلوماسية أو عبر خدمة DHL من خلال تعبئة الطلب
+                                    </b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>: وطباعته كاملا عند الحضور إلى السفارة وذلك على الموقع الإلكتروني التالي</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    Fasttracllb.dhl.com
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>: لمزيد من المعلومات يمكن التواصل مع السفارة عبر البريد الإلكتروني التالي</b>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;font-size: 13px;padding-top: 5px;padding-bottom: 5px;"
+                                align="right" colspan="4">
+                                <span>
+                                    <b>passport@lebaneseembassy.com</b>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

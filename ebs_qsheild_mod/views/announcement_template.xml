@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="announcement_template" name="announcement_template">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="mt-5 mb-5">
+                                    <h1 style="font-size: 20px;font-family: HelveticaNeue-Medium !important;"><b>التعاميم</b></h1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <t t-foreach="announcement_data" t-as="announcement">
+
+                                    <div class="col-md-4 mb-5" >
+                                        <div style="border:1px solid #cdcdcd;height:318px;">
+                                            <a t-attf-href="/announcement/#{ slug(announcement) }/">
+                                                <img t-attf-src="/web/image/circulars.page/{{announcement.id}}/image" style="width:100%;max-height: 230px;height: 215px;"></img>
+                                            </a>
+                                            <div class="" style="padding-left:15px;padding-right:15px;">
+                                                <div class="mt-2">
+                                                    <span style="color:#000;word-break: break-word;"><t t-esc="announcement.name"/></span>
+                                                </div>
+                                                <div class="mt-4 mb-2">
+                                                    <span class="pull-right" style="color:#d90000;"><t t-esc="announcement.date"/></span>
+                                                </div>
+                                                <t t-if="announcement.attachment_id">
+                                                    <div class="mb-2">
+                                                        <span><a t-attf-href="/web/content/#{announcement.attachment_id.id}?download=true">تنزيل المرفقات <div class="fa fa-download"></div></a></span>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="circular_page_template" name="announcement_template">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section>
+                        <div class="container">
+                            <div class="col-md-12 mt-5 mb-5">
+                                <h1 style="font-size: 20px;font-family: HelveticaNeue-Medium !important;"><b style="word-break: break-word;"><t t-esc="circular_data.name"/></b></h1>
+                            </div>
+                            <t t-if="circular_data.image">
+                                <div class="col-md-8">
+                                    <img t-attf-src="/web/image/circulars.page/{{circular_data.id}}/image" style="width:100%;height: 300px;"></img>
+                                </div>
+                                <div class="row col-md-8" style="padding-right: 15px;padding-left: 15px;">
+                                    <div class="col-md-8 mt-3 mb-5 name_class" style="color:#000;word-break: break-word;"><b><t t-esc="circular_data.name"/></b></div>
+                                    <div class="col-md-4 mt-5 mb-3 date_class" style="color:#d90000;">
+                                        <span class="pull-right">
+                                            <t t-esc="circular_data.date"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </t>
+                            <div class="col-md-8 mt-5 mb-5">
+                                <span style="font-size: 15px;font-family: HelveticaNeue-Medium !important;word-break: break-word;"  t-raw="circular_data.description"></span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>
