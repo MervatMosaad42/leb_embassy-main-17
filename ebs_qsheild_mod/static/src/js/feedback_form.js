@@ -1,8 +1,10 @@
-odoo.define('ebs_qsheild_mod.website_feedback_form', function (require) {
+odoo.define('ebs_qsheild_mod.website_feedback_form',[], function (require) {
 'use strict';
 
 
     var ajax = require('web.ajax');
+    var jsonrpc = require('@web/core/network/rpc_service')
+
     //        var dom = require('web.dom');
     //        var Dialog = require("web.Dialog");
     //        var Widget = require("web.Widget");
@@ -43,15 +45,23 @@ odoo.define('ebs_qsheild_mod.website_feedback_form', function (require) {
                         var rating =$("#rating5")[0].value
                     }
 
-                    ajax.jsonRpc('/feedback_submit/', 'call', {rating,email ,description,name,comments}).then(function(data){
-                        if (data == true){
-                                $('.feedback_website_main_page').css('display','none');
-                                $('#thank_you_feedback').css('display','block');
-                            }
-                            else{
-                                alert("Please Enter name and Comments !")
-                            }
-                    });
+
+                    $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: '/feedback_submit/',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {rating,email,description,name,comments}}),
+                    success: function (data) {
+                        if (data.result == true) {
+                            $('.feedback_website_main_page').css('display','none');
+                            $('#thank_you_feedback').css('display','block');
+                        } else {
+                            alert("Please Enter name and Comments !");
+                        }
+                    },
+                });
+
                  });
 
 

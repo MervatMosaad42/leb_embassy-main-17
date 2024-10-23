@@ -27,14 +27,5 @@
         </record>
 
 
-<!--        <record id="website_embassy_events_and_activities" model="website.menu">
-            <field name="name">Embassy Events and Activities</field>
-            <field name="url">/embassy_events_and_activities</field>
-            <field name="parent_id" ref="website.main_menu"/>
-&lt;!&ndash;            <field name="website_id" ref="website.default_website"/>&ndash;&gt;
-            <field name="sequence" type="int">80</field>
-        </record>-->
-
-
     </data>
 </odoo>

@@ -97,9 +97,9 @@
 
                 <xpath expr="//tree//field[@name='create_date']" position="before">
                     <button name="access_content" icon="fa-download" type="object"
-                            invisible="type != 'binary'"/>
+                            invisible="type != 'binary'" string="Access Content"/>
                     <button name="preview_document" icon="fa-eye" type="object"
-                            invisible="type != 'binary'"/>
+                            invisible="type != 'binary'" string="Preview Document"/>
                 </xpath>
 
             </field>

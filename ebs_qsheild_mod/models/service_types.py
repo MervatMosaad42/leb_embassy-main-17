@@ -42,7 +42,7 @@ class ServiceTypes(models.Model):
         required=False)
 
     inactive = fields.Boolean(string="Inactive")
-    active = fields.Boolean(string="Active")
+    active = fields.Boolean(string="Active", default=True)
 
     def _get_name(self):
         locale = self._context.get('lang') or 'en_US'

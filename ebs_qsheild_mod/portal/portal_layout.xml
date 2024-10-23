@@ -1,0 +1,48 @@
+<odoo>
+    <template id="portal.portal_layout" name="Portal Layout">
+            <t t-call="portal.frontend_layout">
+                <t t-set="is_portal" t-value="True"/>
+
+                <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar" class="o_portal container mt-3">
+                    <div class="row align-items-center bg-white no-gutters border rounded">
+                        <div class="col">
+                            <t t-call="portal.portal_breadcrumbs"></t>
+                        </div>
+                        <div t-if="prev_record or next_record" class="col flex-grow-0">
+                            <t t-call='portal.record_pager'/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="wrap" class='o_portal_wrap'>
+                    <div class="container mb64">
+                        <t t-if="my_details">
+                            <div class="row justify-content-between mt-4">
+                                <div t-attf-class="col-12 col-md col-lg-6">
+                                    <t t-raw="0"/>
+                                </div>
+                                <div id="o_my_sidebar" class="d-none col-12 col-md col-lg-4 col-xl-3 o_my_sidebar">
+                                    <div class="o_my_contact" t-if="sales_user">
+                                        <t t-call="portal.portal_contact"/>
+                                    </div>
+                                    <div class="o_portal_my_details">
+                                        <h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Edit</a></h4>
+                                        <hr class="mt-1 mb-0"/>
+                                        <div t-field="user_id.partner_id" t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>
+                                    </div>
+                                    <div class="o_my_archives" t-if="archive_groups">
+                                        <t t-call="portal.portal_archive_groups"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-raw="0"/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+</odoo>

@@ -10,10 +10,14 @@
 
                 <div class="o_portal_docs row g-2" invisible="1">
                     <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
-                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3" id="portal_alert_category"/>
-                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3" id="portal_client_category"/>
-                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3" id="portal_service_category"/>
-                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3" id="portal_vendor_category"/>
+                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3"
+                         id="portal_alert_category"/>
+                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3"
+                         id="portal_client_category"/>
+                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3"
+                         id="portal_service_category"/>
+                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3"
+                         id="portal_vendor_category"/>
                     <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
                         <t t-call="portal.portal_docs_entry">
                             <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
@@ -38,28 +42,26 @@
     </template>
 
 
+    <!-- commented by mervat -->
 
-<!-- commented by mervat -->
-
-<!--    <template id="portal.my_account_link" name="Link to frontend portal" inherit_id="portal.frontend_layout">-->
-<!--        <xpath expr="//a[@id='o_logout']" position="before">-->
-<!--            <a href="/my/account" role="menuitem" class="dropdown-item">My Profile</a>-->
-<!--        </xpath>-->
-<!--    </template>-->
-
+    <!--    <template id="portal.my_account_link" name="Link to frontend portal" inherit_id="portal.frontend_layout">-->
+    <!--        <xpath expr="//a[@id='o_logout']" position="before">-->
+    <!--            <a href="/my/account" role="menuitem" class="dropdown-item">My Profile</a>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
 
 
-<!-- commented by mervat -->
-<!--    <template id="portal.portal_show_sign_in" inherit_id="portal.frontend_layout" name="Show Sign In">-->
-<!--        <xpath expr="//ul[@id='top_menu']" position="inside">-->
-<!--            <li class="nav-item divider" groups="base.group_public"/>-->
-<!--            <li groups="base.group_public" class="nav-item">-->
-<!--                <a t-attf-href="/web/login" class="nav-link">-->
-<!--                    <b>Sign in</b>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </xpath>-->
-<!--    </template>-->
+    <!-- commented by mervat -->
+    <!--    <template id="portal.portal_show_sign_in" inherit_id="portal.frontend_layout" name="Show Sign In">-->
+    <!--        <xpath expr="//ul[@id='top_menu']" position="inside">-->
+    <!--            <li class="nav-item divider" groups="base.group_public"/>-->
+    <!--            <li groups="base.group_public" class="nav-item">-->
+    <!--                <a t-attf-href="/web/login" class="nav-link">-->
+    <!--                    <b>Sign in</b>-->
+    <!--                </a>-->
+    <!--            </li>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
 
     <template id="web.brand_promotion" name="Brand Promotion">
         <div class="o_brand_promotion d-none">
@@ -70,56 +72,6 @@
         </div>
     </template>
 
-    <template id="portal.portal_layout" name="Portal Layout">
-        <t t-call="portal.frontend_layout">
-            <t t-set="is_portal" t-value="True"/>
-
-            <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar"
-                 class="o_portal container mt-3">
-                <div class="row align-items-center bg-white no-gutters border rounded">
-                    <div class="col">
-                        <t t-call="portal.portal_breadcrumbs"></t>
-                    </div>
-                    <div t-if="prev_record or next_record" class="col flex-grow-0">
-                        <t t-call='portal.record_pager'/>
-                    </div>
-                </div>
-            </div>
-            <div id="wrap" class='o_portal_wrap'>
-                <div class="container mb64">
-                    <t t-if="my_details">
-                        <div class="row justify-content-between mt-4">
-                            <div t-attf-class="col-12 col-md col-lg-6">
-                                <t t-raw="0"/>
-                            </div>
-                            <div id="o_my_sidebar" class="d-none col-12 col-md col-lg-4 col-xl-3 o_my_sidebar">
-                                <div class="o_my_contact" t-if="sales_user">
-                                    <t t-call="portal.portal_contact"/>
-                                </div>
-                                <div class="o_portal_my_details">
-                                    <h4>Details
-                                        <a role="button" href="/my/account" class="btn btn-sm btn-link">
-                                            <i class="fa fa-pencil"/>
-                                            Edit
-                                        </a>
-                                    </h4>
-                                    <hr class="mt-1 mb-0"/>
-                                    <div t-field="user_id.partner_id"
-                                         t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>
-                                </div>
-                                <div class="o_my_archives" t-if="archive_groups">
-                                    <t t-call="portal.portal_archive_groups"/>
-                                </div>
-                            </div>
-                        </div>
-                    </t>
-                    <t t-else="">
-                        <t t-raw="0"/>
-                    </t>
-                </div>
-            </div>
-        </t>
-    </template>
 
     <template id="portal.portal_searchbar" name="Portal Search Bar">
         <nav t-attf-class="navbar navbar-light navbar-expand-lg border py-0 mb-2 o_portal_navbar {{classes if classes else ''}} {{'mt-3 rounded' if breadcrumbs_searchbar else 'border-top-0' }}">
@@ -267,16 +219,16 @@
     </template>
 
 
-<!--    commented by mervat -->
-<!--    <template id="portal_enroll_menu" inherit_id="portal.frontend_layout">-->
-<!--        <xpath expr="//header//ul[@id='top_menu']/li[hasclass('divider')]" position="before">-->
-<!--            <li class="nav-item">-->
-<!--                <div class="nav-link" id="open_public_enroll">-->
-<!--                    <b>Enroll</b>-->
-<!--                </div>-->
-<!--            </li>-->
-<!--        </xpath>-->
-<!--    </template>-->
+    <!--    commented by mervat -->
+    <!--    <template id="portal_enroll_menu" inherit_id="portal.frontend_layout">-->
+    <!--        <xpath expr="//header//ul[@id='top_menu']/li[hasclass('divider')]" position="before">-->
+    <!--            <li class="nav-item">-->
+    <!--                <div class="nav-link" id="open_public_enroll">-->
+    <!--                    <b>Enroll</b>-->
+    <!--                </div>-->
+    <!--            </li>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
 
     <template id="enroll_webpage" name="Enroll">
         <t t-call="website.layout">
@@ -293,7 +245,8 @@
                                 <button class="btn btn-primary add_address">Add Address</button>
                             </div>
                         </div>
-                        <div id="add_social_media_btn" class="ml-2">
+
+                        <div style="margin-left:15px;" id="add_social_media_btn" class="ml-2">
                             <div>
                                 <button class="btn btn-primary add_social_media">Add Social Media</button>
                             </div>
@@ -406,54 +359,68 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a class="nav-link active" data-toggle="tab" href="#addresses">
-                                            Addresses
-                                        </a>
+
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="address-tab" data-bs-toggle="tab"
+                                                data-bs-target="#addresses" type="button" role="tab"
+                                                aria-controls="addresses" aria-selected="true">Addresses
+                                        </button>
                                     </li>
-                                    <li>
-                                        <a class="nav-link" data-toggle="tab" href="#social_media">
-                                            Social Media
-                                        </a>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="social-media-tab" data-bs-toggle="tab"
+                                                data-bs-target="#social_media" type="button" role="tab"
+                                                aria-controls="social-media-pane" aria-selected="false">Social Media
+                                        </button>
                                     </li>
                                 </ul>
-                                <div class="tab-content">
-                                    <div id="addresses" class="tab-pane fade show active">
-                                        <input type="hidden" name="enroll_addresses" id="enroll_addresses"
-                                               value=""/>
-                                        <table class="table table-border" style="margin-top:10px;"
-                                               id="enroll_address_table">
-                                            <thead>
-                                                <th>Type</th>
-                                                <th>Street</th>
-                                                <th>City</th>
-                                                <th>PO Box</th>
-                                                <th>Phone Number</th>
-                                                <th>Mobile</th>
-                                                <th></th>
-                                            </thead>
-                                            <tbody>
-                                                <tr></tr>
-                                            </tbody>
-                                        </table>
+                                <div class="tab-content" id="myTabContent">
+
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="addresses" role="tabpanel"
+                                             aria-labelledby="addresses-tab" tabindex="0">
+
+                                            <input type="hidden" name="enroll_addresses" id="enroll_addresses"
+                                                   value=""/>
+                                            <table class="table table-border" style="margin-top:10px;"
+                                                   id="enroll_address_table">
+                                                <thead>
+                                                    <th>Type</th>
+                                                    <th>Street</th>
+                                                    <th>City</th>
+                                                    <th>PO Box</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Mobile</th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr></tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="social_media" role="tabpanel"
+                                             aria-labelledby="social-media-tab" tabindex="0">
+
+                                            <input type="hidden" name="enroll_social_media_list"
+                                                   id="enroll_social_media_list"
+                                                   value=""/>
+                                            <table class="table table-border" style="margin-top:10px;"
+                                                   id="enroll_social_media_table">
+                                                <thead>
+                                                    <th>Type</th>
+                                                    <th>Link</th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr></tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
                                     </div>
-                                    <div id="social_media" class="tab-pane fade">
-                                        <input type="hidden" name="enroll_social_media_list"
-                                               id="enroll_social_media_list"
-                                               value=""/>
-                                        <table class="table table-border" style="margin-top:10px;"
-                                               id="enroll_social_media_table">
-                                            <thead>
-                                                <th>Type</th>
-                                                <th>Link</th>
-                                                <th></th>
-                                            </thead>
-                                            <tbody>
-                                                <tr></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+
+
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -524,7 +491,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary add_enroll_address" data-dismiss="modal">Submit
                         </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </div>
@@ -568,7 +535,7 @@
                         <button type="button" class="btn btn-primary add_enroll_social_media" data-dismiss="modal">
                             Submit
                         </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </div>

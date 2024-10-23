@@ -1,4 +1,4 @@
-odoo.define('documents.DocumentsSearchPanel', function (require) {
+odoo.define('documents.DocumentsSearchPanel',[], function (require) {
 "use strict";
 
 /**

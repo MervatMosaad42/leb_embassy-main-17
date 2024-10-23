@@ -1,16 +1,12 @@
-odoo.define('ebs_qsheild_mod.portal', function (require){
+odoo.define('ebs_qsheild_mod.portal', [], function (require){
 'use strict';
     var core = require('web.core');
     var ajax = require('web.ajax');
-    var _t = core._t;
+//    var _t = core._t;
+    var _t = require('@web/core/l10n/translation');
     console.log("....................")
     $(document).ready(function(){
 
-
-
-//        $(".oe_website_login_container").addClass('row')
-//        $(".oe_website_login_container").addClass('container-fluid')
-//        $(".oe_login_form").addClass('col-md-6')
         var curday = function(sp){
         var today = new Date();
         var dd = today.getDate();

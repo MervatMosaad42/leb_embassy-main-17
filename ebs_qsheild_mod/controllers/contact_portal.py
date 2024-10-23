@@ -28,8 +28,9 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMA
 class ContactPortal(CustomerPortal):
 
     @route(['/my', '/my/home'], type='http', auth="user", website=True)
-    def home(self, **kw):
-        values = self._prepare_home_portal_values()
+    def home(self,**kw):
+        # values = self._prepare_home_portal_values()
+        values = self._prepare_portal_layout_values()
         # if request.env.user.partner_id.status in ['draft','progress','reject'] and request.env.user.partner_id.person_type == 'emp':
         #     return request.render("ebs_qsheild_mod.description")
         # else:
@@ -3418,6 +3419,7 @@ class CustomerPortal(CustomerPortal):
         if expiryDate == '':
             expiryDate = None;
         folder = request.env['documents.folder'].search([('is_default_folder', '=', True)], limit=1)
+
         file = request.params['files[]']
         if file is not None and file is not '':
             attachment_64 = request.env['ir.attachment'].create({

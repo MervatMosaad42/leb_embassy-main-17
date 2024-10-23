@@ -48,6 +48,7 @@
         'wizards/enroll_request_reject_view.xml',
 
         # 'static/src/xml/assets.xml',
+        # 'views/documents_assets.xml',
 
         'cron/document_cron_job.xml',
 
@@ -96,7 +97,6 @@
         'views/website_feedback_page_template.xml',
         'views/ambassador_greetings_view.xml',
         'views/portal_report_template.xml',
-        # 'views/documents_assets.xml',
         'views/ebs_partner_socialmedia_view.xml',
         'views/ebs_enroll_requests_view.xml',
         'views/he_job_view.xml',
@@ -111,6 +111,7 @@
         'portal/portal_templates.xml',
         'portal/job_vacancies_portal_view.xml',
         'portal/contact_details_templates.xml',
+        'portal/portal_layout.xml',
 
         'report/report.xml',
         'report/report_passport_electronic.xml',
@@ -122,6 +123,29 @@
         'report/report_passport_pal.xml',
         'report/report_passport_pal2.xml',
     ],
-    "images": ['image/Header.png',]
+    'assets': {
+            'web.assets_frontend': [
+                '/ebs_qsheild_mod/static/src/css/homepage.css',
+                '/ebs_qsheild_mod/static/src/css/owl.carousel.css',
+                '/ebs_qsheild_mod/static/src/css/Font_face/font_face.css',
+                '/ebs_qsheild_mod/static/src/css/lightbox.css',
+                '/ebs_qsheild_mod/static/src/css/marquee.scss',
+
+
+                '/ebs_qsheild_mod/static/src/js/owl.carousel.js',
+                '/ebs_qsheild_mod/static/src/js/portal.js',
+                '/ebs_qsheild_mod/static/src/js/feedback_form.js',
+                '/ebs_qsheild_mod/static/src/js/contact_info_portal_copy.js',
+                '/ebs_qsheild_mod/static/src/js/homepage.js',
+
+
+                '/ebs_qsheild_mod/static/src/js/lightbox.js',
+                # '/ebs_qsheild_mod/static/src/js/documents_search_panel_copy.js',
+
+            ],
+            'web.report_assets_pdf': [
+                '/ebs_qsheild_mod/static/src/css/Font_face/report_font.css',
+            ],
+    },
 
 }

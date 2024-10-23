@@ -128,13 +128,13 @@
                                 </div>
                                 <ol class="carousel-indicators">
                                     <t t-if="first">
-                                        <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+                                        <li data-bs-target="#multi-item-example" data-bs-slide-to="0" class="active"></li>
                                     </t>
                                     <t t-if="second">
-                                        <li data-target="#multi-item-example" data-slide-to="1"></li>
+                                        <li data-bs-target="#multi-item-example" data-bs-slide-to="1"></li>
                                     </t>
                                     <t t-if="third">
-                                        <li data-target="#multi-item-example" data-slide-to="2"></li>
+                                        <li data-bs-target="#multi-item-example" data-bs-slide-to="2"></li>
                                     </t>
                                 </ol>
                                 <!--/.Indicators-->
@@ -629,7 +629,8 @@
                                         <t t-foreach="serviceTypes" t-as="service">
                                             <div class="image_section_class">
                                                 <div class="image_display_class">
-                                                    <a t-att-href="'/my'+service.path">
+                                                    <t t-if="service.path">
+                                                        <a t-att-href="'/my'+service.path">
                                                         <img t-if="service.service_image"
                                                              t-attf-src="data:image/png;base64,{{service.service_image}}"></img>
                                                         <img t-if="not service.service_image"
@@ -638,6 +639,18 @@
                                                             <t t-esc="service._get_name()"></t>
                                                         </div>
                                                     </a>
+                                                    </t>
+                                                    <t t-if="not service.path">
+                                                        <a t-att-href="'/my'">
+                                                        <img t-if="service.service_image"
+                                                             t-attf-src="data:image/png;base64,{{service.service_image}}"></img>
+                                                        <img t-if="not service.service_image"
+                                                             src="/ebs_qsheild_mod/static/src/image/LebaneseEmbassy.png"></img>
+                                                        <div style="color:red">
+                                                            <t t-esc="service._get_name()"></t>
+                                                        </div>
+                                                     </a>
+                                                    </t>
                                                 </div>
                                             </div>
                                         </t>

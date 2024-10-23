@@ -97,7 +97,7 @@ class QshieldController(http.Controller):
 
         # check access right
         try:
-            last_update = record['__last_update']
+            last_update = record['write_date']
         except AccessError:
             return (404, [], None)
 
@@ -359,16 +359,18 @@ class portal_report_data(http.Controller):
             })
 
         else:
+            attachment_cover_id = []
             Attachments = request.env['ir.attachment']
             if kw.get('applicant_cover_letter', False):
+
                 for attach in request.httprequest.files.getlist('applicant_cover_letter'):
                     attachment_cover_id = Attachments.create({'name': attach.filename,
-                                   'datas': base64.encodestring(attach.read()),
+                                   'datas': base64.encodebytes(attach.read()),
                                    })
             if kw.get('applicant_cv_attachment', False):
                 for attach in request.httprequest.files.getlist('applicant_cv_attachment'):
                     attachment_cv_id = Attachments.create({'name': attach.filename,
-                                   'datas': base64.encodestring(attach.read()),
+                                   'datas': base64.encodebytes(attach.read()),
                                    })
 
             request.env['job.vacancies.applicant'].sudo().create({

@@ -1,5 +1,7 @@
-odoo.define('ebs_qsheild_mod.backend', function (require) {
+odoo.define('ebs_qsheild_mod.backend',[],  function (require) {
 'use strict';
+
+//BY Comment by Mervat: basic fields and AbstractFieldBinary not in odoo 17
 
 	var basic_fields = require('web.basic_fields');
 

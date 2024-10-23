@@ -446,7 +446,7 @@
                     <field name="status"/>
                     <field name="date"/>
                     <field name="assign_to"/>
-                    <button name="create_service_activity" icon="fa-calendar" type="object"/>
+                    <button name="create_service_activity" icon="fa-calendar" type="object" string="Create Service Activity"/>
                 </tree>
             </field>
         </record>

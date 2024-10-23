@@ -151,7 +151,9 @@ class DocumentsCustom(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('expiry_date', False):
-            expiry_date = datetime.strptime(str(vals['expiry_date']), "%Y-%m-%d").date()
+            print('mero::', vals['expiry_date'])
+
+            expiry_date = datetime.strptime(str(vals['expiry_date']), "%Y-%m-%d %H:%M:%S").date()
 
             if expiry_date > datetime.today().date():
                 vals['status'] = 'active'

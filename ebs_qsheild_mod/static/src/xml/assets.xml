@@ -8,6 +8,7 @@
             <link href="/ebs_qsheild_mod/static/src/css/Font_face/font_face.css" rel="stylesheet" type="text/css"/>
             <link href="/ebs_qsheild_mod/static/src/css/lightbox.css" rel="stylesheet" type="text/css"/>
             <link href="/ebs_qsheild_mod/static/src/css/marquee.scss" rel="stylesheet" type="text/css"/>
+
             <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/homepage.js"></script>
             <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/portal.js"></script>
             <script type="src/javascript" src="/ebs_qsheild_mod/static/src/js/owl.carousel.js"></script>

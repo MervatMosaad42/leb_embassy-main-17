@@ -91,4 +91,11 @@
     'qweb': [
     'static/src/xml/ks_binary_preview.xml',
     ],
+
+    "assets": {
+        "web.assets_backend": [
+            "/ks_binary_file_preview/static/src/js/ks_binary_preview_copy.js",
+            # "/ks_binary_file_preview/static/src/js/ks_binary_preview.js",
+        ],
+    },
 }
