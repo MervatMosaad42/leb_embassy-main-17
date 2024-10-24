@@ -12,7 +12,7 @@ class CircularPage(models.Model):
     image = fields.Binary('Image')
     active = fields.Boolean('Active',default=True)
     page_active = fields.Boolean('Active')
-    attachment_id = fields.Many2one('ir.attachment', "Attachment", attachment=True)
+    attachment_id = fields.Many2one('ir.attachment', string="Attachment", attachment=True)
 
 
 class CircularPage(models.Model):

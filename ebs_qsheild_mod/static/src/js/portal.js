@@ -163,7 +163,15 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
 //            console.log(event.which ascii('0'))
 //        if (event.ctrlKey && event.which == ascii("0")
         if(person_name != '' &&  Nationality != '' &&  qid != '' &&  sponsor_name != '' &&  education != '' &&  school_university != '' &&  certificateissue_date != '' &&  labnon_street != '' &&  labnon_owned != '' &&  labnon_mobile != '' &&  labnon_floor != '' &&  qatar_street != '' &&  qatar_buliding != '' &&  qatar_mobile != '' &&  qatar_floor != '' && emergency_name != '' && emergency_contact != '' && portal_report_date != '' && leb_description != '' && qtr_description != ''){
-            ajax.jsonRpc('/portal/report/data/print/','call',{
+
+
+
+           $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: '/portal/report/data/print/',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
                 'service_request_id':portal_service_request_id,
                 'qtr_description':qtr_description,
                 'leb_description':leb_description,
@@ -194,11 +202,15 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
                 'emergency_name':emergency_name,
                 'emergency_contact':emergency_contact,
                 'portal_report_date':portal_report_date,
-            }).then(function(data){
-                console.log("..data..",data)
-                 $('#print_data_report_form').attr('href','/web/content/'+parseInt(data)+'?download=true');
-                 $('#print_data_report_form').show();
+            }}),
+                success: function (data) {
+                     console.log("..data..",data)
+                     $('#print_data_report_form').attr('href','/web/content/'+parseInt(data)+'?download=true');
+                     $('#print_data_report_form').show();
+                },
             });
+
+
         }
         else{
             alert("please fill-up all informations !")
@@ -215,10 +227,20 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         $('.close').show();
         $('.image_click').click(function(ev){
             console.log("clicked",$(this).siblings('.type_id').val());
-            ajax.jsonRpc("/my/service/insert_form",'call',{'service':$(this).siblings('.type_id').val()}).then(function (data) {
-                console.log(data);
-                $(location).attr('href','/my/'+$('.service_name').val()+'/insert_doc_form/'+data['id']);
-            });
+
+
+            $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: '/my/service/insert_form',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {'service':$(this).siblings('.type_id').val()}}),
+                    success: function (data) {
+                        console.log(data);
+                        $(location).attr('href','/my/'+$('.service_name').val()+'/insert_doc_form/'+data['id']);
+                    },
+                });
+
 
         });
         var $star_rating = $('.star-rating .fa');
@@ -404,16 +426,41 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         var subject = $('#education_subject_new_rec_amount').val()
         var major = $('#education_major_new_rec').val()
         var country = $('#education_country_id').children("option:selected").val()
-        ajax.jsonRpc('/applicant/education/info/','call',{
+
+
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/applicant/education/info/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
         'degree':degree,
         'year_from':year_from,
         'year_to':year_to,
         'subject':subject,
         'major':major,
         'country':country,
-         }).then(function(){
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+                location.reload();
+            },
+        });
+
+
+
+
+
+//        ajax.jsonRpc('/applicant/education/info/','call',{
+//        'degree':degree,
+//        'year_from':year_from,
+//        'year_to':year_to,
+//        'subject':subject,
+//        'major':major,
+//        'country':country,
+//         }).then(function(){
+//            location.reload();
+//         });
     }
     else{
         var name =  $('#job_applicant_name').val()
@@ -461,7 +508,17 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         reader1.onload = function(e){
             window.sessionStorage.setItem('cv_attachment_data', e.target.result);
         }
-        ajax.jsonRpc('/applicant/education/info/','call',{
+
+
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/applicant/education/info/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
         'degree':degree,
         'year_from':year_from,
         'year_to':year_to,
@@ -487,9 +544,48 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
          'qid_expiry_date':qid_expiry_date,
          'cover_letter':window.sessionStorage.getItem('cover_letter_data'),
          'cv_attachment':window.sessionStorage.getItem('cv_attachment_data'),
-         }).then(function(){
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+              location.reload();
+            },
+        });
+
+
+
+
+
+
+
+
+//        ajax.jsonRpc('/applicant/education/info/','call',{
+//        'degree':degree,
+//        'year_from':year_from,
+//        'year_to':year_to,
+//        'subject':subject,
+//        'major':major,
+//        'country':country,
+//         'name':name,
+//         'contact_email':contact_email,
+//         'family_name':family_name,
+//         'contact_phone':contact_phone,
+//         'date_of_birth':date_of_birth,
+//         'notice_period':notice_period,
+//         'pass_no':pass_no,
+//         'marital_status':marital_status,
+//         'pass_issu_place':pass_issu_place,
+//         'add_qatar':add_qatar,
+//         'pass_issu_date':pass_issu_date,
+//         'cv_summary':cv_summary,
+//         'pass_expiry_date':pass_expiry_date,
+//         'skills':skills,
+//         'resident_in_qatar':resident_in_qatar,
+//         'qid':qid,
+//         'qid_expiry_date':qid_expiry_date,
+//         'cover_letter':window.sessionStorage.getItem('cover_letter_data'),
+//         'cv_attachment':window.sessionStorage.getItem('cv_attachment_data'),
+//         }).then(function(){
+//            location.reload();
+//         });
     }
     else{
             alert("Please Insert All Applicant's Data !")
@@ -512,18 +608,45 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         var description  = $('#job_description_new_rec').val()
         var country = $('#job_history_country_id').children("option:selected").val()
         var current_position = $('#job_current_position').children("option:selected").val()
-        ajax.jsonRpc('/applicant/job/history/info/','call',{
-        'position':position,
-        'company_name':company_name,
-        'start_date':start_date,
-        'end_date':end_date,
-        'description':description,
-        'country':country,
-        'current_position':current_position,
 
-         }).then(function(){
-            location.reload();
-         });
+
+
+         $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: '/applicant/job/history/info/',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
+                        'position':position,
+                        'company_name':company_name,
+                        'start_date':start_date,
+                        'end_date':end_date,
+                        'description':description,
+                        'country':country,
+                        'current_position':current_position,
+
+                         }}),
+                    success: function (data) {
+                        location.reload();
+                    },
+                });
+
+
+
+
+
+//        ajax.jsonRpc('/applicant/job/history/info/','call',{
+//        'position':position,
+//        'company_name':company_name,
+//        'start_date':start_date,
+//        'end_date':end_date,
+//        'description':description,
+//        'country':country,
+//        'current_position':current_position,
+//
+//         }).then(function(){
+//            location.reload();
+//         });
     }
     else{
 
@@ -578,7 +701,16 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         reader1.onload = function(e){
             window.sessionStorage.setItem('cv_attachment_data', e.target.result);
         }
-        ajax.jsonRpc('/applicant/job/history/info/','call',{
+
+
+
+
+         $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: '/applicant/job/history/info/',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
         'position':position,
         'company_name':company_name,
         'start_date':start_date,
@@ -605,9 +737,48 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
          'qid_expiry_date':qid_expiry_date,
          'cover_letter':window.sessionStorage.getItem('cover_letter_data'),
          'cv_attachment':window.sessionStorage.getItem('cv_attachment_data'),
-         }).then(function(){
-            location.reload();
+         }}),
+            success: function (data) {
+                location.reload();
+            },
          });
+
+
+
+
+
+
+
+//        ajax.jsonRpc('/applicant/job/history/info/','call',{
+//        'position':position,
+//        'company_name':company_name,
+//        'start_date':start_date,
+//        'end_date':end_date,
+//        'description':description,
+//        'country':country,
+//        'current_position':current_position,
+//         'name':name,
+//         'contact_email':contact_email,
+//         'family_name':family_name,
+//         'contact_phone':contact_phone,
+//         'date_of_birth':date_of_birth,
+//         'notice_period':notice_period,
+//         'pass_no':pass_no,
+//         'marital_status':marital_status,
+//         'pass_issu_place':pass_issu_place,
+//         'add_qatar':add_qatar,
+//         'pass_issu_date':pass_issu_date,
+//         'cv_summary':cv_summary,
+//         'pass_expiry_date':pass_expiry_date,
+//         'skills':skills,
+//         'resident_in_qatar':resident_in_qatar,
+//         'qid':qid,
+//         'qid_expiry_date':qid_expiry_date,
+//         'cover_letter':window.sessionStorage.getItem('cover_letter_data'),
+//         'cv_attachment':window.sessionStorage.getItem('cv_attachment_data'),
+//         }).then(function(){
+//            location.reload();
+//         });
     }
     else{
             alert("Please Insert All Applicant's Data !")
@@ -625,19 +796,47 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         var subject = $('#edit_education_subject_new_rec').val()
         var major = $('#edit_education_major_new_rec').val()
         var country = $('#edit_education_country_id').children("option:selected").val()
-        ajax.jsonRpc('/applicant/edit/education/info/','call',{
-        'degree':degree,
-        'year_from':year_from,
-        'year_to':year_to,
-        'subject':subject,
-        'major':major,
-        'country':country,
-        'education_rec_id':education_rec_id
-         }).then(function(){
-            $('#edit_education_new_rec_line_close').click()
-            location.reload();
 
-         });
+
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/applicant/edit/education/info/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
+                'degree':degree,
+                'year_from':year_from,
+                'year_to':year_to,
+                'subject':subject,
+                'major':major,
+                'country':country,
+                'education_rec_id':education_rec_id
+                 }}),
+            success: function (data) {
+                $('#edit_education_new_rec_line_close').click()
+                location.reload();
+            },
+        });
+
+
+
+
+//        ajax.jsonRpc('/applicant/edit/education/info/','call',{
+//        'degree':degree,
+//        'year_from':year_from,
+//        'year_to':year_to,
+//        'subject':subject,
+//        'major':major,
+//        'country':country,
+//        'education_rec_id':education_rec_id
+//         }).then(function(){
+//            $('#edit_education_new_rec_line_close').click()
+//            location.reload();
+//
+//         });
 
 
     });
@@ -652,7 +851,17 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         var company_name = $('#edit_job_company_name_new_rec').val()
         var country = $('#edit_job_history_country_id').children("option:selected").val()
         var current_position = $('#edit_job_history_current_position').children("option:selected").val()
-        ajax.jsonRpc('/applicant/edit/job/history/','call',{
+
+
+
+
+
+         $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: '/applicant/edit/job/history/',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
         'position':position,
         'start_date':start_date,
         'end_date':end_date,
@@ -661,10 +870,32 @@ odoo.define('ebs_qsheild_mod.portal', [], function (require){
         'country':country,
         'current_position':current_position,
         'job_rec_id':job_rec_id
-         }).then(function(){
-            $('#edit_job_history_rec_line_close').click()
-            location.reload();
+         }}),
+            success: function (data) {
+                $('#edit_job_history_rec_line_close').click()
+                location.reload();
+            },
          });
+
+
+
+
+
+
+
+//        ajax.jsonRpc('/applicant/edit/job/history/','call',{
+//        'position':position,
+//        'start_date':start_date,
+//        'end_date':end_date,
+//        'description':description,
+//        'company_name':company_name,
+//        'country':country,
+//        'current_position':current_position,
+//        'job_rec_id':job_rec_id
+//         }).then(function(){
+//            $('#edit_job_history_rec_line_close').click()
+//            location.reload();
+//         });
 
 
 
@@ -675,19 +906,48 @@ $(document).on('click','.save_job_data', function(ev){
         var job_vac_id = $('#job_vacancies_rec_id').val()
         var job_applicant_id = $('#job_vacancies_hidden_applicant_id').val()
         if(job_applicant_id){
-            ajax.jsonRpc('/vacancies/save/job/','call',{
+
+
+
+
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/vacancies/save/job/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'job_vac_id':job_vac_id,
             'job_applicant_id':job_applicant_id,
-             }).then(function(data){
-             if(data == false){
-                alert("This job has been Already Applied!")
-             }
-             else{
-                location.reload();
-                alert("This job has been saved successfully!")
+             }}),
+            success: function (data) {
+                if (data.result == true) {
+                    location.reload();
+                    alert("This job has been saved successfully!")
+                } else {
+                    alert("This job has been Already Applied!")
+                }
+            },
+        });
 
-            }
-             });
+//            ajax.jsonRpc('/vacancies/save/job/','call',{
+//            'job_vac_id':job_vac_id,
+//            'job_applicant_id':job_applicant_id,
+//             }).then(function(data){
+//             if(data == false){
+//                alert("This job has been Already Applied!")
+//             }
+//             else{
+//                location.reload();
+//                alert("This job has been saved successfully!")
+//
+//            }
+//             });
+
+
+
              }
          else{
             alert("Please make first Your Profile!")
@@ -705,15 +965,38 @@ $(document).on('click','.save_job_data', function(ev){
         var position = $('#company_new_job_position_id').val()
         var email = $('#company_new_email_id').val()
         var phone = $('#company_new_phone_id').val()
-        ajax.jsonRpc('/company/point/of/contact/line/','call',{
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/company/point/of/contact/line/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
         'company_rec':company_rec,
         'name':name,
         'position':position,
         'email':email,
         'phone':phone,
-         }).then(function(){
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+                location.reload();
+            },
+        });
+
+
+
+
+//        ajax.jsonRpc('/company/point/of/contact/line/','call',{
+//        'company_rec':company_rec,
+//        'name':name,
+//        'position':position,
+//        'email':email,
+//        'phone':phone,
+//         }).then(function(){
+//            location.reload();
+//         });
     }
     else{
 
@@ -726,7 +1009,14 @@ $(document).on('click','.save_job_data', function(ev){
         var phone = $('#company_new_phone_id').val()
 
         if(name && number_of_employees){
-            ajax.jsonRpc('/company/point/of/contact/line/','call',{
+
+
+             $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: '/company/point/of/contact/line/',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'company_name':company_name,
             'industry_id':industry_id,
             'number_of_employees':number_of_employees,
@@ -734,9 +1024,25 @@ $(document).on('click','.save_job_data', function(ev){
             'position':position,
             'email':email,
             'phone':phone,
-             }).then(function(){
-                location.reload();
-             });
+             }}),
+                success: function (data) {
+                    location.reload();
+                },
+            });
+
+
+
+//            ajax.jsonRpc('/company/point/of/contact/line/','call',{
+//            'company_name':company_name,
+//            'industry_id':industry_id,
+//            'number_of_employees':number_of_employees,
+//            'name':name,
+//            'position':position,
+//            'email':email,
+//            'phone':phone,
+//             }).then(function(){
+//                location.reload();
+//             });
         }
     else{
             alert("Please Insert All Company's Data !")
@@ -751,30 +1057,81 @@ $(document).on('click','.save_job_data', function(ev){
         var position = $('#edit_company_job_position_id').val()
         var email = $('#edit_job_company_email_id').val()
         var phone = $('#edit_company_phone_id').val()
-        ajax.jsonRpc('/company/edit/point/of/contact/','call',{
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/company/edit/point/of/contact/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'name':name,
             'position':position,
             'email':email,
             'phone':phone,
             'company_point_of_contact_id':company_point_of_contact_id
-         }).then(function(){
-            $('#edit_company_point_of_contact_close').click()
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+                 $('#edit_company_point_of_contact_close').click()
+                 location.reload();
+            },
+        });
+
+
+
+
+
+//        ajax.jsonRpc('/company/edit/point/of/contact/','call',{
+//            'name':name,
+//            'position':position,
+//            'email':email,
+//            'phone':phone,
+//            'company_point_of_contact_id':company_point_of_contact_id
+//         }).then(function(){
+//            $('#edit_company_point_of_contact_close').click()
+//            location.reload();
+//         });
     });
     $(document).on('click','.seekers_save_job_data', function(ev){
         var seekers_job_vacancies_applicant_rec_id = ev.target.dataset.id
-        ajax.jsonRpc('/vacancies/applicant/seekers/record/','call',{
+
+
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/vacancies/applicant/seekers/record/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'seekers_job_vacancies_applicant_rec_id':seekers_job_vacancies_applicant_rec_id,
-         }).then(function(data){
-            if(data == false){
-            alert("This profile has been Already Saved!")
-         }
-         else{
-            location.reload();
-            alert("Profile is saved successfully!")
-        }
-         });
+         }}),
+            success: function (data) {
+                if (data.result == true) {
+                    location.reload();
+                    alert("Profile is saved successfully!");
+                } else {
+                    alert("This profile has been Already Saved!")
+                }
+            },
+        });
+
+
+
+
+//        ajax.jsonRpc('/vacancies/applicant/seekers/record/','call',{
+//            'seekers_job_vacancies_applicant_rec_id':seekers_job_vacancies_applicant_rec_id,
+//         }).then(function(data){
+//            if(data == false){
+//            alert("This profile has been Already Saved!")
+//         }
+//         else{
+//            location.reload();
+//            alert("Profile is saved successfully!")
+//        }
+//         });
     });
 
         $(document).on('click','#create_new_vacancies_record_id', function(ev){
@@ -792,7 +1149,15 @@ $(document).on('click','.save_job_data', function(ev){
             var work_location = $('#create_job_vacancies_work_location').val()
             console.log("publising_date....joining_limit......expiry_date..",publising_date,joining_limit,expiry_date)
             if(position_name && publising_date && description && educational_requirement && skills_requirement && joining_limit && benefits && expiry_date && application_link && application_mail && work_location){
-                ajax.jsonRpc('/company/job/vacancies/create/','call',{
+
+
+
+                 $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: '/company/job/vacancies/create/',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
                     'position_name':position_name,
                     'publising_date':publising_date,
                     'description':description,
@@ -804,10 +1169,33 @@ $(document).on('click','.save_job_data', function(ev){
                     'application_link':application_link,
                     'application_mail':application_mail,
                     'work_location':work_location,
-                 }).then(function(){
-                    $('#create_new_vacancies_close').click()
-                    location.reload();
-                 });
+                 }}),
+                    success: function (data) {
+                        $('#create_new_vacancies_close').click();
+                        location.reload();
+                    },
+                });
+
+
+
+
+
+//                ajax.jsonRpc('/company/job/vacancies/create/','call',{
+//                    'position_name':position_name,
+//                    'publising_date':publising_date,
+//                    'description':description,
+//                    'educational_requirement':educational_requirement,
+//                    'skills_requirement':skills_requirement,
+//                    'benefits':benefits,
+//                    'joining_limit':joining_limit,
+//                    'expiry_date':expiry_date,
+//                    'application_link':application_link,
+//                    'application_mail':application_mail,
+//                    'work_location':work_location,
+//                 }).then(function(){
+//                    $('#create_new_vacancies_close').click()
+//                    location.reload();
+//                 });
                  }
                  else{
                     alert("Please insert vacancies Data!")
@@ -818,17 +1206,38 @@ $(document).on('click','.save_job_data', function(ev){
      $(document).on('change','#filter_vacanices_record', function(ev){
         console.log("...............................click.......")
         var search_input = $('#filter_vacanices_record').val()
-        ajax.jsonRpc('/search/vacancies/record','call',{
-            'search_input':search_input,
-         }).then(function(data){
-         console.log("..1....data......",data)
-         if(data){
-         console.log("...2...data......",data)
-            window.location.href= "/job/vacancies/record?search=" + data
-            console.log("........window.location.href......",window.location.href)
-         }
 
-         });
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/search/vacancies/record',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
+            'search_input':search_input,
+         }}),
+            success: function (data) {
+                console.log("...2...data......",data);
+                window.location.href= "/job/vacancies/record?search=" + data;
+                console.log("........window.location.href......",window.location.href);
+            },
+        });
+
+
+
+
+//        ajax.jsonRpc('/search/vacancies/record','call',{
+//            'search_input':search_input,
+//         }).then(function(data){
+//         console.log("..1....data......",data)
+//         if(data){
+//         console.log("...2...data......",data)
+//            window.location.href= "/job/vacancies/record?search=" + data
+//            console.log("........window.location.href......",window.location.href)
+//         }
+//
+//         });
 
 
 
@@ -839,21 +1248,52 @@ $(document).on('click','.save_job_data', function(ev){
         var search_input = $('#filter_jobseekers_record').val()
         var search_input_resident = $('#filter_resident_in_qatar_record').children("option:selected").val()
         console.log("search_input.....search_input_resident.................",search_input,search_input_resident)
-        ajax.jsonRpc('/search/jobseekers/record','call',{
-         'search_input':search_input,
-         'search_input_resident':search_input_resident,
-         }).then(function(data){
-            console.log("..1....data......",data)
-         if(data.search){
-            window.location.href= "/company/job/seekers?search=" + data.search
-         }
-         if(data.resident_in_qatar){
-            window.location.href= "/company/job/seekers?search=" + data.resident_in_qatar
-         }
-        if(data.resident_in_qatar && data.search){
-            window.location.href= "/company/job/seekers?search=" + data.search + "&resident_in_qatar=" + data.resident_in_qatar
-         }
+
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/search/jobseekers/record',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
+             'search_input':search_input,
+             'search_input_resident':search_input_resident,
+             }}),
+            success: function (data) {
+                if (data.search) {
+                    window.location.href= "/company/job/seekers?search=" + data.search
+                }
+                if(data.resident_in_qatar){
+                    window.location.href= "/company/job/seekers?search=" + data.resident_in_qatar
+                 }
+
+                 if(data.resident_in_qatar && data.search){
+                    window.location.href= "/company/job/seekers?search=" + data.search + "&resident_in_qatar=" + data.resident_in_qatar
+                 }
+            },
         });
+
+
+
+
+
+//        ajax.jsonRpc('/search/jobseekers/record','call',{
+//         'search_input':search_input,
+//         'search_input_resident':search_input_resident,
+//         }).then(function(data){
+//            console.log("..1....data......",data)
+//         if(data.search){
+//            window.location.href= "/company/job/seekers?search=" + data.search
+//         }
+//         if(data.resident_in_qatar){
+//            window.location.href= "/company/job/seekers?search=" + data.resident_in_qatar
+//         }
+//        if(data.resident_in_qatar && data.search){
+//            window.location.href= "/company/job/seekers?search=" + data.search + "&resident_in_qatar=" + data.resident_in_qatar
+//         }
+//        });
 });
 
 $(document).on('change','#filter_resident_in_qatar_record', function(ev){
@@ -861,23 +1301,54 @@ $(document).on('change','#filter_resident_in_qatar_record', function(ev){
         var search_input = $('#filter_jobseekers_record').val()
         var search_input_resident = $('#filter_resident_in_qatar_record').children("option:selected").val()
         console.log("search_input.....search_input_resident.................",search_input,search_input_resident)
-        ajax.jsonRpc('/search/jobseekers/resident/record','call',{
-         'search_input':search_input,
-         'search_input_resident':search_input_resident,
-         }).then(function(data){
-            console.log("......data......",data)
-         if(data.search){
-         console.log("..............data.search/......",data.search)
-            window.location.href= "/company/job/seekers/?search=" + data.search
-         }
-         if(data.resident_in_qatar){
-         console.log("..............data.resident_in_qatar/......",data.resident_in_qatar)
-            window.location.href= "/company/job/seekers/?resident_in_qatar=" + data.resident_in_qatar
-         }
-        if(data.resident_in_qatar && data.search){
-            window.location.href= "/company/job/seekers/?search=" + data.search + "&resident_in_qatar=" + data.resident_in_qatar
-         }
+
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/search/jobseekers/resident/record',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
+             'search_input':search_input,
+             'search_input_resident':search_input_resident,
+             }}),
+            success: function (data) {
+                if(data.search){
+                    console.log("..............data.search/......",data.search);
+                    window.location.href= "/company/job/seekers/?search=" + data.search;
+                }
+                if(data.resident_in_qatar) {
+                    console.log("..............data.resident_in_qatar/......",data.resident_in_qatar);
+                    window.location.href= "/company/job/seekers/?resident_in_qatar=" + data.resident_in_qatar;
+                }
+                if(data.resident_in_qatar && data.search){
+                    window.location.href= "/company/job/seekers/?search=" + data.search + "&resident_in_qatar=" + data.resident_in_qatar
+                }
+            },
         });
+
+
+
+
+//        ajax.jsonRpc('/search/jobseekers/resident/record','call',{
+//         'search_input':search_input,
+//         'search_input_resident':search_input_resident,
+//         }).then(function(data){
+//            console.log("......data......",data)
+//         if(data.search){
+//         console.log("..............data.search/......",data.search)
+//            window.location.href= "/company/job/seekers/?search=" + data.search
+//         }
+//         if(data.resident_in_qatar){
+//         console.log("..............data.resident_in_qatar/......",data.resident_in_qatar)
+//            window.location.href= "/company/job/seekers/?resident_in_qatar=" + data.resident_in_qatar
+//         }
+//        if(data.resident_in_qatar && data.search){
+//            window.location.href= "/company/job/seekers/?search=" + data.search + "&resident_in_qatar=" + data.resident_in_qatar
+//         }
+//        });
 
 
 
@@ -917,53 +1388,146 @@ $(document).on('change','#filter_resident_in_qatar_record', function(ev){
     $(document).on('click','.education_info_remove_class', function(ev){
     console.log("...............................click.......")
         var education_info_line_id = ev.target.dataset.id
-        ajax.jsonRpc('/education/line/remove/','call',{
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/education/line/remove/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params":{
             'education_info_line_id':education_info_line_id,
-         }).then(function(){
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+                location.reload();
+            },
+        });
+
+
+
+//        ajax.jsonRpc('/education/line/remove/','call',{
+//            'education_info_line_id':education_info_line_id,
+//         }).then(function(){
+//            location.reload();
+//         });
     });
 
     $(document).on('click','.point_of_remove_line', function(ev){
     console.log("...............................click.......")
         var point_of_remove_line = ev.target.dataset.id
-        ajax.jsonRpc('/point/of/contact/line/remove/','call',{
+
+
+
+         $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/point/of/contact/line/remove/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'point_of_remove_line':point_of_remove_line,
-         }).then(function(){
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+                location.reload();
+            },
+        });
+
+
+
+//        ajax.jsonRpc('/point/of/contact/line/remove/','call',{
+//            'point_of_remove_line':point_of_remove_line,
+//         }).then(function(){
+//            location.reload();
+//         });
     });
 
     $(document).on('click','.job_history_remove_line_class', function(ev){
     console.log("...............................click.......")
         var job_history_line_id = ev.target.dataset.id
-        ajax.jsonRpc('/job/history/line/remove','call',{
+
+
+
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/job/history/line/remove',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'job_history_line_id':job_history_line_id,
-         }).then(function(){
-            location.reload();
-         });
+         }}),
+            success: function (data) {
+                location.reload();
+            },
+        });
+
+
+
+
+//        ajax.jsonRpc('/job/history/line/remove','call',{
+//            'job_history_line_id':job_history_line_id,
+//         }).then(function(){
+//            location.reload();
+//         });
     });
 
     $(document).on('change','#filter_individual_contact_record', function(ev){
         var search_input = $('#filter_individual_contact_record').val()
-        ajax.jsonRpc('search/individual_contacts','call',{
+
+
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: 'search/individual_contacts',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'search_input':search_input,
-        }).then(function(data){
-            if(data){
-                window.location.href= "/individual_contacts?search=" + data
-            }
+        }}),
+            success: function (data) {
+                window.location.href= "/individual_contacts?search=" + data;
+            },
         });
+
+
+
+
+//        ajax.jsonRpc('search/individual_contacts','call',{
+//            'search_input':search_input,
+//        }).then(function(data){
+//            if(data){
+//                window.location.href= "/individual_contacts?search=" + data
+//            }
+//        });
     });
 
     $(document).on('change','#filter_company_contact_record', function(ev){
         var search_input = $('#filter_company_contact_record').val()
-        ajax.jsonRpc('search/company_contacts','call',{
+
+
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: 'search/company_contacts',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'search_input':search_input,
-        }).then(function(data){
-            if(data){
-                window.location.href= "/company_contacts?search=" + data
-            }
+        }}),
+            success: function (data) {
+                window.location.href= "/company_contacts?search=" + data;
+            },
         });
+
+
+
+
+//        ajax.jsonRpc('search/company_contacts','call',{
+//            'search_input':search_input,
+//        }).then(function(data){
+//            if(data){
+//                window.location.href= "/company_contacts?search=" + data
+//            }
+//        });
     });
 
     $(document).on('click','.delete_address', function(ev){
@@ -976,24 +1540,53 @@ $(document).on('change','#filter_resident_in_qatar_record', function(ev){
         else {
             modal = '#enroll_page_form'
         }
-        ajax.jsonRpc('/delete_address','call',{
+
+
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/delete_address',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'id':address_id,
             'enroll_addresses': $(modal + ' #enroll_addresses').val()
-        }).then(function(data){
-            $(modal + ' #enroll_addresses').val(data.enroll_addresses);
-            $(modal + ' #address_' + address_id).remove();
+        }}),
+            success: function (data) {
+                $(modal + ' #enroll_addresses').val(data.enroll_addresses);
+                $(modal + ' #address_' + address_id).remove();
+            },
         });
+
+
+
+//        ajax.jsonRpc('/delete_address','call',{
+//            'id':address_id,
+//            'enroll_addresses': $(modal + ' #enroll_addresses').val()
+//        }).then(function(data){
+//            $(modal + ' #enroll_addresses').val(data.enroll_addresses);
+//            $(modal + ' #address_' + address_id).remove();
+//        });
     });
 
     $(document).on('click','.delete_social_media', function(ev){
         var social_media_id = ev.currentTarget.dataset.value
         var modal = '#enroll_page_form'
-        ajax.jsonRpc('/delete_social_media','call',{
+
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: '/delete_social_media',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'jsonrpc': "2.0", 'method': "call", "params": {
             'id':social_media_id,
             'enroll_social_media_list': $(modal + ' #enroll_social_media_list').val()
-        }).then(function(data){
-            $(modal + ' #enroll_social_media_list').val(data.enroll_social_media_list);
-            $(modal + ' #social_media_' + social_media_id).remove();
+        }}),
+            success: function (data) {
+                $(modal + ' #enroll_social_media_list').val(data.enroll_social_media_list);
+                $(modal + ' #social_media_' + social_media_id).remove();
+            },
         });
     });
 

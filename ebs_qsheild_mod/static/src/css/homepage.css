@@ -190,16 +190,11 @@ padding: 11px 9px 15px 10px;
       .image_display_class{
         text-align:center;
       }
-      .image_section_class{
-            display:flex;
-            flex:2;
+     .image_section_class{
+            margin-bottom:88px;
+            margin:auto;
             font-weight:bold;
             font-size:21px;
-            justify-content: center;
-            list-style: none;
-            padding: 20px 0;
-            margin:0;
-            width:20%;
       }
       .subimage_display_class img{
         width:100px;
