@@ -52,7 +52,7 @@
 
         'cron/document_cron_job.xml',
 
-        # 'views/footer_view.xml',
+        'views/footer_view.xml',
         'views/homepage.xml',
 
         'views/aboutembassy_template.xml',

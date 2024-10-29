@@ -190,12 +190,14 @@ padding: 11px 9px 15px 10px;
       .image_display_class{
         text-align:center;
       }
+
      .image_section_class{
             margin-bottom:88px;
             margin:auto;
             font-weight:bold;
             font-size:21px;
       }
+
       .subimage_display_class img{
         width:100px;
          border: solid 2px #f1f1f1;
@@ -290,6 +292,7 @@ body,h1,h2,h3,h4,h5,h6{
     margin-right: -15px;
     margin-left: -15px;
 }
+
 
 #footer{
     direction: initial;
@@ -1068,3 +1071,49 @@ header .dropdown-item {
 .recruitment_show_class .recruitment_access_button{
     display:block;
 }
+
+.fa-user-circle-o:before {
+  content: "\f2be";
+}
+
+
+header .navbar-brand.logo img {
+    object-fit: contain;
+    display: block;
+    width: auto;
+    height: 2.5rem;
+}
+
+#wrapwrap:not(.o_header_overlay) header .nav-item > .nav-link > *, #wrapwrap:not(.o_header_overlay) header .nav-item > .nav-link::after, #wrapwrap:not(.o_header_overlay) header .js_language_selector span, #wrapwrap:not(.o_header_overlay) header .badge, header.o_header_is_scrolled .nav-item > .nav-link > *, header.o_header_is_scrolled .nav-item > .nav-link::after, header.o_header_is_scrolled .js_language_selector span, header.o_header_is_scrolled .badge {
+    color: #0f205f;
+}
+
+.navbar > .container, .navbar > .o_container_small, .navbar > .container-fluid, .navbar > .container-sm, .navbar > .container-md, .navbar > .container-lg, .navbar > .container-xl, .navbar > .container-xxl {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: inherit;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 18px;
+
+}
+
+small, .small {
+    font-size: 18px;
+    color: #0f205f;
+}
+
+.navbar #top_menu, .navbar .top_menu {
+    flex-wrap: nowrap !important;
+    padding-left: 20px;
+}
+
+ol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    margin-left: inherit;
+}
+

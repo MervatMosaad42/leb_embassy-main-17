@@ -199,9 +199,10 @@
                                                              style="border:1px solid #cdcdcd;border-radius:5px;">
                                                             <div class="row">
                                                                 <div class="col-md-4 text_wrap">
-                                                                    <a t-attf-href="/announcement/#{ slug(ann_2) }/">
+                                                                    <a t-attf-href="/announcement/#{slug(ann_2)}/">
                                                                         <img class="home_page_announchment_slider_image"
                                                                              t-attf-src="/web/image/circulars.page/{{ann_2.id}}/image"></img>
+
                                                                     </a>
                                                                 </div>
                                                                 <div class="col-md-8"
@@ -771,6 +772,83 @@
                 <attribute name="style">font-size:18px;font-weight:bold;color:#0f205f</attribute>
             </xpath>
         </template>
+
+        <template id="template_header_default_inherit" name="header default inherit" inherit_id="website.template_header_default">
+
+             <xpath expr="//div[@id='o_main_nav'][1]/ul/t[@t-call='website.placeholder_header_text_element']" position="replace">
+             </xpath>
+             <xpath expr="//div[@id='o_main_nav'][1]/ul/t[@t-call='website.placeholder_header_search_box']" position="replace">
+             </xpath>
+            <xpath expr="//div[@id='o_main_nav'][1]/ul/t[@t-call='website.placeholder_header_call_to_action']" position="replace">
+<!--                <attribute name="invisible">1</attribute>-->
+<!--                 &lt;!&ndash; Brand &ndash;&gt;-->
+<!--                <t t-call="website.placeholder_header_brand">-->
+<!--                    <t t-set="_link_class" t-valuef="me-4"/>-->
+<!--                </t>-->
+<!--                &lt;!&ndash; Navbar &ndash;&gt;-->
+<!--                <t t-call="website.navbar_nav">-->
+<!--                    <t t-set="_nav_class" t-valuef="me-auto"/>-->
+
+<!--                    &lt;!&ndash; Menu &ndash;&gt;-->
+<!--                    <t t-foreach="website.menu_id.child_id" t-as="submenu">-->
+<!--                        <t t-call="website.submenu">-->
+<!--                            <t t-set="item_class" t-valuef="nav-item"/>-->
+<!--                            <t t-set="link_class" t-valuef="nav-link"/>-->
+<!--                        </t>-->
+<!--                    </t>-->
+<!--                </t>-->
+<!--&lt;!&ndash;                 Extra elements&ndash;&gt;-->
+<!--                <ul class="navbar-nav align-items-center gap-2 flex-shrink-0 justify-content-end ps-3">-->
+<!--                    &lt;!&ndash; Search Bar &ndash;&gt;-->
+<!--                    <t t-call="website.placeholder_header_search_box">-->
+<!--                        <t t-set="_layout" t-valuef="modal"/>-->
+<!--                        <t t-set="_input_classes" t-valuef="border border-end-0 p-3"/>-->
+<!--                        <t t-set="_submit_classes" t-valuef="border border-start-0 px-4 bg-o-color-4"/>-->
+<!--                        <t t-set="_button_classes" t-valuef="o_navlink_background text-reset"/>-->
+<!--                    </t>-->
+<!--                    &lt;!&ndash; Text element &ndash;&gt;-->
+<!--                    <t t-call="website.placeholder_header_text_element"/>-->
+<!--                    &lt;!&ndash; Social &ndash;&gt;-->
+<!--                    <t t-call="website.placeholder_header_social_links"/>-->
+<!--                    &lt;!&ndash; Language Selector &ndash;&gt;-->
+<!--                    <t t-call="website.placeholder_header_language_selector">-->
+<!--                        <t t-set="_btn_class" t-valuef="btn-outline-secondary border-0"/>-->
+<!--                        <t t-set="_txt_class" t-valuef="small"/>-->
+<!--                        <t t-set="_dropdown_menu_class" t-valuef="dropdown-menu-end"/>-->
+<!--                    </t>-->
+<!--                    &lt;!&ndash; Sign In &ndash;&gt;-->
+<!--                    <t t-call="portal.placeholder_user_sign_in">-->
+<!--                        <t t-set="_link_class" t-valuef="btn btn-outline-secondary"/>-->
+<!--                    </t>-->
+<!--                    &lt;!&ndash; User Dropdown &ndash;&gt;-->
+<!--                    <t t-call="portal.user_dropdown">-->
+<!--                        <t t-set="_user_name" t-value="True"/>-->
+<!--                        <t t-set="_item_class" t-valuef="dropdown"/>-->
+<!--                        <t t-set="_link_class" t-valuef="btn-outline-secondary border-0 fw-bold"/>-->
+<!--                        <t t-set="_user_name_class" t-valuef="small"/>-->
+<!--                        <t t-set="_dropdown_menu_class" t-valuef="dropdown-menu-end"/>-->
+<!--                    </t>-->
+<!--&lt;!&ndash;                     Call To Action&ndash;&gt;-->
+<!--&lt;!&ndash;                    <t t-call="website.placeholder_header_call_to_action"/>&ndash;&gt;-->
+<!--                </ul>-->
+
+            </xpath>
+
+            <xpath expr="//div[@id='o_main_nav'][1]/ul/t[@t-call='portal.user_dropdown']" position="after">
+                <i t-attf-class="fa fa-user-circle-o"></i>
+            </xpath>
+
+        </template>
+
+<!--        <template id="option_header_brand_logo_inherit" inherit_id="website.placeholder_header_brand">-->
+<!--            <xpath expr="//a[hasclass('navbar-brand')]" position="replace">-->
+<!--            <a href="/" class="navbar-brand logo">-->
+<!--                <img t-att-src="'/logo.png?company=%s' % res_company.id" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>-->
+<!--            </a>-->
+<!--            <t t-esc="res_company.name"/>-->
+<!--        </xpath>-->
+
+<!--        </template>-->
 
 
 

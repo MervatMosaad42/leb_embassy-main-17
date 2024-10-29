@@ -2,7 +2,7 @@
 
 <odoo>
 
-    <template id="footer_custom_homepage" inherit_id="website.layout" name="Footer">
+    <template id="footer_custom_homepage" inherit_id="website.footer_custom" name="Footer">
         <xpath expr="//div[@id='footer']" position="replace">
              <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
                 <section class="s_text_block pt16 pb8">
@@ -100,13 +100,19 @@
         </xpath>
     </template>
 
-    <template id="frontend_layout" inherit_id="portal.frontend_layout">
-        <xpath expr="//div[hasclass('o_footer_copyright')]" position="replace">
-        </xpath>
-        <xpath expr="//div[@id='top_menu_collapse']/ul" position="after">
+    <template id="template_header_hamburger_inherit" inherit_id="website.template_header_hamburger">
+         <xpath expr="//div[@id='top_menu_collapse']/ul" position="after">
             <i class="fa fa-user-circle-o"></i>
         </xpath>
-        <xpath expr="//a[hasclass('navbar-brand')]" position="replace">
+    </template>
+
+    <template id="frontend_layout" inherit_id="website.option_header_brand_logo">
+<!--        <xpath expr="//div[hasclass('o_footer_copyright')]" position="replace">-->
+<!--        </xpath>-->
+<!--        <xpath expr="//div[@id='top_menu_collapse']/ul" position="after">-->
+<!--            <i class="fa fa-user-circle-o"></i>-->
+<!--        </xpath>-->
+        <xpath expr="//a" position="replace">
             <a href="/" class="navbar-brand logo">
                 <img t-att-src="'/logo.png?company=%s' % res_company.id" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
             </a>
